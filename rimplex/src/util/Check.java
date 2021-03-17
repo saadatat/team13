@@ -9,8 +9,9 @@ package util;
 public class Check
 {
   /**
-   * Check to see if an array of String objects contains a particular
-   * String.
+   * Check to see if an array of String objects contains the String from 
+   * the parameter
+   * 
    * 
    * @param haystack  The array of String objects to search through
    * @param needle The String object to search for
@@ -20,7 +21,7 @@ public class Check
   {
     for (int i=0; i<haystack.length; i++)
     {
-      if (haystack[i].equalsIgnoreCase(needle)) return true;
+      if (haystack[i].equals(needle)) return true;
     }
     return false;
   }
