@@ -2,7 +2,7 @@ package util;
 
 /**
  * A utility class that performs checks of various kinds.
- * 
+ * See the git Commit History
  * @author Prof. David Bernstein, James Madison University
  * @version 1.0
  */
