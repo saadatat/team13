@@ -25,4 +25,12 @@ public class Check
     }
     return false;
   }
+  
+  /**
+   * Perform a test.
+   */
+  public static void test()
+  {
+    System.out.println("test");
+  }
 }
