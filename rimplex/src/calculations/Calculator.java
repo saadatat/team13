@@ -1,8 +1,26 @@
 package calculations;
 
+import java.util.List;
+
 public class Calculator
 {
 
+  /**
+   * Parses args for 2 complex numbers
+   * 
+   * @param stringToCovert - parameter to get convert
+   * @return xxxxxx - the list of Strings complex nums
+   */
+  public static List<String> parse(String stringToConvert)
+  {
+    
+      //**NEGATIVE IMAGINARY NUMBERS SHOULD BE IN FORM: a+-bi
+    
+    return null;
+
+  }
+  
+  
   /**
    * Accepts an operand string and returns the complex version.
    * 
@@ -49,4 +67,7 @@ public class Calculator
 
     return formattedString;
   }
+
+
+
 }
