@@ -68,11 +68,23 @@ class CalculatorTest
     //Check when theres a minus
     assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
     assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
-    
-    
-    
-    
+
+  }
   
+  /**
+   * divideTest - test divide method.
+   */
+  @Test
+  void divideTest()
+  {
+    
+    String validNum1 = "6+1i";
+    String validNum2 = "4+2i";
+
+    
+    //Normal test
+    assertEquals("( 26 / 20 ) + ( -8i / 20 )", Operations.divide(validNum1, validNum2));
+
 
   }
 
