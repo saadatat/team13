@@ -11,7 +11,7 @@ public class Calculator
    * @param stringToCovert - parameter to get convert
    * @return xxxxxx - the list of Strings complex nums
    */
-  public static List<String> parse(String stringToConvert)
+  private static List<String> parse(String stringToConvert)
   {
     
       //**NEGATIVE IMAGINARY NUMBERS SHOULD BE IN FORM: a+-bi
