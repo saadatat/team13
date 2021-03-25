@@ -78,8 +78,7 @@ public class Operations
     quotient2 = "( " + top2 + "i / " + denominator + " )";
     
     String operator = " + ";
-    
-  
+
     return quotient1 + operator + quotient2;
   }
 }
