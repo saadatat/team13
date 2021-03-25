@@ -13,10 +13,10 @@ public class Operations
    */
   public static String addition(String operandOne, String operandTwo)
   {
-    int[][] opInts = parseToInt(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
 
-    int realSum = (opInts[0][0] + opInts[1][0]);
-    int imagSum = (opInts[0][1] + opInts[1][1]);
+    double realSum = (opdoubles[0][0] + opdoubles[1][0]);
+    double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
 
     char operator = '+';
 
@@ -27,7 +27,7 @@ public class Operations
       imagSum = -1 * imagSum;
     }
 
-    return String.format("%d%c%di", realSum, operator, imagSum);
+    return String.format("%.2f%c%.2fi", realSum, operator, imagSum);
   }
 
   /**
@@ -41,10 +41,10 @@ public class Operations
    */
   public static String subtraction(String operandOne, String operandTwo)
   {
-    int[][] opInts = parseToInt(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
 
-    int realDiff = (opInts[0][0] - opInts[1][0]);
-    int imagDiff = (opInts[0][1] - opInts[1][1]);
+    double realDiff = (opdoubles[0][0] - opdoubles[1][0]);
+    double imagDiff = (opdoubles[0][1] - opdoubles[1][1]);
 
     char operator = '+';
 
@@ -55,7 +55,7 @@ public class Operations
       imagDiff = -1 * imagDiff;
     }
 
-    return String.format("%d%c%di", realDiff, operator, imagDiff);
+    return String.format("%.2f%c%.2fi", realDiff, operator, imagDiff);
   }
 
   /**
@@ -71,17 +71,17 @@ public class Operations
   public static String multiply(String operandOne, String operandTwo)
   {
 
-    // Split the strings into two ints, the one before '+' and one before 'i'
-    String op1[] = operandOne.split("\\+|i");
-    String op2[] = operandTwo.split("\\+|i");
+    // Split the strings double two doubles, the one before '+' and one before 'i'
+    
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
 
-    int ac = (Integer.parseInt(op1[0]) * (Integer.parseInt(op2[0])));
-    int bd = (Integer.parseInt(op1[1]) * (Integer.parseInt(op2[1])));
-    int ad = (Integer.parseInt(op1[0]) * (Integer.parseInt(op2[1])));
-    int bc = (Integer.parseInt(op1[1]) * (Integer.parseInt(op2[0])));
+    double ac = opdoubles[0][0] * opdoubles[1][0];
+    double bd = opdoubles[0][1] * opdoubles[1][1];
+    double ad = opdoubles[0][0] * opdoubles[1][1];
+    double bc = opdoubles[0][1] * opdoubles[1][0];
 
-    int realProduct = ac - bd;
-    int imagProduct = ad + bc;
+    double realProduct = ac - bd;
+    double imagProduct = ad + bc;
 
     char operator = '+';
 
@@ -92,7 +92,7 @@ public class Operations
       imagProduct = -1 * imagProduct;
     }
 
-    return realProduct + "" + operator + "" + imagProduct + "i";
+    return String.format("%.2f%c%.2fi", realProduct, operator, imagProduct);
   }
 
   /**
@@ -108,56 +108,63 @@ public class Operations
   public static String divide(String operandOne, String operandTwo)
   {
 
-    String quotient1;
-    String quotient2;
+    double quotient1;
+    double quotient2;
+    char operator = '+';
 
-    // Split the strings into two ints, the one before '+' and one before 'i'
+    // Split the strings double two doubles, the one before '+' and one before 'i'
     String op1[] = operandOne.split("\\+|i");
     String op2[] = operandTwo.split("\\+|i");
 
-    int ac = (Integer.parseInt(op1[0]) * (Integer.parseInt(op2[0])));
-    int bd = (Integer.parseInt(op1[1]) * (Integer.parseInt(op2[1])));
-    int ad = (Integer.parseInt(op1[0]) * (Integer.parseInt(op2[1])));
-    int bc = (Integer.parseInt(op1[1]) * (Integer.parseInt(op2[0])));
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+    
+    double ac = opdoubles[0][0] * opdoubles[1][0];
+    double bd = opdoubles[0][1] * opdoubles[1][1];
+    double ad = opdoubles[0][0] * opdoubles[1][1];
+    double bc = opdoubles[0][1] * opdoubles[1][0];
 
-    int top1 = ac + bd;
-    int top2 = bc - ad;
+    double top1 = ac + bd;
+    double top2 = bc - ad;
 
-    int cSquare = (int) Math.pow(Integer.parseInt(op2[0]), 2);
-    int dSquare = (int) Math.pow(Integer.parseInt(op2[1]), 2);
+    double cSquare = (double) Math.pow(opdoubles[1][0], 2);
+    double dSquare = (double) Math.pow(opdoubles[1][1], 2);
 
-    int denominator = cSquare + dSquare;
+    double denominator = cSquare + dSquare;
 
-    quotient1 = "( " + top1 + " / " + denominator + " )";
-    quotient2 = "( " + top2 + "i / " + denominator + " )";
+    quotient1 = (top1 / denominator);
+    quotient2 = (top2 / denominator);
+   
+    if (quotient2 < 0)
+    {
+      operator = '-';
+      quotient2 = -1 * quotient2 ;
+    }
 
-    String operator = " + ";
-
-    return quotient1 + operator + quotient2;
+    return String.format("%.2f%c%.2fi", quotient1, operator, quotient2);
   }
 
   /**
    * Private helper method for helping parse values. This method will return a 2D array with the
-   * values as ints ordered respectively.
+   * values as doubles ordered respectively.
    * 
    * @param operandOne
    *          The first complex number to parse, must not be in +- form.
    * @param operandTwo
    *          The second complex number to parse, must not be in +- form.
-   * @return returns the parsed strings as indididual integers in a 2D array.
+   * @return returns the parsed strings as indididual doubleegers in a 2D array.
    */
-  private static int[][] parseToInt(String operandOne, String operandTwo)
+  private static double[][] parseTodouble(String operandOne, String operandTwo)
   {
-    int negModifier1A = 1;
-    int negModifier1B = 1;
-    int negModifier2A = 1;
-    int negModifier2B = 1;
-    int[] op1Int;
-    int[] op2Int;
+    double negModifier1A = 1;
+    double negModifier1B = 1;
+    double negModifier2A = 1;
+    double negModifier2B = 1;
+    double[] op1double;
+    double[] op2double;
     String[] op1;
     String[] op2;
 
-    // Split the strings into two ints, the one before '+'/'-' and one before 'i'
+    // Split the strings doubleo two doubles, the one before '+'/'-' and one before 'i'
 
     // Checks if first operand has negative values
     if (operandOne.charAt(0) == '-')
@@ -185,15 +192,15 @@ public class Operations
     if (operandTwo.substring(1).contains("-"))
       negModifier2B = -1;
 
-    // Converting parsed string to integers
-    op1Int = new int[op1.length];
-    op1Int[0] = Integer.parseInt(op1[0]) * negModifier1A;
-    op1Int[1] = Integer.parseInt(op1[1]) * negModifier1B;
+    // Converting parsed string to doubleegers
+    op1double = new double[op1.length];
+    op1double[0] = Double.parseDouble(op1[0]) * negModifier1A;
+    op1double[1] = Double.parseDouble(op1[1]) * negModifier1B;
 
-    op2Int = new int[op2.length];
-    op2Int[0] = Integer.parseInt(op2[0]) * negModifier2A;
-    op2Int[1] = Integer.parseInt(op2[1]) * negModifier2B;
+    op2double = new double[op2.length];
+    op2double[0] = Double.parseDouble(op2[0]) * negModifier2A;
+    op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
 
-    return new int[][] {op1Int, op2Int};
+    return new double[][] {op1double, op2double};
   }
 }
