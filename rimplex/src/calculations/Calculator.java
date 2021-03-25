@@ -1,26 +1,25 @@
 package calculations;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Calculator
 {
 
-  /**
-   * Parses args for 2 complex numbers
-   * 
-   * @param stringToCovert - parameter to get convert
-   * @return xxxxxx - the list of Strings complex nums
-   */
-  private static List<String> parse(String stringToConvert)
-  {
-    
-      //**NEGATIVE IMAGINARY NUMBERS SHOULD BE IN FORM: a+-bi
-    
-    return null;
+  private String leftOperand;
+  private String rightOperand;
+  private String result;
 
+  /**
+   * Default constructor.
+   */
+  public Calculator()
+  {
+    leftOperand = null;
+    rightOperand = null;
+    result = null;
   }
-  
-  
+
   /**
    * Accepts an operand string and returns the complex version.
    * 
@@ -68,6 +67,67 @@ public class Calculator
     return formattedString;
   }
 
+  /**
+   * getLeftOperand - return the left operand.
+   * 
+   * @return String the left operand.
+   */
+  public String getLeftOperand()
+  {
+    return leftOperand;
+  }
 
+  /**
+   * getRightOperand - return the right operand.
+   * 
+   * @return String the right operand.
+   */
+  public String getRightOperand()
+  {
+    return rightOperand;
+  }
+
+  /**
+   * getResult - return the result.
+   * 
+   * @return String the result.
+   */
+  public String getResult()
+  {
+    return result;
+  }
+
+  /**
+   * setLeftOperand - sets the left operand of the calculator.
+   * 
+   * @param incomingLeftOperand
+   *          - the left operand.
+   */
+  public void setLeftOperand(String incomingLeftOperand)
+  {
+    leftOperand = incomingLeftOperand;
+  }
+
+  /**
+   * setRightOperand - sets the right operand of the calculator.
+   * 
+   * @param incomingRightOperand
+   *          - the right operand.
+   */
+  public void setRightOperand(String incomingRightOperand)
+  {
+    rightOperand = incomingRightOperand;
+  }
+
+  /**
+   * setResult - sets the result of the calculator.
+   * 
+   * @param incomingResult
+   *          - the result.
+   */
+  public void setResult(String incomingResult)
+  {
+    result = incomingResult;
+  }
 
 }
