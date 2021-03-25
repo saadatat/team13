@@ -9,6 +9,7 @@ public class Calculator
   private String leftOperand;
   private String rightOperand;
   private String result;
+  private String operator;
 
   /**
    * Default constructor.
@@ -16,6 +17,7 @@ public class Calculator
   public Calculator()
   {
     leftOperand = null;
+    operator = null;
     rightOperand = null;
     result = null;
   }
@@ -78,6 +80,16 @@ public class Calculator
   }
 
   /**
+   * getOperator - return the operator.
+   * 
+   * @return String the operator.
+   */
+  public String getOperator()
+  {
+    return operator;
+  }
+
+  /**
    * getRightOperand - return the right operand.
    * 
    * @return String the right operand.
@@ -109,6 +121,17 @@ public class Calculator
   }
 
   /**
+   * setOperator - sets the operator.
+   * 
+   * @param incomingOperator
+   *          - the operator.
+   */
+  public void setOperator(String incomingOperator)
+  {
+    operator = incomingOperator;
+  }
+
+  /**
    * setRightOperand - sets the right operand of the calculator.
    * 
    * @param incomingRightOperand
@@ -130,4 +153,91 @@ public class Calculator
     result = incomingResult;
   }
 
+  /**
+   * adds the operands and reset values besides result.
+   */
+  public void add()
+  {
+    result = Operations.addition(leftOperand, rightOperand);
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
+  }
+
+  /**
+   * subtracts the operands and reset values besides result.
+   */
+  public void subtract()
+  {
+    result = Operations.subtraction(leftOperand, rightOperand);
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
+  }
+
+  /**
+   * multiply the operands and reset values besides result.
+   */
+  public void multiply()
+  {
+    result = Operations.multiply(leftOperand, rightOperand);
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
+  }
+
+  /**
+   * divide the operands and reset values besides result.
+   */
+  public void divide()
+  {
+    result = Operations.divide(leftOperand, rightOperand);
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
+  }
+
+  /**
+   * calls the appropriate calculation method.
+   */
+  public void formResult()
+  {
+    if (operator.equals("+") && validOperands())
+    {
+      add();
+    }
+
+    if (operator.equals("-") && validOperands())
+    {
+      subtract();
+    }
+
+    if (operator.equals("*") && validOperands())
+    {
+      multiply();
+    }
+
+    if (operator.equals("/") && validOperands())
+    {
+      divide();
+    }
+  }
+
+  /**
+   * checks if both operands are valid.
+   * 
+   * @return boolean whether the operands are valid.
+   */
+  public boolean validOperands()
+  {
+    boolean returnValue = true;
+
+    if (leftOperand == null || leftOperand.trim().equals("") || rightOperand == null
+        || rightOperand.trim().equals(""))
+    {
+      returnValue = false;
+    }
+
+    return returnValue;
+  }
 }

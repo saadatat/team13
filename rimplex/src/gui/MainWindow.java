@@ -28,48 +28,33 @@ public class MainWindow extends JFrame
     String command = e.getActionCommand();
     String operators = "+-/*";
     String leftOperand = calculator.getLeftOperand();
-    String rightOperand = calculator.getRightOperand();
     String result = calculator.getResult();
 
-    if (operators.contains(command) && leftOperand != null && rightOperand != null)
+    if (operators.contains(command))
     {
-      if (command.equals("+"))
+
+      if (leftOperand == null || leftOperand.trim().equals(""))
       {
-        calculator.setResult(Operations.addition(leftOperand, rightOperand));
-        calculator.setLeftOperand(null);
-        calculator.setRightOperand(null);
+        if (result == null || result.trim().equals(""))
+        {
+          calculator.setLeftOperand("0");
+        }
+        else
+        {
+          calculator.setLeftOperand(result);
+        }
       }
-      else if (command.equals("-"))
+      else if (calculator.validOperands())
       {
-        calculator.setResult(Operations.subtraction(leftOperand, rightOperand));
-        calculator.setLeftOperand(null);
-        calculator.setRightOperand(null);
-      }
-      else if (command.equals("*"))
-      {
-        calculator.setResult(Operations.multiply(leftOperand, rightOperand));
-        calculator.setLeftOperand(null);
-        calculator.setRightOperand(null);
-      }
-      else if (command.equals("/"))
-      {
-        calculator.setResult(Operations.divide(leftOperand, rightOperand));
-        calculator.setLeftOperand(null);
-        calculator.setRightOperand(null);
+        calculator.formResult();
       }
 
+      calculator.setOperator(command);
     }
 
-    if (operators.contains(command) && (leftOperand == null || leftOperand.trim().equals("")))
+    if (command.equals("="))
     {
-      if (result == null || result.trim().equals(""))
-      {
-        calculator.setLeftOperand("0");
-      }
-      else
-      {
-        calculator.setLeftOperand(result);
-      }
+      calculator.formResult();
     }
 
   }
