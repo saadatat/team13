@@ -58,18 +58,18 @@ public class MainWindow extends JFrame
         calculator.setRightOperand(null);
       }
 
-      if (operators.contains(command) && (leftOperand == null || leftOperand.trim().equals("")))
-      {
-        if (result == null || result.trim().equals(""))
-        {
-          calculator.setLeftOperand("0");
-        }
-        else
-        {
-          calculator.setLeftOperand(result);
-        }
-      }
+    }
 
+    if (operators.contains(command) && (leftOperand == null || leftOperand.trim().equals("")))
+    {
+      if (result == null || result.trim().equals(""))
+      {
+        calculator.setLeftOperand("0");
+      }
+      else
+      {
+        calculator.setLeftOperand(result);
+      }
     }
 
   }
