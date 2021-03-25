@@ -60,14 +60,14 @@ class CalculatorTest
     String minusReal = "-3+5i";
 
     // Normal test
-    assertEquals("22.00+16.00i", Operations.multiply(validNum1, validNum2));
+    assertEquals("22+16i", Operations.multiply(validNum1, validNum2));
     // Switch normal
-    assertEquals("22.00+16.00i", Operations.multiply(validNum2, validNum1));
+    assertEquals("22+16i", Operations.multiply(validNum2, validNum1));
     // zero times valid
-    assertEquals("18.00+3.00i", Operations.multiply(validNum1, zeroImaginary));
+    assertEquals("18+3i", Operations.multiply(validNum1, zeroImaginary));
     // Check when theres a minus
-    assertEquals("33.00-13.00i", Operations.multiply(validNum1, minusImag));
-    assertEquals("-23.00+27.00i", Operations.multiply(minusReal, validNum1));
+    assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
+    assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
 
   }
 
@@ -87,7 +87,7 @@ class CalculatorTest
 
     assertEquals("0.92+0.56i", Operations.divide(termPositive1, termPositive2));
     assertEquals("0.92+0.56i", Operations.divide(termNegative1, termNegative2));
-    assertEquals("-1.00+0.00i", Operations.divide(termFirstNegOnly1, termFirstNegOnly2));
+    assertEquals("-1+0i", Operations.divide(termFirstNegOnly1, termFirstNegOnly2));
     assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
     assertEquals("-0.28+1.04i", Operations.divide(termPositive1, termFirstNegOnly2));
 
@@ -103,18 +103,19 @@ class CalculatorTest
     String termFirstNegOnly1 = "-4+3i";
     String termFirstNegOnly2 = "-4+3i";
 
-    assertEquals("6.00+8.00i", Operations.addition(termPositive1, termPositive2));
-    assertEquals("-2.00+2.00i", Operations.addition(termNegative1, termNegative2));
-    assertEquals("-8.00+6.00i", Operations.addition(termFirstNegOnly1, termFirstNegOnly2));
-    assertEquals("0.00+0.00i", Operations.addition("0+0i", "0+0i"));
+    assertEquals("6+8i", Operations.addition(termPositive1, termPositive2));
+    assertEquals("-2+2i", Operations.addition(termNegative1, termNegative2));
+    assertEquals("-8+6i", Operations.addition(termFirstNegOnly1, termFirstNegOnly2));
+    assertEquals("0+0i", Operations.addition("0+0i", "0+0i"));
 
-    for (double i = -10; i <= 10; i++)
+    for (int i = -10; i <= 10; i++)
     {
-      for (double j = -50; j <= 50; j++)
+      for (int j = -50; j <= 50; j++)
       {
-        String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-        String secondOp = String.format("%.2f+%.2fi", j, i).replace("+-", "-");
-        String expected = String.format("%.2f+%.2fi", i + j, i + j).replace("+-", "-");
+
+        String firstOp = String.format("%d+%di", i, j).replace("+-", "-");
+        String secondOp = String.format("%d+%di", j, i).replace("+-", "-");
+        String expected = String.format("%d+%di", i + j, i + j).replace("+-", "-");
         assertEquals(expected, Operations.addition(firstOp, secondOp));
       }
     }
@@ -125,15 +126,15 @@ class CalculatorTest
   {
     String termPositive1 = "2+5i";
     String termPositive2 = "4+3i";
-    assertEquals("-2.00+2.00i", Operations.subtraction(termPositive1, termPositive2));
+    assertEquals("-2+2i", Operations.subtraction(termPositive1, termPositive2));
 
-    for (double i = -10; i <= 10; i++)
+    for (int i = -10; i <= 10; i++)
     {
-      for (double j = -50; j <= 50; j++)
+      for (int j = -50; j <= 50; j++)
       {
-        String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-        String secondOp = String.format("%.2f+%.2fi", j, i).replace("+-", "-");
-        String expected = String.format("%.2f+%.2fi", i - j, j - i).replace("+-", "-");
+        String firstOp = String.format("%d+%di", i, j).replace("+-", "-");
+        String secondOp = String.format("%d+%di", j, i).replace("+-", "-");
+        String expected = String.format("%d+%di", i - j, j - i).replace("+-", "-");
         assertEquals(expected, Operations.subtraction(firstOp, secondOp));
       }
     }

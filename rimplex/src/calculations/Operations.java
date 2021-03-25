@@ -13,7 +13,8 @@ public class Operations
    */
   public static String addition(String operandOne, String operandTwo)
   {
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
+        operandTwo.replace("+-", "-"));
 
     double realSum = (opdoubles[0][0] + opdoubles[1][0]);
     double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
@@ -27,7 +28,7 @@ public class Operations
       imagSum = -1 * imagSum;
     }
 
-    return String.format("%.2f%c%.2fi", realSum, operator, imagSum);
+    return formatResult(realSum, operator, imagSum);
   }
 
   /**
@@ -41,7 +42,8 @@ public class Operations
    */
   public static String subtraction(String operandOne, String operandTwo)
   {
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
+        operandTwo.replace("+-", "-"));
 
     double realDiff = (opdoubles[0][0] - opdoubles[1][0]);
     double imagDiff = (opdoubles[0][1] - opdoubles[1][1]);
@@ -55,7 +57,7 @@ public class Operations
       imagDiff = -1 * imagDiff;
     }
 
-    return String.format("%.2f%c%.2fi", realDiff, operator, imagDiff);
+    return formatResult(realDiff, operator, imagDiff);
   }
 
   /**
@@ -72,8 +74,9 @@ public class Operations
   {
 
     // Split the strings double two doubles, the one before '+' and one before 'i'
-    
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
+
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
+        operandTwo.replace("+-", "-"));
 
     double ac = opdoubles[0][0] * opdoubles[1][0];
     double bd = opdoubles[0][1] * opdoubles[1][1];
@@ -92,7 +95,7 @@ public class Operations
       imagProduct = -1 * imagProduct;
     }
 
-    return String.format("%.2f%c%.2fi", realProduct, operator, imagProduct);
+    return formatResult(realProduct, operator, imagProduct);
   }
 
   /**
@@ -116,8 +119,9 @@ public class Operations
     String op1[] = operandOne.split("\\+|i");
     String op2[] = operandTwo.split("\\+|i");
 
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"), operandTwo.replace("+-", "-"));
-    
+    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
+        operandTwo.replace("+-", "-"));
+
     double ac = opdoubles[0][0] * opdoubles[1][0];
     double bd = opdoubles[0][1] * opdoubles[1][1];
     double ad = opdoubles[0][0] * opdoubles[1][1];
@@ -133,14 +137,15 @@ public class Operations
 
     quotient1 = (top1 / denominator);
     quotient2 = (top2 / denominator);
-   
+
     if (quotient2 < 0)
     {
       operator = '-';
-      quotient2 = -1 * quotient2 ;
+      quotient2 = -1 * quotient2;
     }
 
-    return String.format("%.2f%c%.2fi", quotient1, operator, quotient2);
+    return formatResult(quotient1, operator, quotient2);
+
   }
 
   /**
@@ -202,5 +207,37 @@ public class Operations
     op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
 
     return new double[][] {op1double, op2double};
+  }
+
+  /**
+   * Formats the result. Removes unnecessary 0's.
+   * 
+   * @param real
+   *          - the real number.
+   * @param operator
+   *          - the operator.
+   * @param imaginary
+   *          - the imaginary.
+   * @return String - the formatted result.
+   */
+  public static String formatResult(double real, char operator, double imaginary)
+  {
+    int realConversion = (int) real;
+    int imaginaryConversion = (int) imaginary;
+    String returnString = String.format("%.2f%c%.2fi", real, operator, imaginary);
+    if (real == realConversion && imaginary == imaginaryConversion)
+    {
+      returnString = String.format("%d%c%di", realConversion, operator, imaginaryConversion);
+    }
+    else if (real == realConversion)
+    {
+      returnString = String.format("%d%c%.2fi", realConversion, operator, imaginary);
+    }
+    else if (imaginary == imaginaryConversion)
+    {
+      returnString = String.format("%.2f%c%di", real, operator, imaginaryConversion);
+    }
+    return returnString;
+
   }
 }
