@@ -34,15 +34,16 @@ class CalculatorTest
   @Test
   void formatDisplayOperandTest()
   {
+    Calculator calculator = new Calculator();
     String validTest = "400";
     String longValidTest = "40000+30000";
     String emptyTest = "        ";
     String nullTest = null;
 
-    assertEquals("(400)", Calculator.formatDisplayOperand(validTest));
-    assertEquals("(40000+30000)", Calculator.formatDisplayOperand(longValidTest));
-    assertThrows(IllegalArgumentException.class, () -> Calculator.formatDisplayOperand(emptyTest));
-    assertThrows(IllegalArgumentException.class, () -> Calculator.formatDisplayOperand(nullTest));
+    assertEquals("(400)", calculator.formatDisplayOperand(validTest));
+    assertEquals("(40000+30000)", calculator.formatDisplayOperand(longValidTest));
+    assertThrows(IllegalArgumentException.class, () -> calculator.formatDisplayOperand(emptyTest));
+    assertThrows(IllegalArgumentException.class, () -> calculator.formatDisplayOperand(nullTest));
 
   }
 

@@ -1,7 +1,6 @@
 package calculations;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.List;
 
 public class Calculator
@@ -21,19 +20,6 @@ public class Calculator
     operator = null;
     rightOperand = null;
     result = null;
-  }
-  
-  /**
-   * The calculate method, takes in a whole string and runs neccessary calculations.
-   */
-  public String calculate(String inputString)
-  {
-    StringReader inputReader = new StringReader(inputString);
-    String firstTerm = 
-        inputString.substring(inputString.indexOf("(") + 1, inputString.indexOf(")"));
-    String secondTerm = 
-        inputString.substring(inputString.lastIndexOf("(") + 1, inputString.lastIndexOf(")"));
-    return "";
   }
 
   /**
@@ -69,7 +55,7 @@ public class Calculator
    *          - the incoming operand string to format.
    * @return String - the formatted operand string.
    */
-  public static String formatDisplayOperand(String stringToFormat)
+  public String formatDisplayOperand(String stringToFormat)
   {
     String formattedString = "";
 
@@ -220,18 +206,15 @@ public class Calculator
     {
       add();
     }
-
-    if (operator.equals("-") && validOperands())
+    else if (operator.equals("-") && validOperands())
     {
       subtract();
     }
-
-    if (operator.equals("*") && validOperands())
+    else if (operator.equals("x") && validOperands())
     {
       multiply();
     }
-
-    if (operator.equals("/") && validOperands())
+    else if (operator.equals("/") && validOperands())
     {
       divide();
     }
@@ -253,5 +236,16 @@ public class Calculator
     }
 
     return returnValue;
+  }
+
+  /**
+   * resets all calculator values.
+   */
+  public void clear()
+  {
+    result = null;
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
   }
 }
