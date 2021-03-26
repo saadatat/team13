@@ -78,11 +78,18 @@ class CalculatorTest
   void divideTest()
   {
 
-    String validNum1 = "6+1i";
-    String validNum2 = "4+2i";
+    String termPositive1 = "2+5i";
+    String termPositive2 = "4+3i";
+    String termNegative1 = "-2-5i";
+    String termNegative2 = "-4-3i";
+    String termFirstNegOnly1 = "-4+3i";
+    String termFirstNegOnly2 = "4-3i";
 
-    // Normal test
-    assertEquals("( 26 / 20 ) + ( -8i / 20 )", Operations.divide(validNum1, validNum2));
+    assertEquals("0.92+0.56i", Operations.divide(termPositive1, termPositive2));
+    assertEquals("0.92+0.56i", Operations.divide(termNegative1, termNegative2));
+    assertEquals("-1+0i", Operations.divide(termFirstNegOnly1, termFirstNegOnly2));
+    assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
+    assertEquals("-0.28+1.04i", Operations.divide(termPositive1, termFirstNegOnly2));
 
   }
 
@@ -105,6 +112,7 @@ class CalculatorTest
     {
       for (int j = -50; j <= 50; j++)
       {
+
         String firstOp = String.format("%d+%di", i, j).replace("+-", "-");
         String secondOp = String.format("%d+%di", j, i).replace("+-", "-");
         String expected = String.format("%d+%di", i + j, i + j).replace("+-", "-");
