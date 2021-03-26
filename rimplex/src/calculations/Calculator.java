@@ -1,6 +1,7 @@
 package calculations;
 
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.List;
 
 public class Calculator
@@ -18,6 +19,19 @@ public class Calculator
     leftOperand = null;
     rightOperand = null;
     result = null;
+  }
+  
+  /**
+   * The calculate method, takes in a whole string and runs neccessary calculations.
+   */
+  public String calculate(String inputString)
+  {
+    StringReader inputReader = new StringReader(inputString);
+    String firstTerm = 
+        inputString.substring(inputString.indexOf("(") + 1, inputString.indexOf(")"));
+    String secondTerm = 
+        inputString.substring(inputString.lastIndexOf("(") + 1, inputString.lastIndexOf(")"));
+    return "";
   }
 
   /**
