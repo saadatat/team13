@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import calculations.Calculator;
 
 /**
  * The main window for the Rimplex GUI.
@@ -20,7 +23,7 @@ import javax.swing.JTextField;
 public class MainWindow extends JFrame
 {
   private static final long serialVersionUID = 2740437090361841747L;
-  
+  private Calculator calculator;
   private JButton addButton;
   private JButton clearButton;
   private JButton divideButton;
@@ -28,12 +31,12 @@ public class MainWindow extends JFrame
   private JButton multiplyButton;
   private JButton resetButton;
   private JButton subtractButton;
-  
+
   private JLabel displayLabel;
-  
+
   private JPanel mainPanel;
   private JPanel southPanel;
-  
+
   private JTextField inputTextField;
 
   /**
@@ -42,7 +45,7 @@ public class MainWindow extends JFrame
   public MainWindow()
   {
     super();
-
+    calculator = new Calculator();
     createComponents(); // create needed objects
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
@@ -74,7 +77,7 @@ public class MainWindow extends JFrame
     setLocation((dimScreenSize.width - dimFrameSize.width) / 2,
         (dimScreenSize.height - dimFrameSize.height) / 2);
   }
-  
+
   /**
    * Create the components used by this window.
    */
@@ -82,11 +85,11 @@ public class MainWindow extends JFrame
   {
     mainPanel = new JPanel();
     southPanel = new JPanel();
-    
+
     displayLabel = new JLabel("test");
-    
+
     inputTextField = new JTextField();
-    
+
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
@@ -95,7 +98,7 @@ public class MainWindow extends JFrame
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
   }
-  
+
   /**
    * Set-up the components used by this window.
    */
@@ -104,7 +107,7 @@ public class MainWindow extends JFrame
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
-    
+
     southPanel.add(resetButton);
     southPanel.add(clearButton);
     southPanel.add(addButton);
@@ -112,16 +115,53 @@ public class MainWindow extends JFrame
     southPanel.add(multiplyButton);
     southPanel.add(divideButton);
     southPanel.add(equalsButton);
-    
+
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
   }
-  
+
   /**
    * Set the listeners for the necessary components.
    */
   private void setListeners()
   {
     Listener listener = Listener.getInstance();
+  }
+
+  public void actionPerformed(ActionEvent e)
+  {
+
+    String command = e.getActionCommand();
+    String operators = "+-/*";
+    String leftOperand = calculator.getLeftOperand();
+    String result = calculator.getResult();
+
+    if (operators.contains(command))
+    {
+
+      if (leftOperand == null || leftOperand.trim().equals(""))
+      {
+        if (result == null || result.trim().equals(""))
+        {
+          calculator.setLeftOperand("0");
+        }
+        else
+        {
+          calculator.setLeftOperand(result);
+        }
+      }
+      else if (calculator.validOperands())
+      {
+        calculator.formResult();
+      }
+
+      calculator.setOperator(command);
+    }
+
+    if (command.equals("="))
+    {
+      calculator.formResult();
+    }
+
   }
 }
