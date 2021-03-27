@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,7 +53,7 @@ public class MainWindow extends JFrame implements ActionListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(375, 180);
+    this.setSize(575, 180);
     this.setTitle("Rimplex");
     this.setVisible(true);
 
@@ -141,7 +142,6 @@ public class MainWindow extends JFrame implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
-
     String inputField = inputTextField.getText().trim();
     String command = e.getActionCommand();
     String operators = "+-/x";
@@ -209,7 +209,7 @@ public class MainWindow extends JFrame implements ActionListener
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
       calculator.formResult();
-      displayLabel.setText(displayLabel.getText() + calculator.getResult());
+      displayLabel.setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
       inputTextField.setText("");
     }
 

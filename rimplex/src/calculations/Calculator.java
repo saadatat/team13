@@ -86,7 +86,25 @@ public class Calculator
     }
 
     formattedString = "(" + stringToFormat + ")";
+    formattedString = formatItalic(formattedString);
 
+    return formattedString;
+  }
+  
+  /**
+   * Converts string i to italics.
+   * @param stringToFormat
+   * @return
+   */
+  public static String formatItalic(String stringToFormat)
+  {
+    String formattedString = "";
+    if (stringToFormat == null || stringToFormat.trim().equals(""))
+    {
+      throw new IllegalArgumentException();
+    }
+    formattedString = stringToFormat;
+    formattedString = formattedString.replace("i", "𝑖");
     return formattedString;
   }
 
