@@ -1,8 +1,8 @@
 package calculations;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Calculator
@@ -76,7 +76,7 @@ public class Calculator
    *          - the incoming operand string to format.
    * @return String - the formatted operand string.
    */
-  public static String formatDisplayOperand(String stringToFormat)
+  public String formatDisplayOperand(String stringToFormat)
   {
     String formattedString = "";
 
