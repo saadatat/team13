@@ -3,7 +3,7 @@ package gui;
 public class Listener
 {
   private static Listener listener;
-  
+
   /**
    * Default Constructor. Necessary for singleton.
    */
@@ -11,7 +11,7 @@ public class Listener
   {
     // do nothing
   }
-  
+
   /**
    * Create Singleton for Listener.
    * 
@@ -23,7 +23,7 @@ public class Listener
     {
       listener = new Listener();
     }
-    
+
     return listener;
   }
 }

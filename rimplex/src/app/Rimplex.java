@@ -9,7 +9,7 @@ import javax.swing.*;
  * The main class for the rimplex application.
  * Adding comment to test if I can.
  * 
- * @author  Max Berger
+ * @author Max Berger
  * @version 1.0
  */
 public class Rimplex implements Runnable
@@ -17,7 +17,8 @@ public class Rimplex implements Runnable
   /**
    * The entry point of the application.
    * 
-   * @param args  The command line arguments (which are ignored)
+   * @param args
+   *          The command line arguments (which are ignored)
    */
   public static void main(final String[] args)
   {
@@ -25,7 +26,7 @@ public class Rimplex implements Runnable
     {
       SwingUtilities.invokeAndWait(new Rimplex());
     }
-    catch (InterruptedException | InvocationTargetException  e)
+    catch (InterruptedException | InvocationTargetException e)
     {
       System.out.println("Unable to start the GUI.");
     }

@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,10 +19,10 @@ import calculations.Calculator;
 /**
  * The main window for the Rimplex GUI.
  * 
- * @author Dylan Moreno
+ * @author Dylan Moreno, Kory Erdmann
  * @version Rimplex 1.0
  */
-public class MainWindow extends JFrame
+public class MainWindow extends JFrame implements ActionListener
 {
   private static final long serialVersionUID = 2740437090361841747L;
   private Calculator calculator;
@@ -49,8 +51,8 @@ public class MainWindow extends JFrame
     createComponents(); // create needed objects
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
-
-    this.setSize(600, 450);
+    setResizable(false);
+    this.setSize(375, 180);
     this.setTitle("Rimplex");
     this.setVisible(true);
 
@@ -86,9 +88,11 @@ public class MainWindow extends JFrame
     mainPanel = new JPanel();
     southPanel = new JPanel();
 
-    displayLabel = new JLabel("test");
+    displayLabel = new JLabel(" ");
+    displayLabel.setPreferredSize(new Dimension(200, 75));
 
-    inputTextField = new JTextField();
+    inputTextField = new JTextField("");
+    inputTextField.setPreferredSize(new Dimension(15, 10));
 
     resetButton = new JButton("R");
     clearButton = new JButton("C");
@@ -97,6 +101,13 @@ public class MainWindow extends JFrame
     multiplyButton = new JButton("X");
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
+    addButton.addActionListener(this);
+    subtractButton.addActionListener(this);
+    divideButton.addActionListener(this);
+    multiplyButton.addActionListener(this);
+    equalsButton.addActionListener(this);
+    resetButton.addActionListener(this);
+    clearButton.addActionListener(this);
   }
 
   /**
@@ -131,36 +142,87 @@ public class MainWindow extends JFrame
   public void actionPerformed(ActionEvent e)
   {
 
+    String inputField = inputTextField.getText().trim();
     String command = e.getActionCommand();
-    String operators = "+-/*";
-    String leftOperand = calculator.getLeftOperand();
+    String operators = "+-/x";
+
     String result = calculator.getResult();
 
     if (operators.contains(command))
     {
 
-      if (leftOperand == null || leftOperand.trim().equals(""))
+      if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
       {
-        if (result == null || result.trim().equals(""))
+        if (!inputField.equals(""))
         {
-          calculator.setLeftOperand("0");
+          calculator.setLeftOperand(inputField);
+          calculator.setOperator(command);
+          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
+              + calculator.getOperator());
+        }
+        else if (result == null || result.trim().equals(""))
+        {
+          calculator.setLeftOperand("0+0i");
+          calculator.setOperator(command);
+          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand()));
         }
         else
         {
+
           calculator.setLeftOperand(result);
+          calculator.setOperator(command);
+          displayLabel
+              .setText(calculator.formatDisplayOperand(calculator.getLeftOperand()) + command);
         }
       }
-      else if (calculator.validOperands())
+      else if (calculator.getLeftOperand() != null
+          && !calculator.getLeftOperand().trim().equals(""))
       {
-        calculator.formResult();
-      }
+        if (!inputField.equals("") && (calculator.getRightOperand() == null
+            || calculator.getRightOperand().trim().equals("")))
+        {
+          calculator.setRightOperand(inputField);
+          displayLabel.setText(displayLabel.getText()
+              + calculator.formatDisplayOperand(calculator.getRightOperand()));
 
-      calculator.setOperator(command);
+        }
+      }
+      inputTextField.setText("");
     }
 
-    if (command.equals("="))
+    if (command.equals("=")
+        && (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals("")))
     {
+
+      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
+      {
+        if (inputField.trim().equals(""))
+        {
+          calculator.setRightOperand("0+0i");
+        }
+        else
+        {
+          calculator.setRightOperand(inputField);
+        }
+      }
+      displayLabel.setText(
+          calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
+              + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
       calculator.formResult();
+      displayLabel.setText(displayLabel.getText() + calculator.getResult());
+      inputTextField.setText("");
+    }
+
+    if (command.equals("C"))
+    {
+      inputTextField.setText("");
+    }
+
+    if (command.equals("R"))
+    {
+      inputTextField.setText("");
+      displayLabel.setText(" ");
+      calculator.clear();
     }
 
   }

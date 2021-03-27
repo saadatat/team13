@@ -24,6 +24,7 @@ public class Calculator
     rightOperand = null;
     result = null;
   }
+<<<<<<< HEAD
   
   /**
    * The calculate method, takes in a whole string and runs neccessary calculations.
@@ -43,6 +44,8 @@ public class Calculator
         operator = matcher.group(1);
     return operator;
   }
+=======
+>>>>>>> branch 'master' of https://github.com/bernstdh/team13.git
 
   /**
    * Accepts an operand string and returns the complex version.
@@ -180,7 +183,14 @@ public class Calculator
    */
   public void add()
   {
-    result = Operations.addition(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.addition(leftOperand, rightOperand);
+    }
+    catch (NumberFormatException e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -191,7 +201,14 @@ public class Calculator
    */
   public void subtract()
   {
-    result = Operations.subtraction(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.subtraction(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -202,7 +219,14 @@ public class Calculator
    */
   public void multiply()
   {
-    result = Operations.multiply(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.multiply(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -213,7 +237,14 @@ public class Calculator
    */
   public void divide()
   {
-    result = Operations.divide(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.divide(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -228,18 +259,15 @@ public class Calculator
     {
       add();
     }
-
-    if (operator.equals("-") && validOperands())
+    else if (operator.equals("-") && validOperands())
     {
       subtract();
     }
-
-    if (operator.equals("*") && validOperands())
+    else if (operator.equals("x") && validOperands())
     {
       multiply();
     }
-
-    if (operator.equals("/") && validOperands())
+    else if (operator.equals("/") && validOperands())
     {
       divide();
     }
@@ -261,5 +289,16 @@ public class Calculator
     }
 
     return returnValue;
+  }
+
+  /**
+   * resets all calculator values.
+   */
+  public void clear()
+  {
+    result = null;
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
   }
 }
