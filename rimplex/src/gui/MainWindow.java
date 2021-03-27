@@ -98,7 +98,7 @@ public class MainWindow extends JFrame implements ActionListener
     clearButton = new JButton("C");
     addButton = new JButton("+");
     subtractButton = new JButton("-");
-    multiplyButton = new JButton("X");
+    multiplyButton = new JButton("x");
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
     addButton.addActionListener(this);
