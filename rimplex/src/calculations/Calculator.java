@@ -23,23 +23,23 @@ public class Calculator
     rightOperand = null;
     result = null;
   }
-  
+
   /**
    * The calculate method, takes in a whole string and runs neccessary calculations.
    */
   public String calculate(String inputString)
   {
-    String firstTerm = 
-        inputString.substring(inputString.indexOf("(") + 1, inputString.indexOf(")"));
-    String secondTerm = 
-        inputString.substring(inputString.lastIndexOf("(") + 1, inputString.lastIndexOf(")"));
-    
+    String firstTerm = inputString.substring(inputString.indexOf("(") + 1,
+        inputString.indexOf(")"));
+    String secondTerm = inputString.substring(inputString.lastIndexOf("(") + 1,
+        inputString.lastIndexOf(")"));
+
     Pattern pattern = Pattern.compile("\\)(.*?)\\(", Pattern.DOTALL);
     Matcher matcher = pattern.matcher(inputString);
-    
+
     String operator = "";
     if (matcher.find())
-        operator = matcher.group(1);
+      operator = matcher.group(1);
     return operator;
   }
 
@@ -179,7 +179,14 @@ public class Calculator
    */
   public void add()
   {
-    result = Operations.addition(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.addition(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -190,7 +197,14 @@ public class Calculator
    */
   public void subtract()
   {
-    result = Operations.subtraction(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.subtraction(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -201,7 +215,14 @@ public class Calculator
    */
   public void multiply()
   {
-    result = Operations.multiply(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.multiply(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -212,7 +233,14 @@ public class Calculator
    */
   public void divide()
   {
-    result = Operations.divide(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.divide(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
