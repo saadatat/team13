@@ -9,12 +9,6 @@ import calculations.Operations;
 
 class CalculatorTest
 {
-  @Test
-  void calculateTest()
-  {
-    Calculator calc = new Calculator();
-    assertEquals("+", calc.calculate("(4+4i)+(2+3i)"));
-  }
 
   /**
    * convertToComplexTest - test convertToComplex.
