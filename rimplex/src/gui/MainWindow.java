@@ -94,7 +94,7 @@ public class MainWindow extends JFrame
     clearButton = new JButton("C");
     addButton = new JButton("+");
     subtractButton = new JButton("-");
-    multiplyButton = new JButton("x");
+    multiplyButton = new JButton("X");
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
   }

@@ -3,6 +3,8 @@ package calculations;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator
 {
@@ -28,12 +30,18 @@ public class Calculator
    */
   public String calculate(String inputString)
   {
-    StringReader inputReader = new StringReader(inputString);
     String firstTerm = 
         inputString.substring(inputString.indexOf("(") + 1, inputString.indexOf(")"));
     String secondTerm = 
         inputString.substring(inputString.lastIndexOf("(") + 1, inputString.lastIndexOf(")"));
-    return "";
+    
+    Pattern pattern = Pattern.compile("\\)(.*?)\\(", Pattern.DOTALL);
+    Matcher matcher = pattern.matcher(inputString);
+    
+    String operator = "";
+    if (matcher.find())
+        operator = matcher.group(1);
+    return operator;
   }
 
   /**
