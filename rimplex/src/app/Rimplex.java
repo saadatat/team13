@@ -7,6 +7,7 @@ import javax.swing.*;
 
 /**
  * The main class for the rimplex application.
+ * Adding comment to test if I can.
  * 
  * @author  Max Berger
  * @version 1.0
