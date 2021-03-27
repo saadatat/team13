@@ -3,7 +3,6 @@ package calculations;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Calculator
@@ -228,18 +227,15 @@ public class Calculator
     {
       add();
     }
-
-    if (operator.equals("-") && validOperands())
+    else if (operator.equals("-") && validOperands())
     {
       subtract();
     }
-
-    if (operator.equals("*") && validOperands())
+    else if (operator.equals("x") && validOperands())
     {
       multiply();
     }
-
-    if (operator.equals("/") && validOperands())
+    else if (operator.equals("/") && validOperands())
     {
       divide();
     }
@@ -261,5 +257,16 @@ public class Calculator
     }
 
     return returnValue;
+  }
+
+  /**
+   * resets all calculator values.
+   */
+  public void clear()
+  {
+    result = null;
+    leftOperand = null;
+    rightOperand = null;
+    operator = null;
   }
 }
