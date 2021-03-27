@@ -13,6 +13,38 @@ public class Operations
    */
   public static String addition(String operandOne, String operandTwo)
   {
+
+    if (!(operandOne.contains("i") && operandTwo.contains("i")))
+    {
+      try
+      {
+        double one = Double.parseDouble(operandOne);
+        double two = Double.parseDouble(operandTwo);
+        double result = one + two;
+        int resultInt = (int) result;
+        if (result == resultInt)
+        {
+          return String.format("%d+0i", resultInt);
+        }
+        else
+        {
+          return String.format(".2f+0i", result);
+        }
+
+      }
+      catch (NumberFormatException e)
+      {
+
+      }
+    }
+    if (!operandOne.contains("i") && operandTwo.contains("i"))
+    {
+      operandOne += "+0i";
+    }
+    if (operandOne.contains("i") && !operandTwo.contains("i"))
+    {
+      operandTwo += "+0i";
+    }
     double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
         operandTwo.replace("+-", "-"));
 
@@ -42,6 +74,37 @@ public class Operations
    */
   public static String subtraction(String operandOne, String operandTwo)
   {
+    if (!(operandOne.contains("i") && operandTwo.contains("i")))
+    {
+      try
+      {
+        double one = Double.parseDouble(operandOne);
+        double two = Double.parseDouble(operandTwo);
+        double result = one - two;
+        int resultInt = (int) result;
+        if (result == resultInt)
+        {
+          return String.format("%d+0i", resultInt);
+        }
+        else
+        {
+          return String.format(".2f+0i", result);
+        }
+
+      }
+      catch (NumberFormatException e)
+      {
+
+      }
+    }
+    if (!operandOne.contains("i") && operandTwo.contains("i"))
+    {
+      operandOne += "+0i";
+    }
+    if (operandOne.contains("i") && !operandTwo.contains("i"))
+    {
+      operandTwo += "+0i";
+    }
     double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
         operandTwo.replace("+-", "-"));
 
@@ -72,7 +135,37 @@ public class Operations
    */
   public static String multiply(String operandOne, String operandTwo)
   {
+    if (!(operandOne.contains("i") && operandTwo.contains("i")))
+    {
+      try
+      {
+        double one = Double.parseDouble(operandOne);
+        double two = Double.parseDouble(operandTwo);
+        double result = one * two;
+        int resultInt = (int) result;
+        if (result == resultInt)
+        {
+          return String.format("%d+0i", resultInt);
+        }
+        else
+        {
+          return String.format(".2f+0i", result);
+        }
 
+      }
+      catch (NumberFormatException e)
+      {
+
+      }
+    }
+    if (!operandOne.contains("i") && operandTwo.contains("i"))
+    {
+      operandOne += "+0i";
+    }
+    if (operandOne.contains("i") && !operandTwo.contains("i"))
+    {
+      operandTwo += "+0i";
+    }
     // Split the strings double two doubles, the one before '+' and one before 'i'
 
     double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
@@ -110,7 +203,37 @@ public class Operations
    */
   public static String divide(String operandOne, String operandTwo)
   {
+    if (!(operandOne.contains("i") && operandTwo.contains("i")))
+    {
+      try
+      {
+        double one = Double.parseDouble(operandOne);
+        double two = Double.parseDouble(operandTwo);
+        double result = one / two;
+        int resultInt = (int) result;
+        if (result == resultInt)
+        {
+          return String.format("%d+0i", resultInt);
+        }
+        else
+        {
+          return String.format(".2f+0i", result);
+        }
 
+      }
+      catch (NumberFormatException e)
+      {
+
+      }
+    }
+    if (!operandOne.contains("i") && operandTwo.contains("i"))
+    {
+      operandOne += "+0i";
+    }
+    if (operandOne.contains("i") && !operandTwo.contains("i"))
+    {
+      operandTwo += "+0i";
+    }
     double quotient1;
     double quotient2;
     char operator = '+';

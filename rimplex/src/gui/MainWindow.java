@@ -148,8 +148,6 @@ public class MainWindow extends JFrame implements ActionListener
 
     String result = calculator.getResult();
 
-    inputTextField.setText("");
-
     if (operators.contains(command))
     {
 
@@ -164,7 +162,7 @@ public class MainWindow extends JFrame implements ActionListener
         }
         else if (result == null || result.trim().equals(""))
         {
-          calculator.setLeftOperand("0");
+          calculator.setLeftOperand("0+0i");
           calculator.setOperator(command);
           displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand()));
         }
@@ -186,32 +184,33 @@ public class MainWindow extends JFrame implements ActionListener
           calculator.setRightOperand(inputField);
           displayLabel.setText(displayLabel.getText()
               + calculator.formatDisplayOperand(calculator.getRightOperand()));
-          calculator.formResult();
 
-          calculator.setOperator(command);
-          displayLabel.setText(displayLabel.getText() + "=" + calculator.getResult());
-
-        }
-        else if (calculator.validOperands())
-        {
-          calculator.formResult();
-          calculator.setOperator(command);
-          displayLabel.setText(displayLabel.getText() + calculator.getResult());
         }
       }
-
+      inputTextField.setText("");
     }
 
-    if (command.equals("="))
+    if (command.equals("=")
+        && (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals("")))
     {
 
-      calculator.setRightOperand(inputField);
+      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
+      {
+        if (inputField.trim().equals(""))
+        {
+          calculator.setRightOperand("0+0i");
+        }
+        else
+        {
+          calculator.setRightOperand(inputField);
+        }
+      }
       displayLabel.setText(
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
       calculator.formResult();
       displayLabel.setText(displayLabel.getText() + calculator.getResult());
-
+      inputTextField.setText("");
     }
 
     if (command.equals("C"))
@@ -221,6 +220,7 @@ public class MainWindow extends JFrame implements ActionListener
 
     if (command.equals("R"))
     {
+      inputTextField.setText("");
       displayLabel.setText(" ");
       calculator.clear();
     }

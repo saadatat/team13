@@ -158,7 +158,14 @@ public class Calculator
    */
   public void add()
   {
-    result = Operations.addition(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.addition(leftOperand, rightOperand);
+    }
+    catch (NumberFormatException e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -169,7 +176,14 @@ public class Calculator
    */
   public void subtract()
   {
-    result = Operations.subtraction(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.subtraction(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -180,7 +194,14 @@ public class Calculator
    */
   public void multiply()
   {
-    result = Operations.multiply(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.multiply(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -191,7 +212,14 @@ public class Calculator
    */
   public void divide()
   {
-    result = Operations.divide(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.divide(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "NaN";
+    }
     leftOperand = null;
     rightOperand = null;
     operator = null;
