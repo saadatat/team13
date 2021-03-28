@@ -1,5 +1,6 @@
 package calculations;
 
+import java.awt.Font;
 import java.io.Serializable;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -105,6 +106,7 @@ public class Calculator
     }
     formattedString = stringToFormat;
     formattedString = formattedString.replace("i", "𝑖");
+   
     return formattedString;
   }
 
