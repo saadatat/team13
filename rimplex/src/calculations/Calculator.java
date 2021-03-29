@@ -262,7 +262,14 @@ public class Calculator
   public void add()
   {
 
-    result = Operations.addition(leftOperand, rightOperand);
+    try
+    {
+      result = Operations.addition(leftOperand, rightOperand);
+    }
+    catch (Exception e)
+    {
+      result = "N/A";
+    }
 
     leftOperand = null;
     rightOperand = null;
@@ -280,7 +287,7 @@ public class Calculator
     }
     catch (Exception e)
     {
-      result = "NaN";
+      result = "N/A";
     }
 
     leftOperand = null;
@@ -299,7 +306,7 @@ public class Calculator
     }
     catch (Exception e)
     {
-      result = "NaN";
+      result = "N/A";
     }
 
     leftOperand = null;
@@ -318,7 +325,7 @@ public class Calculator
     }
     catch (Exception e)
     {
-      result = "NaN";
+      result = "N/A";
     }
 
     leftOperand = null;
