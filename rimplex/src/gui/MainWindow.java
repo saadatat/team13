@@ -164,7 +164,8 @@ public class MainWindow extends JFrame implements ActionListener
         {
           calculator.setLeftOperand("0+0i");
           calculator.setOperator(command);
-          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand()));
+          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
+              + calculator.getOperator());
         }
         else
         {
@@ -178,13 +179,19 @@ public class MainWindow extends JFrame implements ActionListener
       else if (calculator.getLeftOperand() != null
           && !calculator.getLeftOperand().trim().equals(""))
       {
-        if (!inputField.equals("") && (calculator.getRightOperand() == null
-            || calculator.getRightOperand().trim().equals("")))
+        if (!(inputField.equals("") && (calculator.getRightOperand() == null
+            || calculator.getRightOperand().trim().equals(""))))
         {
           calculator.setRightOperand(inputField);
           displayLabel.setText(displayLabel.getText()
               + calculator.formatDisplayOperand(calculator.getRightOperand()));
 
+        }
+        else
+        {
+          calculator.setOperator(command);
+          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
+              + calculator.getOperator());
         }
       }
       inputTextField.setText("");
@@ -209,7 +216,8 @@ public class MainWindow extends JFrame implements ActionListener
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
       calculator.formResult();
-      displayLabel.setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
+      displayLabel
+          .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
       inputTextField.setText("");
     }
 
