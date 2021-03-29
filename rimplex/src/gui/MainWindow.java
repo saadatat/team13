@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,7 +25,7 @@ import calculations.Calculator;
  * @author Dylan Moreno, Kory Erdmann
  * @version Rimplex 1.0
  */
-public class MainWindow extends JFrame implements ActionListener
+public class MainWindow extends JFrame implements ActionListener, KeyListener
 {
   private static final long serialVersionUID = 2740437090361841747L;
   private Calculator calculator;
@@ -109,6 +111,7 @@ public class MainWindow extends JFrame implements ActionListener
     equalsButton.addActionListener(this);
     resetButton.addActionListener(this);
     clearButton.addActionListener(this);
+    inputTextField.addKeyListener(this);
   }
 
   /**
@@ -119,6 +122,7 @@ public class MainWindow extends JFrame implements ActionListener
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
+    
 
     southPanel.add(resetButton);
     southPanel.add(clearButton);
@@ -143,6 +147,7 @@ public class MainWindow extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     String inputField = inputTextField.getText().trim();
+    inputField = inputField.replace("𝑖", "i");
     String command = e.getActionCommand();
     String operators = "+-/x";
 
@@ -233,5 +238,38 @@ public class MainWindow extends JFrame implements ActionListener
       calculator.clear();
     }
 
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e)
+  {
+    if (e.getKeyChar() == 'i')
+    {
+      String newText = inputTextField.getText().replace("i","𝑖" );
+      inputTextField.setText(newText);
+    }
+    
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e)
+  {
+    
+    if (e.getKeyChar() == 'i')
+    {
+      String newText = inputTextField.getText().replace("i","𝑖" );
+      inputTextField.setText(newText);
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e)
+  {
+    if (e.getKeyChar() == 'i')
+    {
+      String newText = inputTextField.getText().replace("i","𝑖" );
+      inputTextField.setText(newText);
+    }
+    
   }
 }
