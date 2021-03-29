@@ -37,14 +37,15 @@ public class Operations
 
       }
     }
-    if (!operandOne.contains("i") && operandTwo.contains("i"))
+    if (!operandOne.contains("i"))
     {
       operandOne += "+0i";
     }
-    if (operandOne.contains("i") && !operandTwo.contains("i"))
+    if (!operandTwo.contains("i"))
     {
       operandTwo += "+0i";
     }
+
     double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
         operandTwo.replace("+-", "-"));
 
@@ -363,4 +364,5 @@ public class Operations
     return returnString;
 
   }
+
 }

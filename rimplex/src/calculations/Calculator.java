@@ -91,9 +91,10 @@ public class Calculator
 
     return formattedString;
   }
-  
+
   /**
    * Converts string i to italics.
+   * 
    * @param stringToFormat
    * @return
    */
@@ -106,7 +107,7 @@ public class Calculator
     }
     formattedString = stringToFormat;
     formattedString = formattedString.replace("i", "𝑖");
-   
+
     return formattedString;
   }
 
@@ -117,6 +118,18 @@ public class Calculator
    */
   public String getLeftOperand()
   {
+    if (leftOperand == null)
+    {
+      return null;
+    }
+    if (leftOperand.contains("+1i"))
+    {
+      return leftOperand.replace("+1i", "+i");
+    }
+    else if (leftOperand.contains("-1i"))
+    {
+      return leftOperand.replace("-1i", "-i");
+    }
     return leftOperand;
   }
 
@@ -137,6 +150,18 @@ public class Calculator
    */
   public String getRightOperand()
   {
+    if (rightOperand == null)
+    {
+      return null;
+    }
+    if (rightOperand.contains("+1i"))
+    {
+      return rightOperand.replace("+1i", "+i");
+    }
+    else if (rightOperand.contains("-1i"))
+    {
+      return rightOperand.replace("-1i", "-i");
+    }
     return rightOperand;
   }
 
@@ -147,6 +172,18 @@ public class Calculator
    */
   public String getResult()
   {
+    if (result == null)
+    {
+      return null;
+    }
+    if (result.contains("+1i"))
+    {
+      return result.replace("+1i", "+i");
+    }
+    else if (result.contains("-1i"))
+    {
+      return result.replace("-1i", "-i");
+    }
     return result;
   }
 
@@ -158,7 +195,19 @@ public class Calculator
    */
   public void setLeftOperand(String incomingLeftOperand)
   {
-    leftOperand = incomingLeftOperand;
+    if (incomingLeftOperand.contains("+i"))
+    {
+      leftOperand = incomingLeftOperand.replace("+i", "+1i");
+    }
+    else if (incomingLeftOperand.contains("-i"))
+    {
+      leftOperand = incomingLeftOperand.replace("-i", "-1i");
+    }
+    else
+    {
+      leftOperand = incomingLeftOperand;
+    }
+
   }
 
   /**
@@ -180,7 +229,20 @@ public class Calculator
    */
   public void setRightOperand(String incomingRightOperand)
   {
-    rightOperand = incomingRightOperand;
+
+    if (incomingRightOperand.contains("+i"))
+    {
+      rightOperand = incomingRightOperand.replace("+i", "+1i");
+    }
+    else if (incomingRightOperand.contains("-i"))
+    {
+      rightOperand = incomingRightOperand.replace("-i", "-1i");
+    }
+    else
+    {
+      rightOperand = incomingRightOperand;
+    }
+
   }
 
   /**
@@ -199,14 +261,9 @@ public class Calculator
    */
   public void add()
   {
-    try
-    {
-      result = Operations.addition(leftOperand, rightOperand);
-    }
-    catch (Exception e)
-    {
-      result = "NaN";
-    }
+
+    result = Operations.addition(leftOperand, rightOperand);
+
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -225,6 +282,7 @@ public class Calculator
     {
       result = "NaN";
     }
+
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -243,6 +301,7 @@ public class Calculator
     {
       result = "NaN";
     }
+
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -261,6 +320,7 @@ public class Calculator
     {
       result = "NaN";
     }
+
     leftOperand = null;
     rightOperand = null;
     operator = null;
