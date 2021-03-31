@@ -154,7 +154,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     String result = calculator.getResult();
     if (!(inputField.matches("^[0-9i+-.]*$")))
     {
-      if (!inputField.trim().equals("") && operators.contains(command))
+      if (!inputField.trim().equals("") && (operators.contains(command) || command.equals("=")))
       {
         error = new WarningDialog();
       }
