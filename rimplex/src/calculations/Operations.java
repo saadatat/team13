@@ -204,6 +204,7 @@ public class Operations
    */
   public static String divide(String operandOne, String operandTwo)
   {
+    double scale = Math.pow(10, 3);
     if (!(operandOne.contains("i") && operandTwo.contains("i")))
     {
       try
@@ -259,14 +260,15 @@ public class Operations
 
     double denominator = cSquare + dSquare;
 
-    quotient1 = (top1 / denominator);
-    quotient2 = (top2 / denominator);
+    quotient1 = Math.round((top1 / denominator) *scale ) / scale;
+    quotient2 = Math.round((top2 / denominator) *scale ) / scale;
 
     if (quotient2 < 0)
     {
       operator = '-';
       quotient2 = -1 * quotient2;
     }
+    
 
     return formatResult(quotient1, operator, quotient2);
 
@@ -348,18 +350,18 @@ public class Operations
   {
     int realConversion = (int) real;
     int imaginaryConversion = (int) imaginary;
-    String returnString = String.format("%.2f%c%.2fi", real, operator, imaginary);
+    String returnString = String.format("%.3f%c%.3fi", real, operator, imaginary);
     if (real == realConversion && imaginary == imaginaryConversion)
     {
       returnString = String.format("%d%c%di", realConversion, operator, imaginaryConversion);
     }
     else if (real == realConversion)
     {
-      returnString = String.format("%d%c%.2fi", realConversion, operator, imaginary);
+      returnString = String.format("%d%c%.3fi", realConversion, operator, imaginary);
     }
     else if (imaginary == imaginaryConversion)
     {
-      returnString = String.format("%.2f%c%di", real, operator, imaginaryConversion);
+      returnString = String.format("%.3f%c%di", real, operator, imaginaryConversion);
     }
     return returnString;
 
