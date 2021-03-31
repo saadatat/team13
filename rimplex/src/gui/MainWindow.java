@@ -152,13 +152,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     String operators = "+-/x";
 
     String result = calculator.getResult();
-    if (!inputField.trim().equals(""))
+    if (!(inputField.matches("^[0-9i+-.]*$")))
     {
-      if (!(command.equals("C") || command.equals("R"))) {
-      if (!(inputField.matches("^[0-9i+-.]*$")))
+      if (!inputField.trim().equals("") && operators.contains(command))
       {
         error = new WarningDialog();
-      }
       }
     }
     else if (operators.contains(command))
