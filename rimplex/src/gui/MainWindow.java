@@ -122,7 +122,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
-    
 
     southPanel.add(resetButton);
     southPanel.add(clearButton);
@@ -146,16 +145,24 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public void actionPerformed(ActionEvent e)
   {
+    WarningDialog error;
     String inputField = inputTextField.getText().trim();
     inputField = inputField.replace("𝑖", "i");
     String command = e.getActionCommand();
     String operators = "+-/x";
 
     String result = calculator.getResult();
-
-    if (operators.contains(command))
+    if (!inputField.trim().equals(""))
     {
-
+      if (!(command.equals("C") || command.equals("R"))) {
+      if (!(inputField.matches("^[0-9i+-.]*$")))
+      {
+        error = new WarningDialog();
+      }
+      }
+    }
+    else if (operators.contains(command))
+    {
       if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
       {
         if (!inputField.equals(""))
@@ -201,8 +208,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       inputTextField.setText("");
     }
-
-    if (command.equals("=")
+    else if (command.equals("=")
         && (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals("")))
     {
 
@@ -245,19 +251,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     if (e.getKeyChar() == 'i')
     {
-      String newText = inputTextField.getText().replace("i","𝑖" );
+      String newText = inputTextField.getText().replace("i", "𝑖");
       inputTextField.setText(newText);
     }
-    
+
   }
 
   @Override
   public void keyPressed(KeyEvent e)
   {
-    
+
     if (e.getKeyChar() == 'i')
     {
-      String newText = inputTextField.getText().replace("i","𝑖" );
+      String newText = inputTextField.getText().replace("i", "𝑖");
       inputTextField.setText(newText);
     }
   }
@@ -267,9 +273,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     if (e.getKeyChar() == 'i')
     {
-      String newText = inputTextField.getText().replace("i","𝑖" );
+      String newText = inputTextField.getText().replace("i", "𝑖");
       inputTextField.setText(newText);
     }
-    
+
   }
 }

@@ -262,14 +262,7 @@ public class Calculator
   public void add()
   {
 
-    try
-    {
-      result = Operations.addition(leftOperand, rightOperand);
-    }
-    catch (Exception e)
-    {
-      result = "N/A";
-    }
+    result = Operations.addition(leftOperand, rightOperand);
 
     leftOperand = null;
     rightOperand = null;
@@ -281,14 +274,8 @@ public class Calculator
    */
   public void subtract()
   {
-    try
-    {
-      result = Operations.subtraction(leftOperand, rightOperand);
-    }
-    catch (Exception e)
-    {
-      result = "N/A";
-    }
+
+    result = Operations.subtraction(leftOperand, rightOperand);
 
     leftOperand = null;
     rightOperand = null;
@@ -300,14 +287,8 @@ public class Calculator
    */
   public void multiply()
   {
-    try
-    {
-      result = Operations.multiply(leftOperand, rightOperand);
-    }
-    catch (Exception e)
-    {
-      result = "N/A";
-    }
+
+    result = Operations.multiply(leftOperand, rightOperand);
 
     leftOperand = null;
     rightOperand = null;
@@ -319,14 +300,8 @@ public class Calculator
    */
   public void divide()
   {
-    try
-    {
-      result = Operations.divide(leftOperand, rightOperand);
-    }
-    catch (Exception e)
-    {
-      result = "N/A";
-    }
+
+    result = Operations.divide(leftOperand, rightOperand);
 
     leftOperand = null;
     rightOperand = null;
