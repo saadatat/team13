@@ -145,7 +145,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public void actionPerformed(ActionEvent e)
   {
-    WarningDialog error;
+    WarningDialog warningDialog = WarningDialog.getInstance();
     String inputField = inputTextField.getText().trim();
     inputField = inputField.replace("𝑖", "i");
     String command = e.getActionCommand();
@@ -156,7 +156,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (!inputField.trim().equals("") && (operators.contains(command) || command.equals("=")))
       {
-        error = new WarningDialog();
+        warningDialog.displayDialog();
       }
     }
     else if (operators.contains(command))
