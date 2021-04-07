@@ -13,7 +13,6 @@ public class Operations
    */
   public static String addition(String operandOne, String operandTwo)
   {
-
     if (!(operandOne.contains("i") && operandTwo.contains("i")))
     {
       try
@@ -286,6 +285,8 @@ public class Operations
    */
   private static double[][] parseTodouble(String operandOne, String operandTwo)
   {
+    //String operandOne = operandOneIn.replace("+-", "-");
+    //String operandTwo = operandTwoIn.replace("+-", "-");
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -324,13 +325,28 @@ public class Operations
       negModifier2B = -1;
 
     // Converting parsed string to doubleegers
-    op1double = new double[op1.length];
-    op1double[0] = Double.parseDouble(op1[0]) * negModifier1A;
-    op1double[1] = Double.parseDouble(op1[1]) * negModifier1B;
-
-    op2double = new double[op2.length];
-    op2double[0] = Double.parseDouble(op2[0]) * negModifier2A;
-    op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
+    op1double = new double[2]; // Always make an array the size of two.
+    if (op1.length == 1) // If there is only one term it must be imaginary, as only-reals have been handled at this point.
+    {
+      op1double[0] = 0; // Set first term to 0 as real.
+      op1double[1] = Double.parseDouble(op1[0]) * negModifier1A; // Set second to imaginary.
+    }
+    else { // Normal operation
+      op1double[0] = Double.parseDouble(op1[0]) * negModifier1A;
+      op1double[1] = Double.parseDouble(op1[1]) * negModifier1B;
+    }
+    
+    // Comments for above steps apply to op2
+    op2double = new double[2];
+    if (op2.length == 1)
+    {
+      op2double[0] = 0;
+      op2double[1] = Double.parseDouble(op2[0]) * negModifier2A;
+    }
+    else {
+      op2double[0] = Double.parseDouble(op2[0]) * negModifier2A;
+      op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
+    }
 
     return new double[][] {op1double, op2double};
   }
