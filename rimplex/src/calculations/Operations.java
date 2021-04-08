@@ -1,5 +1,7 @@
 package calculations;
 
+import java.text.NumberFormat;
+
 public class Operations
 {
   /**
@@ -227,23 +229,10 @@ public class Operations
    */
   public static String formatResult(double real, char operator, double imaginary)
   {
-    int realConversion = (int) real;
-    int imaginaryConversion = (int) imaginary;
-    String returnString = String.format("%.2f%c%.2fi", real, operator, imaginary);
-    if (real == realConversion && imaginary == imaginaryConversion)
-    {
-      returnString = String.format("%d%c%di", realConversion, operator, imaginaryConversion);
-    }
-    else if (real == realConversion)
-    {
-      returnString = String.format("%d%c%.2fi", realConversion, operator, imaginary);
-    }
-    else if (imaginary == imaginaryConversion)
-    {
-      returnString = String.format("%.2f%c%di", real, operator, imaginaryConversion);
-    }
+    NumberFormat fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(2);
+    String returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
     return returnString;
-
   }
-
 }
