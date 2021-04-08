@@ -3,21 +3,13 @@ package testing;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.NumberFormat;
-import java.util.Locale;
-
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import calculations.Operations;
 
 class OperationsTest
 {
   NumberFormat fmat;
-  
-  @BeforeClass
-  void setup()
-  {
 
-  }
   @Test
   void additionTest()
   {
@@ -49,17 +41,19 @@ class OperationsTest
   @Test
   void additionTestComprehensive()
   {
-    for (double i = -10; i <= 10; i += 0.25)
+    for (double i = -2; i <= 2; i += 0.25)
     {
-      for (double j = -10; j <= 10; j += 0.25)
+      for (double j = -2; j <= 2; j += 0.25)
       {
-        for (double k = -10; i <= 10; i += 0.25)
+        for (double k = -2; k <= 2; k += 0.25)
         {
-          for (double l = -10; j <= 10; j += 0.25)
+          for (double l = -2; l <= 2; l += 0.25)
           {
+            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
             fmat = NumberFormat.getInstance();
             fmat.setMinimumFractionDigits(0);
             fmat.setMaximumFractionDigits(2);
+            
             String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
             String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
             String one = fmat.format(i + k);
@@ -90,4 +84,33 @@ class OperationsTest
       }
     }
   }
+
+  @Test
+  void subtractionTestComprehensive()
+  {
+    for (double i = -2; i <= 2; i += 0.25)
+    {
+      for (double j = -2; j <= 2; j += 0.25)
+      {
+        for (double k = -2; k <= 2; k += 0.25)
+        {
+          for (double l = -2; l <= 2; l += 0.25)
+          {
+            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
+            fmat = NumberFormat.getInstance();
+            fmat.setMinimumFractionDigits(0);
+            fmat.setMaximumFractionDigits(2);
+            
+            String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+            String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+            String one = fmat.format(i - k);
+            String two = fmat.format(j - l);
+            String expected = String.format("%s+%si", one, two).replace("+-", "-");
+            assertEquals(expected, Operations.subtraction(firstOp, secondOp));
+          }
+        }
+      }
+    }
+  }
 }
+
