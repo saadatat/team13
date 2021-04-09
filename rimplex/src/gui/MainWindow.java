@@ -203,28 +203,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       inputTextField.setText("");
     }
-    else if (command.equals("=")
-        && (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals("")))
+    else if (command.equals("="))
     {
 
-      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
-      {
-        if (inputField.trim().equals(""))
-        {
-          calculator.setRightOperand("0+0i");
-        }
-        else
-        {
-          calculator.setRightOperand(inputField);
-        }
-      }
-      displayLabel.setText(
-          calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
-              + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
-      calculator.formResult();
-      displayLabel
-          .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
-      inputTextField.setText("");
+      equalsEvent();
     }
 
     if (command.equals("C"))
@@ -238,7 +220,83 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       displayLabel.setText(" ");
       calculator.clear();
     }
+    
+    
+    /**
+    if (command.equals("0")) {
+      inputTextField.setText("0");
+    }
+    
+    if (command.equals("1")) {
+      inputTextField.setText("1");
+    }
+    
+    if (command.equals("2")) {
+      inputTextField.setText("2");
+    }
+    
+    if (command.equals("3")) {
+      inputTextField.setText("3");
+    }
+    
+    if (command.equals("4")) {
+      inputTextField.setText("4");
+    }
+    
+    if (command.equals("5")) {
+      inputTextField.setText("5");
+    }
+    
+    if (command.equals("6")) {
+      inputTextField.setText("6");
+    }
+    
+    if (command.equals("7")) {
+      inputTextField.setText("7");
+    }
+    
+    if (command.equals("8")) {
+      inputTextField.setText("8");
+    }
+    
+    if (command.equals("9")) {
+      inputTextField.setText("9");
+    }
+    if (command.equals("(")) {
+      inputTextField.setText("(");
+    }
+    if (command.equals(")")) {
+      inputTextField.setText(")");
+    }**/
 
+  }
+
+  public void equalsEvent()
+  {
+    String inputField = inputTextField.getText().trim();
+    inputField = inputField.replace("𝑖", "i");
+
+    if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
+    {
+      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
+      {
+        if (inputField.trim().equals(""))
+        {
+          calculator.setRightOperand("0+0i");
+        }
+        else
+        {
+          calculator.setRightOperand(inputField);
+        }
+      }
+      displayLabel.setText(
+          calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
+              + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
+      calculator.formResult();
+      displayLabel
+          .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
+      inputTextField.setText("");
+    }
   }
 
   @Override
@@ -260,6 +318,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       String newText = inputTextField.getText().replace("i", "𝑖");
       inputTextField.setText(newText);
+    }
+
+    if (e.getKeyCode() == KeyEvent.VK_ENTER)
+    {
+      equalsEvent();
     }
   }
 

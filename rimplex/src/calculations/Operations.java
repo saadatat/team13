@@ -231,8 +231,9 @@ public class Operations
   {
     NumberFormat fmat = NumberFormat.getInstance();
     fmat.setMinimumFractionDigits(0);
-    fmat.setMaximumFractionDigits(2);
+    fmat.setMaximumFractionDigits(3);
     String returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
+    returnString = returnString.replace(",", "");
     return returnString;
   }
 }
