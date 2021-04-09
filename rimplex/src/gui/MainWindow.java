@@ -39,6 +39,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton subtractButton;
   private JButton signButton;
   private JButton resultButton;
+  private JButton fractionDisplayButton;
   private JLabel displayLabel;
   private JTextArea resultDisplayArea;
   private JPanel mainPanel;
@@ -48,6 +49,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private String resultHistory;
   private JScrollPane scroll;
   private JButton hideResultButton;
+ 
   /**
    * Default Constructor.
    */
@@ -64,6 +66,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.setVisible(true);
     resultHistory = "";
     centerForm();
+    calculator.setFractionDisplay(false);
   }
 
   /**
@@ -121,6 +124,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     signButton = new JButton("+/-");
     resultButton = new JButton(">");
     hideResultButton = new JButton("<");
+    fractionDisplayButton = new JButton("F");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -132,6 +136,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     signButton.addActionListener(this);
     resultButton.addActionListener(this);
     hideResultButton.addActionListener(this);
+    fractionDisplayButton.addActionListener(this);
   
  
     
@@ -154,6 +159,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(divideButton);
     southPanel.add(equalsButton);
     southPanel.add(signButton);
+    southPanel.add(fractionDisplayButton);
     southPanel.add(resultButton);
     
     resultButton.setBorderPainted(false);
@@ -293,6 +299,16 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       setLocationRelativeTo(null);
       resultButton.setText(">");
     }
+    
+    if (command.equals("F")) {
+      fractionDisplayButton.setText("D");
+      calculator.setFractionDisplay(true);
+    }
+    
+    if (command.equals("D")) {
+      fractionDisplayButton.setText("F");
+      calculator.setFractionDisplay(false);
+    }
 
     /**
      * if (command.equals("0")) { inputTextField.setText("0"); }
@@ -386,4 +402,6 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     }
 
   }
+  
+  
 }

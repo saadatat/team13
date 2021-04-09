@@ -13,6 +13,7 @@ public class Calculator
   private String rightOperand;
   private String result;
   private String operator;
+  private boolean fractionDisplay;
 
   /**
    * Default constructor.
@@ -23,6 +24,7 @@ public class Calculator
     operator = null;
     rightOperand = null;
     result = null;
+    fractionDisplay = false;
   }
 
   /**
@@ -159,12 +161,17 @@ public class Calculator
     }
     if (result.contains("+1i"))
     {
-      return result.replace("+1i", "+i");
+      setResult(result.replace("+1i", "+i"));
     }
     else if (result.contains("-1i"))
     {
-      return result.replace("-1i", "-i");
+      setResult(result.replace("-1i", "-i"));
     }
+    
+    if (fractionDisplay) {
+      return Operations.formatFractionDisplay(result);
+    }
+    
     return result;
   }
 
@@ -333,5 +340,13 @@ public class Calculator
     leftOperand = null;
     rightOperand = null;
     operator = null;
+  }
+  
+  public void setFractionDisplay(boolean incoming) {
+    fractionDisplay = incoming;
+  }
+  
+  public boolean getFractionDisplay() {
+    return fractionDisplay;
   }
 }

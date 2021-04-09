@@ -236,4 +236,65 @@ public class Operations
     returnString = returnString.replace(",", "");
     return returnString;
   }
+  
+  public static String formatFractionDisplay(String incoming) {
+    
+    String splits[] = incoming.split("\\+|-|i");
+    String splits2[];
+    String splits3[];
+    int digits1;
+    int digits2;
+    int denominator1;
+    int denominator2;
+    int numerator1;
+    int numerator2;
+    int gcd1;
+    int gcd2;
+    double result1;
+    double result2;
+    String returnString = "";
+    String operator = "";
+    
+    if (incoming.contains("+")) {
+      operator = "+";
+    }else {
+      operator = "-";
+    }
+    
+    if (splits[0].contains(".")) {
+      splits2 = splits[0].split("\\.");
+      digits1 = splits2[1].length();
+      denominator1 = (int) Math.pow(10, digits1);
+      result1 = Double.parseDouble(splits[0]);
+      numerator1 = (int)(result1*denominator1);
+      gcd1 = getGCD(numerator1, denominator1);
+      returnString = numerator1 / gcd1 + "/" + denominator1 / gcd1;
+    }else {
+      returnString += splits[0];
+    }
+    if (splits[1].contains(".")) {
+      splits3 = splits[1].split("\\.");
+      digits2 = splits3[1].length();
+      denominator2 = (int) Math.pow(10, digits2);
+      result2 = Double.parseDouble(splits[0]);
+      numerator2 = (int)(result2*denominator2);
+      gcd2 = getGCD(numerator2, denominator2);
+      returnString += operator + numerator2 / gcd2 + "/" + denominator2 / gcd2;
+    }else {
+      returnString += operator + splits[1]; 
+    }
+     
+   return returnString + "i";
+    
+  }
+  
+  public static int getGCD(int number1, int number2) {
+    if (number2 == 0) {
+      return number1;
+    }
+    return getGCD(number2, number1 % number2);
+  }
+  
+  
+  
 }
