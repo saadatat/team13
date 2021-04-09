@@ -47,6 +47,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JTextField inputTextField;
   private String resultHistory;
   private JScrollPane scroll;
+  private JButton hideResultButton;
   /**
    * Default Constructor.
    */
@@ -93,7 +94,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     mainPanel = new JPanel();
     southPanel = new JPanel();
-
+    resultPanel = new JPanel(new BorderLayout());
+    
+    resultPanel.setVisible(false);
+    
     mainPanel.setPreferredSize(new Dimension(500,300));
     southPanel.setPreferredSize(new Dimension(100,30));
     displayLabel = new JLabel(" ");
@@ -106,6 +110,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputTextField.setPreferredSize(new Dimension(100, 30));
     
     
+    
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
@@ -115,6 +120,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     equalsButton = new JButton("=");
     signButton = new JButton("+/-");
     resultButton = new JButton(">");
+    hideResultButton = new JButton("<");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -125,8 +131,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputTextField.addKeyListener(this);
     signButton.addActionListener(this);
     resultButton.addActionListener(this);
-    resultPanel = new JPanel();
-    resultPanel.setVisible(false);
+    hideResultButton.addActionListener(this);
+  
+ 
+    
   }
 
   /**
@@ -148,9 +156,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(signButton);
     southPanel.add(resultButton);
     
+    resultButton.setBorderPainted(false);
+    resultButton.setContentAreaFilled( false );
+    hideResultButton.setBorderPainted(false);
+    hideResultButton.setContentAreaFilled( false );
+resultPanel.add(hideResultButton, BorderLayout.LINE_END);
+    
+
     resultDisplayArea.setEditable(false);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     resultPanel.add(scroll);
+    
     //resultDisplayArea.setBackground(Color.lightGray);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
@@ -261,7 +277,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     
     if (command.equals(">")) {
-        resultButton.setText("<");
+        
+        resultButton.setVisible(false);
         resultPanel.setPreferredSize(new Dimension(500,100));
         resultPanel.setVisible(true);
         pack();
@@ -269,6 +286,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
     
     if (command.equals("<")) {
+      
+      resultButton.setVisible(true);
       resultPanel.setVisible(false);  
       pack();
       setLocationRelativeTo(null);
@@ -325,7 +344,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       displayLabel
           .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
       inputTextField.setText("");
-      resultHistory += displayLabel.getText() + "\r\n";
+      resultHistory += displayLabel.getText() + "\n";
       resultDisplayArea.setText(resultHistory);
     }
   }
