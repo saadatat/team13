@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import calculations.Calculator;
 
@@ -34,14 +38,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton resetButton;
   private JButton subtractButton;
   private JButton signButton;
-
+  private JButton resultButton;
   private JLabel displayLabel;
-
+  private JTextArea resultDisplayArea;
   private JPanel mainPanel;
   private JPanel southPanel;
-
+  private JPanel resultPanel;
   private JTextField inputTextField;
-
+  private String resultHistory;
+  private JScrollPane scroll;
   /**
    * Default Constructor.
    */
@@ -56,7 +61,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.setSize(575, 180);
     this.setTitle("Rimplex");
     this.setVisible(true);
-
+    resultHistory = "";
     centerForm();
   }
 
@@ -89,12 +94,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     mainPanel = new JPanel();
     southPanel = new JPanel();
 
+    mainPanel.setPreferredSize(new Dimension(500,300));
+    southPanel.setPreferredSize(new Dimension(100,30));
     displayLabel = new JLabel(" ");
-    displayLabel.setPreferredSize(new Dimension(200, 75));
-
+    displayLabel.setPreferredSize(new Dimension(500, 250));
+    resultDisplayArea = new JTextArea(" ");
+    
+    scroll = new JScrollPane(resultDisplayArea);
+    scroll.setPreferredSize(new Dimension(400,300));
     inputTextField = new JTextField("");
-    inputTextField.setPreferredSize(new Dimension(15, 10));
-
+    inputTextField.setPreferredSize(new Dimension(100, 30));
+    
+    
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
@@ -103,6 +114,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
     signButton = new JButton("+/-");
+    resultButton = new JButton(">");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -112,6 +124,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     clearButton.addActionListener(this);
     inputTextField.addKeyListener(this);
     signButton.addActionListener(this);
+    resultButton.addActionListener(this);
+    resultPanel = new JPanel();
+    resultPanel.setVisible(false);
   }
 
   /**
@@ -131,9 +146,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(divideButton);
     southPanel.add(equalsButton);
     southPanel.add(signButton);
-
+    southPanel.add(resultButton);
+    
+    resultDisplayArea.setEditable(false);
+    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    resultPanel.add(scroll);
+    //resultDisplayArea.setBackground(Color.lightGray);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
+    this.add(resultPanel, BorderLayout.LINE_END);
+    pack();
+    setLocationRelativeTo(null);
   }
 
   /**
@@ -151,7 +174,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputField = inputField.replace("𝑖", "i");
     String command = e.getActionCommand();
     String operators = "+-/x";
-
     String result = calculator.getResult();
     if (!(inputField.matches("^[0-9i+-.]*$")))
     {
@@ -236,6 +258,22 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField.substring(1, inputField.length()));
       }
     }
+    
+    
+    if (command.equals(">")) {
+        resultButton.setText("<");
+        resultPanel.setPreferredSize(new Dimension(500,100));
+        resultPanel.setVisible(true);
+        pack();
+        setLocationRelativeTo(null);
+      }
+    
+    if (command.equals("<")) {
+      resultPanel.setVisible(false);  
+      pack();
+      setLocationRelativeTo(null);
+      resultButton.setText(">");
+    }
 
     /**
      * if (command.equals("0")) { inputTextField.setText("0"); }
@@ -287,6 +325,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       displayLabel
           .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
       inputTextField.setText("");
+      resultHistory += displayLabel.getText() + "\r\n";
+      resultDisplayArea.setText(resultHistory);
     }
   }
 
