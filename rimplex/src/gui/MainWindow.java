@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import calculations.Calculator;
 
@@ -33,14 +37,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton multiplyButton;
   private JButton resetButton;
   private JButton subtractButton;
-
+  private JButton signButton;
+  private JButton resultButton;
+  private JButton fractionDisplayButton;
   private JLabel displayLabel;
-
+  private JTextArea resultDisplayArea;
   private JPanel mainPanel;
   private JPanel southPanel;
-
+  private JPanel resultPanel;
   private JTextField inputTextField;
-
+  private String resultHistory;
+  private JScrollPane scroll;
+  private JButton hideResultButton;
+ 
   /**
    * Default Constructor.
    */
@@ -52,11 +61,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(575, 180);
+    this.setSize(650, 300);
     this.setTitle("Rimplex");
     this.setVisible(true);
-
+    resultHistory = "";
     centerForm();
+    calculator.setFractionDisplay(false);
   }
 
   /**
@@ -87,13 +97,23 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     mainPanel = new JPanel();
     southPanel = new JPanel();
-
+    resultPanel = new JPanel(new BorderLayout());
+    
+    resultPanel.setVisible(false);
+    
+    mainPanel.setPreferredSize(new Dimension(650,250));
+   
     displayLabel = new JLabel(" ");
-    displayLabel.setPreferredSize(new Dimension(200, 75));
-
+    displayLabel.setPreferredSize(new Dimension(500, 250));
+    resultDisplayArea = new JTextArea(" ");
+    
+    scroll = new JScrollPane(resultDisplayArea);
+    scroll.setPreferredSize(new Dimension(400,300));
     inputTextField = new JTextField("");
-    inputTextField.setPreferredSize(new Dimension(15, 10));
-
+    inputTextField.setPreferredSize(new Dimension(100, 30));
+    
+    
+    
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
@@ -101,6 +121,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     multiplyButton = new JButton("x");
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
+    signButton = new JButton("+/-");
+    resultButton = new JButton(">");
+    hideResultButton = new JButton("<");
+    fractionDisplayButton = new JButton("Format ( / )");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -109,6 +133,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resetButton.addActionListener(this);
     clearButton.addActionListener(this);
     inputTextField.addKeyListener(this);
+    signButton.addActionListener(this);
+    resultButton.addActionListener(this);
+    hideResultButton.addActionListener(this);
+    fractionDisplayButton.addActionListener(this);
+  
+ 
+    
   }
 
   /**
@@ -127,9 +158,27 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(multiplyButton);
     southPanel.add(divideButton);
     southPanel.add(equalsButton);
+    southPanel.add(signButton);
+    southPanel.add(fractionDisplayButton);
+    southPanel.add(resultButton);
+    
+    resultButton.setBorderPainted(false);
+    resultButton.setContentAreaFilled( false );
+    hideResultButton.setBorderPainted(false);
+    hideResultButton.setContentAreaFilled( false );
+resultPanel.add(hideResultButton, BorderLayout.LINE_END);
+    
 
+    resultDisplayArea.setEditable(false);
+    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    resultPanel.add(scroll);
+    
+    //resultDisplayArea.setBackground(Color.lightGray);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
+    this.add(resultPanel, BorderLayout.LINE_END);
+    pack();
+    setLocationRelativeTo(null);
   }
 
   /**
@@ -147,8 +196,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputField = inputField.replace("𝑖", "i");
     String command = e.getActionCommand();
     String operators = "+-/x";
-
-    
     String result = calculator.getResult();
     if (!(inputField.matches("^[0-9i+-.]*$")))
     {
@@ -204,28 +251,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       inputTextField.setText("");
     }
-    else if (command.equals("=")
-        && (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals("")))
+    else if (command.equals("="))
     {
 
-      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
-      {
-        if (inputField.trim().equals(""))
-        {
-          calculator.setRightOperand("0+0i");
-        }
-        else
-        {
-          calculator.setRightOperand(inputField);
-        }
-      }
-      displayLabel.setText(
-          calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
-              + calculator.formatDisplayOperand(calculator.getRightOperand()) + command);
-      calculator.formResult();
-      displayLabel
-          .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
-      inputTextField.setText("");
+      equalsEvent();
     }
 
     if (command.equals("C"))
@@ -240,6 +269,100 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       calculator.clear();
     }
 
+    if (command.equals("+/-") && !inputField.equals(""))
+    {
+      if (inputField.charAt(0) != '-')
+      {
+        inputTextField.setText("-" + inputField);
+      }
+      else
+      {
+        inputTextField.setText(inputField.substring(1, inputField.length()));
+      }
+    }
+    
+    
+    if (command.equals(">")) {
+        
+        resultButton.setVisible(false);
+        resultPanel.setPreferredSize(new Dimension(500,100));
+        resultPanel.setVisible(true);
+        pack();
+        setLocationRelativeTo(null);
+      }
+    
+    if (command.equals("<")) {
+      
+      resultButton.setVisible(true);
+      resultPanel.setVisible(false);  
+      pack();
+      setLocationRelativeTo(null);
+      resultButton.setText(">");
+    }
+    
+    if (command.equals("Format ( / )")) {
+      fractionDisplayButton.setText("Format ( . )");
+      calculator.setFractionDisplay(true);
+    }
+    
+    if (command.equals("Format ( . )")) {
+      fractionDisplayButton.setText("Format ( / )");
+      calculator.setFractionDisplay(false);
+    }
+
+    /**
+     * if (command.equals("0")) { inputTextField.setText("0"); }
+     * 
+     * if (command.equals("1")) { inputTextField.setText("1"); }
+     * 
+     * if (command.equals("2")) { inputTextField.setText("2"); }
+     * 
+     * if (command.equals("3")) { inputTextField.setText("3"); }
+     * 
+     * if (command.equals("4")) { inputTextField.setText("4"); }
+     * 
+     * if (command.equals("5")) { inputTextField.setText("5"); }
+     * 
+     * if (command.equals("6")) { inputTextField.setText("6"); }
+     * 
+     * if (command.equals("7")) { inputTextField.setText("7"); }
+     * 
+     * if (command.equals("8")) { inputTextField.setText("8"); }
+     * 
+     * if (command.equals("9")) { inputTextField.setText("9"); } if (command.equals("(")) {
+     * inputTextField.setText("("); } if (command.equals(")")) { inputTextField.setText(")"); }
+     **/
+
+  }
+
+  public void equalsEvent()
+  {
+    String inputField = inputTextField.getText().trim();
+    inputField = inputField.replace("𝑖", "i");
+
+    if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
+    {
+      if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
+      {
+        if (inputField.trim().equals(""))
+        {
+          calculator.setRightOperand("0+0i");
+        }
+        else
+        {
+          calculator.setRightOperand(inputField);
+        }
+      }
+      displayLabel.setText(
+          calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
+              + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
+      calculator.formResult();
+      displayLabel
+          .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
+      inputTextField.setText("");
+      resultHistory += displayLabel.getText() + "\n";
+      resultDisplayArea.setText(resultHistory);
+    }
   }
 
   @Override
@@ -262,6 +385,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       String newText = inputTextField.getText().replace("i", "𝑖");
       inputTextField.setText(newText);
     }
+
+    if (e.getKeyCode() == KeyEvent.VK_ENTER)
+    {
+      equalsEvent();
+    }
   }
 
   @Override
@@ -274,4 +402,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
 
   }
+  
+  
 }

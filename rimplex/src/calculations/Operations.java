@@ -1,5 +1,7 @@
 package calculations;
 
+import java.text.NumberFormat;
+
 public class Operations
 {
   /**
@@ -13,40 +15,7 @@ public class Operations
    */
   public static String addition(String operandOne, String operandTwo)
   {
-    if (!(operandOne.contains("i") && operandTwo.contains("i")))
-    {
-      try
-      {
-        double one = Double.parseDouble(operandOne);
-        double two = Double.parseDouble(operandTwo);
-        double result = one + two;
-        int resultInt = (int) result;
-        if (result == resultInt)
-        {
-          return String.format("%d+0i", resultInt);
-        }
-        else
-        {
-          return String.format(".2f+0i", result);
-        }
-
-      }
-      catch (NumberFormatException e)
-      {
-
-      }
-    }
-    if (!operandOne.contains("i"))
-    {
-      operandOne += "+0i";
-    }
-    if (!operandTwo.contains("i"))
-    {
-      operandTwo += "+0i";
-    }
-
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
-        operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
     double realSum = (opdoubles[0][0] + opdoubles[1][0]);
     double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
@@ -74,39 +43,7 @@ public class Operations
    */
   public static String subtraction(String operandOne, String operandTwo)
   {
-    if (!(operandOne.contains("i") && operandTwo.contains("i")))
-    {
-      try
-      {
-        double one = Double.parseDouble(operandOne);
-        double two = Double.parseDouble(operandTwo);
-        double result = one - two;
-        int resultInt = (int) result;
-        if (result == resultInt)
-        {
-          return String.format("%d+0i", resultInt);
-        }
-        else
-        {
-          return String.format(".2f+0i", result);
-        }
-
-      }
-      catch (NumberFormatException e)
-      {
-
-      }
-    }
-    if (!operandOne.contains("i") && operandTwo.contains("i"))
-    {
-      operandOne += "+0i";
-    }
-    if (operandOne.contains("i") && !operandTwo.contains("i"))
-    {
-      operandTwo += "+0i";
-    }
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
-        operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
     double realDiff = (opdoubles[0][0] - opdoubles[1][0]);
     double imagDiff = (opdoubles[0][1] - opdoubles[1][1]);
@@ -135,41 +72,7 @@ public class Operations
    */
   public static String multiply(String operandOne, String operandTwo)
   {
-    if (!(operandOne.contains("i") && operandTwo.contains("i")))
-    {
-      try
-      {
-        double one = Double.parseDouble(operandOne);
-        double two = Double.parseDouble(operandTwo);
-        double result = one * two;
-        int resultInt = (int) result;
-        if (result == resultInt)
-        {
-          return String.format("%d+0i", resultInt);
-        }
-        else
-        {
-          return String.format(".2f+0i", result);
-        }
-
-      }
-      catch (NumberFormatException e)
-      {
-
-      }
-    }
-    if (!operandOne.contains("i") && operandTwo.contains("i"))
-    {
-      operandOne += "+0i";
-    }
-    if (operandOne.contains("i") && !operandTwo.contains("i"))
-    {
-      operandTwo += "+0i";
-    }
-    // Split the strings double two doubles, the one before '+' and one before 'i'
-
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
-        operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
     double ac = opdoubles[0][0] * opdoubles[1][0];
     double bd = opdoubles[0][1] * opdoubles[1][1];
@@ -204,47 +107,11 @@ public class Operations
   public static String divide(String operandOne, String operandTwo)
   {
     double scale = Math.pow(10, 3);
-    if (!(operandOne.contains("i") && operandTwo.contains("i")))
-    {
-      try
-      {
-        double one = Double.parseDouble(operandOne);
-        double two = Double.parseDouble(operandTwo);
-        double result = one / two;
-        int resultInt = (int) result;
-        if (result == resultInt)
-        {
-          return String.format("%d+0i", resultInt);
-        }
-        else
-        {
-          return String.format(".2f+0i", result);
-        }
-
-      }
-      catch (NumberFormatException e)
-      {
-
-      }
-    }
-    if (!operandOne.contains("i") && operandTwo.contains("i"))
-    {
-      operandOne += "+0i";
-    }
-    if (operandOne.contains("i") && !operandTwo.contains("i"))
-    {
-      operandTwo += "+0i";
-    }
     double quotient1;
     double quotient2;
     char operator = '+';
 
-    // Split the strings double two doubles, the one before '+' and one before 'i'
-    String op1[] = operandOne.split("\\+|i");
-    String op2[] = operandTwo.split("\\+|i");
-
-    double[][] opdoubles = parseTodouble(operandOne.replace("+-", "-"),
-        operandTwo.replace("+-", "-"));
+    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
     double ac = opdoubles[0][0] * opdoubles[1][0];
     double bd = opdoubles[0][1] * opdoubles[1][1];
@@ -267,10 +134,8 @@ public class Operations
       operator = '-';
       quotient2 = -1 * quotient2;
     }
-    
 
     return formatResult(quotient1, operator, quotient2);
-
   }
 
   /**
@@ -283,10 +148,11 @@ public class Operations
    *          The second complex number to parse, must not be in +- form.
    * @return returns the parsed strings as indididual doubleegers in a 2D array.
    */
-  private static double[][] parseTodouble(String operandOne, String operandTwo)
+  private static double[][] parseTodouble(String operandOneIn, String operandTwoIn)
   {
-    //String operandOne = operandOneIn.replace("+-", "-");
-    //String operandTwo = operandTwoIn.replace("+-", "-");
+    String operandOne = operandOneIn.replace("+-", "-");
+    String operandTwo = operandTwoIn.replace("+-", "-");
+    
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -296,6 +162,15 @@ public class Operations
     String[] op1;
     String[] op2;
 
+    if (!operandOne.contains("i"))
+    {
+      operandOne += "+0i";
+    }
+    if (!operandTwo.contains("i"))
+    {
+      operandTwo += "+0i";
+    }
+    
     // Split the strings doubleo two doubles, the one before '+'/'-' and one before 'i'
 
     // Checks if first operand has negative values
@@ -324,29 +199,19 @@ public class Operations
     if (operandTwo.substring(1).contains("-"))
       negModifier2B = -1;
 
+    
+    
     // Converting parsed string to doubleegers
     op1double = new double[2]; // Always make an array the size of two.
-    if (op1.length == 1) // If there is only one term it must be imaginary, as only-reals have been handled at this point.
-    {
-      op1double[0] = 0; // Set first term to 0 as real.
-      op1double[1] = Double.parseDouble(op1[0]) * negModifier1A; // Set second to imaginary.
-    }
-    else { // Normal operation
-      op1double[0] = Double.parseDouble(op1[0]) * negModifier1A;
-      op1double[1] = Double.parseDouble(op1[1]) * negModifier1B;
-    }
+
+    op1double[0] = Double.parseDouble(op1[0]) * negModifier1A;
+    op1double[1] = Double.parseDouble(op1[1]) * negModifier1B;
     
-    // Comments for above steps apply to op2
+
     op2double = new double[2];
-    if (op2.length == 1)
-    {
-      op2double[0] = 0;
-      op2double[1] = Double.parseDouble(op2[0]) * negModifier2A;
-    }
-    else {
-      op2double[0] = Double.parseDouble(op2[0]) * negModifier2A;
-      op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
-    }
+
+    op2double[0] = Double.parseDouble(op2[0]) * negModifier2A;
+    op2double[1] = Double.parseDouble(op2[1]) * negModifier2B;
 
     return new double[][] {op1double, op2double};
   }
@@ -364,23 +229,72 @@ public class Operations
    */
   public static String formatResult(double real, char operator, double imaginary)
   {
-    int realConversion = (int) real;
-    int imaginaryConversion = (int) imaginary;
-    String returnString = String.format("%.3f%c%.3fi", real, operator, imaginary);
-    if (real == realConversion && imaginary == imaginaryConversion)
-    {
-      returnString = String.format("%d%c%di", realConversion, operator, imaginaryConversion);
-    }
-    else if (real == realConversion)
-    {
-      returnString = String.format("%d%c%.3fi", realConversion, operator, imaginary);
-    }
-    else if (imaginary == imaginaryConversion)
-    {
-      returnString = String.format("%.3f%c%di", real, operator, imaginaryConversion);
-    }
+    NumberFormat fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+    String returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
+    returnString = returnString.replace(",", "");
     return returnString;
-
   }
-
+  
+  public static String formatFractionDisplay(String incoming) {
+    
+    String splits[] = incoming.split("\\+|-|i");
+    String splits2[];
+    String splits3[];
+    int digits1;
+    int digits2;
+    int denominator1;
+    int denominator2;
+    int numerator1;
+    int numerator2;
+    int gcd1;
+    int gcd2;
+    double result1;
+    double result2;
+    String returnString = "";
+    String operator = "";
+    
+    if (incoming.contains("+")) {
+      operator = "+";
+    }else {
+      operator = "-";
+    }
+    
+    if (splits[0].contains(".")) {
+      splits2 = splits[0].split("\\.");
+      digits1 = splits2[1].length();
+      denominator1 = (int) Math.pow(10, digits1);
+      result1 = Double.parseDouble(splits[0]);
+      numerator1 = (int)(result1*denominator1);
+      gcd1 = getGCD(numerator1, denominator1);
+      returnString = numerator1 / gcd1 + "/" + denominator1 / gcd1;
+    }else {
+      returnString += splits[0];
+    }
+    if (splits[1].contains(".")) {
+      splits3 = splits[1].split("\\.");
+      digits2 = splits3[1].length();
+      denominator2 = (int) Math.pow(10, digits2);
+      result2 = Double.parseDouble(splits[0]);
+      numerator2 = (int)(result2*denominator2);
+      gcd2 = getGCD(numerator2, denominator2);
+      returnString += operator + numerator2 / gcd2 + "/" + denominator2 / gcd2;
+    }else {
+      returnString += operator + splits[1]; 
+    }
+     
+   return returnString + "i";
+    
+  }
+  
+  public static int getGCD(int number1, int number2) {
+    if (number2 == 0) {
+      return number1;
+    }
+    return getGCD(number2, number1 % number2);
+  }
+  
+  
+  
 }

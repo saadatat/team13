@@ -13,6 +13,7 @@ public class Calculator
   private String rightOperand;
   private String result;
   private String operator;
+  private boolean fractionDisplay;
 
   /**
    * Default constructor.
@@ -23,25 +24,7 @@ public class Calculator
     operator = null;
     rightOperand = null;
     result = null;
-  }
-
-  /**
-   * The calculate method, takes in a whole string and runs neccessary calculations.
-   */
-  public String calculate(String inputString)
-  {
-    String firstTerm = inputString.substring(inputString.indexOf("(") + 1,
-        inputString.indexOf(")"));
-    String secondTerm = inputString.substring(inputString.lastIndexOf("(") + 1,
-        inputString.lastIndexOf(")"));
-
-    Pattern pattern = Pattern.compile("\\)(.*?)\\(", Pattern.DOTALL);
-    Matcher matcher = pattern.matcher(inputString);
-
-    String operator = "";
-    if (matcher.find())
-      operator = matcher.group(1);
-    return operator;
+    fractionDisplay = false;
   }
 
   /**
@@ -72,7 +55,7 @@ public class Calculator
 
   /**
    * Accepts an operand string and returns the formatted result to be used for the display.
-   * 
+   * Italisizes i and adds parantheses.
    * @param stringToFormat
    *          - the incoming operand string to format.
    * @return String - the formatted operand string.
@@ -178,12 +161,17 @@ public class Calculator
     }
     if (result.contains("+1i"))
     {
-      return result.replace("+1i", "+i");
+      setResult(result.replace("+1i", "+i"));
     }
     else if (result.contains("-1i"))
     {
-      return result.replace("-1i", "-i");
+      setResult(result.replace("-1i", "-i"));
     }
+    
+    if (fractionDisplay) {
+      return Operations.formatFractionDisplay(result);
+    }
+    
     return result;
   }
 
@@ -262,10 +250,7 @@ public class Calculator
   public void add()
   {
     result = Operations.addition(leftOperand, rightOperand);
-
-    leftOperand = null;
-    rightOperand = null;
-    operator = null;
+    resultResetHelper();
   }
 
   /**
@@ -273,12 +258,8 @@ public class Calculator
    */
   public void subtract()
   {
-
     result = Operations.subtraction(leftOperand, rightOperand);
-
-    leftOperand = null;
-    rightOperand = null;
-    operator = null;
+    resultResetHelper();
   }
 
   /**
@@ -286,12 +267,8 @@ public class Calculator
    */
   public void multiply()
   {
-
     result = Operations.multiply(leftOperand, rightOperand);
-
-    leftOperand = null;
-    rightOperand = null;
-    operator = null;
+    resultResetHelper();
   }
 
   /**
@@ -299,9 +276,15 @@ public class Calculator
    */
   public void divide()
   {
-
     result = Operations.divide(leftOperand, rightOperand);
-
+    resultResetHelper();
+  }
+  
+  /**
+   * Helper method for whrn operations are called.
+   */
+  private void resultResetHelper()
+  {
     leftOperand = null;
     rightOperand = null;
     operator = null;
@@ -331,7 +314,7 @@ public class Calculator
   }
 
   /**
-   * checks if both operands are valid.
+   * Checks if both operands are valid.
    * 
    * @return boolean whether the operands are valid.
    */
@@ -357,5 +340,13 @@ public class Calculator
     leftOperand = null;
     rightOperand = null;
     operator = null;
+  }
+  
+  public void setFractionDisplay(boolean incoming) {
+    fractionDisplay = incoming;
+  }
+  
+  public boolean getFractionDisplay() {
+    return fractionDisplay;
   }
 }

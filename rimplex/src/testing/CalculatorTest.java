@@ -1,11 +1,10 @@
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
-import calculations.Calculator;
 import calculations.Operations;
+import calculations.Calculator;
+
 
 class CalculatorTest
 {
@@ -92,53 +91,6 @@ class CalculatorTest
     assertEquals("-0.920-0.560i", Operations.divide(termPositive1, termNegative2));
     assertEquals("-0.280+1.040i", Operations.divide(termPositive1, termFirstNegOnly2));
 
-  }
-
-  @Test
-  void additionTest()
-  {
-    String termPositive1 = "2+5i";
-    String termPositive2 = "4+3i";
-    String termNegative1 = "2+5i";
-    String termNegative2 = "-4-3i";
-    String termFirstNegOnly1 = "-4+3i";
-    String termFirstNegOnly2 = "-4+3i";
-
-    assertEquals("6+8i", Operations.addition(termPositive1, termPositive2));
-    assertEquals("-2+2i", Operations.addition(termNegative1, termNegative2));
-    assertEquals("-8+6i", Operations.addition(termFirstNegOnly1, termFirstNegOnly2));
-    assertEquals("0+0i", Operations.addition("0+0i", "0+0i"));
-
-    for (int i = -10; i <= 10; i++)
-    {
-      for (int j = -50; j <= 50; j++)
-      {
-
-        String firstOp = String.format("%d+%di", i, j).replace("+-", "-");
-        String secondOp = String.format("%d+%di", j, i).replace("+-", "-");
-        String expected = String.format("%d+%di", i + j, i + j).replace("+-", "-");
-        assertEquals(expected, Operations.addition(firstOp, secondOp));
-      }
-    }
-  }
-
-  @Test
-  void subtractionTest()
-  {
-    String termPositive1 = "2+5i";
-    String termPositive2 = "4+3i";
-    assertEquals("-2+2i", Operations.subtraction(termPositive1, termPositive2));
-
-    for (int i = -10; i <= 10; i++)
-    {
-      for (int j = -50; j <= 50; j++)
-      {
-        String firstOp = String.format("%d+%di", i, j).replace("+-", "-");
-        String secondOp = String.format("%d+%di", j, i).replace("+-", "-");
-        String expected = String.format("%d+%di", i - j, j - i).replace("+-", "-");
-        assertEquals(expected, Operations.subtraction(firstOp, secondOp));
-      }
-    }
   }
 
   @Test
