@@ -148,6 +148,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     String command = e.getActionCommand();
     String operators = "+-/x";
 
+    
     String result = calculator.getResult();
     if (!(inputField.matches("^[0-9i+-.]*$")))
     {

@@ -86,11 +86,11 @@ class CalculatorTest
     String termFirstNegOnly1 = "-4+3i";
     String termFirstNegOnly2 = "4-3i";
 
-    assertEquals("0.92+0.56i", Operations.divide(termPositive1, termPositive2));
-    assertEquals("0.92+0.56i", Operations.divide(termNegative1, termNegative2));
+    assertEquals("0.920+0.560i", Operations.divide(termPositive1, termPositive2));
+    assertEquals("0.920+0.560i", Operations.divide(termNegative1, termNegative2));
     assertEquals("-1+0i", Operations.divide(termFirstNegOnly1, termFirstNegOnly2));
-    assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
-    assertEquals("-0.28+1.04i", Operations.divide(termPositive1, termFirstNegOnly2));
+    assertEquals("-0.920-0.560i", Operations.divide(termPositive1, termNegative2));
+    assertEquals("-0.280+1.040i", Operations.divide(termPositive1, termFirstNegOnly2));
 
   }
 
