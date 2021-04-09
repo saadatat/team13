@@ -46,52 +46,7 @@ class CalculatorTest
 
   }
 
-  /**
-   * multiplyTest - test multiply method.
-   */
-  @Test
-  void multiplyTest()
-  {
 
-    String validNum1 = "6+1i";
-    String validNum2 = "4+2i";
-    String zeroImaginary = "3+0i";
-    String minusImag = "5+-3i";
-    String minusReal = "-3+5i";
-
-    // Normal test
-    assertEquals("22+16i", Operations.multiply(validNum1, validNum2));
-    // Switch normal
-    assertEquals("22+16i", Operations.multiply(validNum2, validNum1));
-    // zero times valid
-    assertEquals("18+3i", Operations.multiply(validNum1, zeroImaginary));
-    // Check when theres a minus
-    assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
-    assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
-
-  }
-
-  /**
-   * divideTest - test divide method.
-   */
-  @Test
-  void divideTest()
-  {
-
-    String termPositive1 = "2+5i";
-    String termPositive2 = "4+3i";
-    String termNegative1 = "-2-5i";
-    String termNegative2 = "-4-3i";
-    String termFirstNegOnly1 = "-4+3i";
-    String termFirstNegOnly2 = "4-3i";
-
-    assertEquals("0.920+0.560i", Operations.divide(termPositive1, termPositive2));
-    assertEquals("0.920+0.560i", Operations.divide(termNegative1, termNegative2));
-    assertEquals("-1+0i", Operations.divide(termFirstNegOnly1, termFirstNegOnly2));
-    assertEquals("-0.920-0.560i", Operations.divide(termPositive1, termNegative2));
-    assertEquals("-0.280+1.040i", Operations.divide(termPositive1, termFirstNegOnly2));
-
-  }
 
   @Test
   void setLeftOperandTest()

@@ -131,6 +131,7 @@ public class Operations
 
     if (quotient2 < 0)
     {
+      
       operator = '-';
       quotient2 = -1 * quotient2;
     }

@@ -67,6 +67,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultHistory = "";
     centerForm();
     calculator.setFractionDisplay(false);
+    this.setFocusable(true);
   }
 
   /**
@@ -111,6 +112,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     scroll.setPreferredSize(new Dimension(400,300));
     inputTextField = new JTextField("");
     inputTextField.setPreferredSize(new Dimension(100, 30));
+    inputTextField.setEditable(false);
+    inputTextField.addKeyListener(this);
+    displayLabel.addKeyListener(this);
     
     
     
@@ -126,17 +130,28 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton = new JButton("<");
     fractionDisplayButton = new JButton("Format ( / )");
     addButton.addActionListener(this);
+    this.addKeyListener(this);
+    addButton.addKeyListener(this);
     subtractButton.addActionListener(this);
+    subtractButton.addKeyListener(this);
     divideButton.addActionListener(this);
+    divideButton.addKeyListener(this);
     multiplyButton.addActionListener(this);
+    multiplyButton.addKeyListener(this);
     equalsButton.addActionListener(this);
+    equalsButton.addKeyListener(this);
     resetButton.addActionListener(this);
+    resetButton.addKeyListener(this);
     clearButton.addActionListener(this);
-    inputTextField.addKeyListener(this);
+    clearButton.addKeyListener(this);
     signButton.addActionListener(this);
+    signButton.addKeyListener(this);
     resultButton.addActionListener(this);
+    resultButton.addKeyListener(this);
     hideResultButton.addActionListener(this);
+    hideResultButton.addKeyListener(this);
     fractionDisplayButton.addActionListener(this);
+    fractionDisplayButton.addKeyListener(this);
   
  
     
@@ -277,7 +292,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       }
       else
       {
-        inputTextField.setText(inputField.substring(1, inputField.length()));
+       inputTextField.setText(inputField.substring(1, inputField.length()));
       }
     }
     
@@ -332,6 +347,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
      * if (command.equals("9")) { inputTextField.setText("9"); } if (command.equals("(")) {
      * inputTextField.setText("("); } if (command.equals(")")) { inputTextField.setText(")"); }
      **/
+   
 
   }
 
@@ -370,37 +386,51 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
   {
     if (e.getKeyChar() == 'i')
     {
-      String newText = inputTextField.getText().replace("i", "𝑖");
+      String newText = inputTextField.getText().concat("𝑖");
       inputTextField.setText(newText);
+    }
+    
+    for(int i = 48; i < 58; i++)
+    {
+      if (e.getKeyChar() == i)
+      {
+        String newText = inputTextField.getText().concat((char)i + "");
+        inputTextField.setText(newText);
+        
+      }
+      
+    }
+    
+    if(e.getKeyChar() == '+')
+    {
+      String newText = inputTextField.getText().concat("+");
+      inputTextField.setText(newText);
+      
+    }
+    
+    if(e.getKeyChar() == '-')
+    {
+      String newText = inputTextField.getText().concat("-");
+      inputTextField.setText(newText);
+      
     }
 
   }
+  
 
+  
+  ////////////Unused methods//////////////////////////////
   @Override
   public void keyPressed(KeyEvent e)
   {
 
-    if (e.getKeyChar() == 'i')
-    {
-      String newText = inputTextField.getText().replace("i", "𝑖");
-      inputTextField.setText(newText);
-    }
-
-    if (e.getKeyCode() == KeyEvent.VK_ENTER)
-    {
-      equalsEvent();
-    }
+   
   }
 
   @Override
   public void keyReleased(KeyEvent e)
   {
-    if (e.getKeyChar() == 'i')
-    {
-      String newText = inputTextField.getText().replace("i", "𝑖");
-      inputTextField.setText(newText);
-    }
-
+  
   }
   
   
