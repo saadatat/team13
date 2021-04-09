@@ -61,7 +61,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(575, 180);
+    this.setSize(650, 300);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -101,8 +101,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     resultPanel.setVisible(false);
     
-    mainPanel.setPreferredSize(new Dimension(500,300));
-    southPanel.setPreferredSize(new Dimension(100,30));
+    mainPanel.setPreferredSize(new Dimension(650,250));
+   
     displayLabel = new JLabel(" ");
     displayLabel.setPreferredSize(new Dimension(500, 250));
     resultDisplayArea = new JTextArea(" ");
@@ -124,7 +124,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     signButton = new JButton("+/-");
     resultButton = new JButton(">");
     hideResultButton = new JButton("<");
-    fractionDisplayButton = new JButton("F");
+    fractionDisplayButton = new JButton("Format ( / )");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -300,13 +300,13 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       resultButton.setText(">");
     }
     
-    if (command.equals("F")) {
-      fractionDisplayButton.setText("D");
+    if (command.equals("Format ( / )")) {
+      fractionDisplayButton.setText("Format ( . )");
       calculator.setFractionDisplay(true);
     }
     
-    if (command.equals("D")) {
-      fractionDisplayButton.setText("F");
+    if (command.equals("Format ( . )")) {
+      fractionDisplayButton.setText("Format ( / )");
       calculator.setFractionDisplay(false);
     }
 
