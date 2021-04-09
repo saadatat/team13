@@ -3,11 +3,14 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -49,6 +52,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private String resultHistory;
   private JScrollPane scroll;
   private JButton hideResultButton;
+  private JButton zero;
+  private JButton one;
+  private JButton two;
+  private JButton three;
+  private JButton four;
+  private JButton five;
+  private JButton six;
+  private JButton seven;
+  private JButton eight;
+  private JButton nine;
  
   /**
    * Default Constructor.
@@ -61,7 +74,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(650, 300);
+    this.setSize(450, 300);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -97,7 +110,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private void createComponents()
   {
     mainPanel = new JPanel();
-    southPanel = new JPanel();
+    southPanel = new JPanel(new GridLayout(5, 5, 50, 15));
     resultPanel = new JPanel(new BorderLayout());
     
     resultPanel.setVisible(false);
@@ -128,6 +141,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     signButton = new JButton("+/-");
     resultButton = new JButton(">");
     hideResultButton = new JButton("<");
+    zero = new JButton("0");
+    one = new JButton("1");
+    two = new JButton("2");
+    three = new JButton("3");
+    four = new JButton("4");
+    five = new JButton("5");
+    six = new JButton("6");
+    seven = new JButton("7");
+    eight = new JButton("8");
+    nine = new JButton("9");
     fractionDisplayButton = new JButton("Format ( / )");
     addButton.addActionListener(this);
     this.addKeyListener(this);
@@ -152,6 +175,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton.addKeyListener(this);
     fractionDisplayButton.addActionListener(this);
     fractionDisplayButton.addKeyListener(this);
+    zero.addActionListener(this);
+    one.addActionListener(this);
+    two.addActionListener(this);
+    three.addActionListener(this);
+    four.addActionListener(this);
+    five.addActionListener(this);
+    six.addActionListener(this);
+    seven.addActionListener(this);
+    eight.addActionListener(this);
+    nine.addActionListener(this);
   
  
     
@@ -162,6 +195,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setComponents()
   {
+    Color lightBlue = new Color(183, 225, 232);
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
@@ -175,6 +209,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(equalsButton);
     southPanel.add(signButton);
     southPanel.add(fractionDisplayButton);
+    southPanel.add(zero);
+    southPanel.add(one);
+    southPanel.add(two);
+    southPanel.add(three);
+    southPanel.add(four);
+    southPanel.add(five);
+    southPanel.add(six);
+    southPanel.add(seven);
+    southPanel.add(eight);
+    southPanel.add(nine);
+    
     southPanel.add(resultButton);
     
     resultButton.setBorderPainted(false);
@@ -188,7 +233,58 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     resultPanel.add(scroll);
     
-    //resultDisplayArea.setBackground(Color.lightGray);
+    
+    resultButton.setContentAreaFilled(false);
+    zero.setContentAreaFilled(false);
+    one.setContentAreaFilled(false);
+    two.setContentAreaFilled(false);
+    three.setContentAreaFilled(false);
+    four.setContentAreaFilled(false);
+    five.setContentAreaFilled(false);
+    six.setContentAreaFilled(false);
+    seven.setContentAreaFilled(false);
+    eight.setContentAreaFilled(false);
+    nine.setContentAreaFilled(false);
+    equalsButton.setContentAreaFilled(false);
+    resetButton.setContentAreaFilled(false);
+    clearButton.setContentAreaFilled(false);
+    multiplyButton.setContentAreaFilled(false);
+    divideButton.setContentAreaFilled(false);
+    addButton.setContentAreaFilled(false);
+    multiplyButton.setContentAreaFilled(false);
+    subtractButton.setContentAreaFilled(false);
+    fractionDisplayButton.setContentAreaFilled(false);
+    signButton.setContentAreaFilled(false);
+    resultButton.setContentAreaFilled(false);
+    hideResultButton.setBorderPainted(false);
+    hideResultButton.setContentAreaFilled(false);
+    
+    resultButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    zero.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    one.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    two.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    three.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    four.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    five.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    six.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    seven.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    eight.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    nine.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    equalsButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    resetButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    clearButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    divideButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    multiplyButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    
+    resultDisplayArea.setBackground(lightBlue);
+
+    mainPanel.setBackground(lightBlue);
+    inputTextField.setBackground(lightBlue);
+    inputTextField.setBorder(null);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
     this.add(resultPanel, BorderLayout.LINE_END);
@@ -325,28 +421,56 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       calculator.setFractionDisplay(false);
     }
 
-    /**
-     * if (command.equals("0")) { inputTextField.setText("0"); }
-     * 
-     * if (command.equals("1")) { inputTextField.setText("1"); }
-     * 
-     * if (command.equals("2")) { inputTextField.setText("2"); }
-     * 
-     * if (command.equals("3")) { inputTextField.setText("3"); }
-     * 
-     * if (command.equals("4")) { inputTextField.setText("4"); }
-     * 
-     * if (command.equals("5")) { inputTextField.setText("5"); }
-     * 
-     * if (command.equals("6")) { inputTextField.setText("6"); }
-     * 
-     * if (command.equals("7")) { inputTextField.setText("7"); }
-     * 
-     * if (command.equals("8")) { inputTextField.setText("8"); }
-     * 
-     * if (command.equals("9")) { inputTextField.setText("9"); } if (command.equals("(")) {
-     * inputTextField.setText("("); } if (command.equals(")")) { inputTextField.setText(")"); }
-     **/
+    if (command.equals("0"))
+    {
+      inputTextField.setText("0");
+    }
+
+    if (command.equals("1"))
+    {
+      inputTextField.setText(inputField += "1");
+    }
+
+    if (command.equals("2"))
+    {
+      inputTextField.setText(inputField += "2");
+    }
+
+    if (command.equals("3"))
+    {
+      inputTextField.setText(inputField += "3");
+    }
+
+    if (command.equals("4"))
+    {
+      inputTextField.setText(inputField += "4");
+    }
+
+    if (command.equals("5"))
+    {
+      inputTextField.setText(inputField += "5");
+    }
+
+    if (command.equals("6"))
+    {
+      inputTextField.setText(inputField += "6");
+    }
+
+    if (command.equals("7"))
+    {
+      inputTextField.setText(inputField += "7");
+    }
+
+    if (command.equals("8"))
+    {
+      inputTextField.setText(inputField += "8");
+    }
+
+    if (command.equals("9"))
+    {
+      inputTextField.setText(inputField += "9");
+    }
+
    
 
   }
