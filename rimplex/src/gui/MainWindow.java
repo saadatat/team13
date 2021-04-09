@@ -62,6 +62,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton seven;
   private JButton eight;
   private JButton nine;
+  private JPanel testPanel;
  
   /**
    * Default Constructor.
@@ -109,16 +110,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void createComponents()
   {
+    testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
     southPanel = new JPanel(new GridLayout(5, 5, 50, 15));
     resultPanel = new JPanel(new BorderLayout());
     
     resultPanel.setVisible(false);
     
-    mainPanel.setPreferredSize(new Dimension(650,250));
+   //mainPanel.setPreferredSize(new Dimension(650,250));
    
     displayLabel = new JLabel(" ");
-    displayLabel.setPreferredSize(new Dimension(500, 250));
+    displayLabel.setPreferredSize(new Dimension(200, 75));
     resultDisplayArea = new JTextArea(" ");
     
     scroll = new JScrollPane(resultDisplayArea);
@@ -286,8 +288,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     mainPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
     inputTextField.setBorder(null);
-    this.add(mainPanel, BorderLayout.CENTER);
-    this.add(southPanel, BorderLayout.SOUTH);
+    
+    testPanel.add(mainPanel, BorderLayout.CENTER);
+    testPanel.add(southPanel, BorderLayout.SOUTH);
+    this.add(testPanel, BorderLayout.CENTER);
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
     setLocationRelativeTo(null);
@@ -397,7 +401,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     if (command.equals(">")) {
         
         resultButton.setVisible(false);
-        resultPanel.setPreferredSize(new Dimension(500,100));
+        //resultPanel.setPreferredSize(new Dimension(500,100));
         resultPanel.setVisible(true);
         pack();
         setLocationRelativeTo(null);
