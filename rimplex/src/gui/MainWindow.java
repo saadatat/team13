@@ -175,6 +175,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton.addKeyListener(this);
     fractionDisplayButton.addActionListener(this);
     fractionDisplayButton.addKeyListener(this);
+    inputTextField.addKeyListener(this);
     zero.addActionListener(this);
     one.addActionListener(this);
     two.addActionListener(this);
@@ -538,16 +539,20 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       inputTextField.setText(newText);
       
     }
+    
 
   }
   
 
   
-  ////////////Unused methods//////////////////////////////
+  
   @Override
   public void keyPressed(KeyEvent e)
   {
-
+    if (e.getKeyCode() == KeyEvent.VK_ENTER)
+    {
+      equalsEvent();
+    }
    
   }
 
