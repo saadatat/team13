@@ -227,7 +227,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     if (command.equals("+/-") && !inputField.equals(""))
     {
-      if (inputTextField.getText().charAt(0) != '-')
+      if (inputField.charAt(0) != '-')
       {
         inputTextField.setText("-" + inputField);
       }
