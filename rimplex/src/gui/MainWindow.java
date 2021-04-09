@@ -33,6 +33,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton multiplyButton;
   private JButton resetButton;
   private JButton subtractButton;
+  private JButton signButton;
 
   private JLabel displayLabel;
 
@@ -101,6 +102,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     multiplyButton = new JButton("x");
     divideButton = new JButton("/");
     equalsButton = new JButton("=");
+    signButton = new JButton("+/-");
     addButton.addActionListener(this);
     subtractButton.addActionListener(this);
     divideButton.addActionListener(this);
@@ -109,6 +111,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resetButton.addActionListener(this);
     clearButton.addActionListener(this);
     inputTextField.addKeyListener(this);
+    signButton.addActionListener(this);
   }
 
   /**
@@ -127,6 +130,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(multiplyButton);
     southPanel.add(divideButton);
     southPanel.add(equalsButton);
+    southPanel.add(signButton);
 
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(southPanel, BorderLayout.SOUTH);
@@ -220,54 +224,41 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       displayLabel.setText(" ");
       calculator.clear();
     }
-    
-    
+
+    if (command.equals("+/-") && !inputField.equals(""))
+    {
+      if (inputTextField.getText().charAt(0) != '-')
+      {
+        inputTextField.setText("-" + inputField);
+      }
+      else
+      {
+        inputTextField.setText(inputField.substring(1, inputField.length()));
+      }
+    }
+
     /**
-    if (command.equals("0")) {
-      inputTextField.setText("0");
-    }
-    
-    if (command.equals("1")) {
-      inputTextField.setText("1");
-    }
-    
-    if (command.equals("2")) {
-      inputTextField.setText("2");
-    }
-    
-    if (command.equals("3")) {
-      inputTextField.setText("3");
-    }
-    
-    if (command.equals("4")) {
-      inputTextField.setText("4");
-    }
-    
-    if (command.equals("5")) {
-      inputTextField.setText("5");
-    }
-    
-    if (command.equals("6")) {
-      inputTextField.setText("6");
-    }
-    
-    if (command.equals("7")) {
-      inputTextField.setText("7");
-    }
-    
-    if (command.equals("8")) {
-      inputTextField.setText("8");
-    }
-    
-    if (command.equals("9")) {
-      inputTextField.setText("9");
-    }
-    if (command.equals("(")) {
-      inputTextField.setText("(");
-    }
-    if (command.equals(")")) {
-      inputTextField.setText(")");
-    }**/
+     * if (command.equals("0")) { inputTextField.setText("0"); }
+     * 
+     * if (command.equals("1")) { inputTextField.setText("1"); }
+     * 
+     * if (command.equals("2")) { inputTextField.setText("2"); }
+     * 
+     * if (command.equals("3")) { inputTextField.setText("3"); }
+     * 
+     * if (command.equals("4")) { inputTextField.setText("4"); }
+     * 
+     * if (command.equals("5")) { inputTextField.setText("5"); }
+     * 
+     * if (command.equals("6")) { inputTextField.setText("6"); }
+     * 
+     * if (command.equals("7")) { inputTextField.setText("7"); }
+     * 
+     * if (command.equals("8")) { inputTextField.setText("8"); }
+     * 
+     * if (command.equals("9")) { inputTextField.setText("9"); } if (command.equals("(")) {
+     * inputTextField.setText("("); } if (command.equals(")")) { inputTextField.setText(")"); }
+     **/
 
   }
 
