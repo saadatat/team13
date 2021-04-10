@@ -380,19 +380,15 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       else if (calculator.getLeftOperand() != null
           && !calculator.getLeftOperand().trim().equals(""))
       {
-        if (!(inputField.equals("") && (calculator.getRightOperand() == null
-            || calculator.getRightOperand().trim().equals(""))))
+        if (!inputField.equals("") && (calculator.getRightOperand() == null
+            || calculator.getRightOperand().trim().equals("")))
         {
           calculator.setRightOperand(inputField);
-          displayLabel.setText(displayLabel.getText()
-              + calculator.formatDisplayOperand(calculator.getRightOperand()));
-
-        }
-        else
-        {
+          calculator.formResult();
           calculator.setOperator(command);
-          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
-              + calculator.getOperator());
+          calculator.setLeftOperand(calculator.getResult());
+          displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
+
         }
       }
       inputTextField.setText("");
