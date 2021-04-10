@@ -76,7 +76,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(500, 350);
+    this.setSize(400, 300);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -113,7 +113,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
-    southPanel = new JPanel(new GridLayout(5, 5, 50, 15));
+    southPanel = new JPanel(new GridLayout(5, 5, 10, 5));
     resultPanel = new JPanel(new BorderLayout());
     
     resultPanel.setVisible(false);
@@ -201,7 +201,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setComponents()
   {
-    Color lightBlue = new Color(183, 225, 232);
+    Color lightBlue = new Color(210, 237, 255, 255);
+    Color gray = new Color(204,204,204,255);
+    Color yellow = new Color(131,139,82,255);
+    Color green = new Color(99,164,157,255);
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
@@ -287,9 +290,23 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     
     resultDisplayArea.setBackground(lightBlue);
-
     mainPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
+    testPanel.setBackground(gray);
+    southPanel.setBackground(gray);
+    resultPanel.setBackground(gray);
+    clearButton.setForeground(yellow);
+    signButton.setForeground(yellow);
+    addButton.setForeground(green);
+   subtractButton.setForeground(green);
+    multiplyButton.setForeground(green);
+    subtractButton.setForeground(green);
+    equalsButton.setForeground(green);
+    resetButton.setForeground(green);
+    
+    
+    
+    
     inputTextField.setBorder(null);
     
     resultPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
