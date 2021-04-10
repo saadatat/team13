@@ -383,12 +383,16 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
         if (!inputField.equals("") && (calculator.getRightOperand() == null
             || calculator.getRightOperand().trim().equals("")))
         {
+          String resultString = calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator();
           calculator.setRightOperand(inputField);
+          resultString+= calculator.formatDisplayOperand(calculator.getRightOperand());
           calculator.formResult();
+          resultString+= "=" + calculator.getResult();
           calculator.setOperator(command);
           calculator.setLeftOperand(calculator.getResult());
           displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
-
+          resultHistory +=  resultString + "\n";
+          resultDisplayArea.setText(resultHistory);
         }
       }
       inputTextField.setText("");
