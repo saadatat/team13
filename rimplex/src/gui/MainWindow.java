@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 
 import calculations.Calculator;
 
@@ -75,7 +76,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(450, 300);
+    this.setSize(500, 350);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -117,16 +118,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     resultPanel.setVisible(false);
     
-   //mainPanel.setPreferredSize(new Dimension(650,250));
+  
    
     displayLabel = new JLabel(" ");
-    displayLabel.setPreferredSize(new Dimension(200, 75));
+   
     resultDisplayArea = new JTextArea(" ");
     
     scroll = new JScrollPane(resultDisplayArea);
-    scroll.setPreferredSize(new Dimension(400,300));
+    scroll.setPreferredSize(new Dimension(300,200));
+    
+    
     inputTextField = new JTextField("");
-    inputTextField.setPreferredSize(new Dimension(100, 30));
+    
     inputTextField.setEditable(false);
     inputTextField.addKeyListener(this);
     displayLabel.addKeyListener(this);
@@ -189,7 +192,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight.addActionListener(this);
     nine.addActionListener(this);
   
- 
+
     
   }
 
@@ -289,8 +292,18 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     inputTextField.setBackground(lightBlue);
     inputTextField.setBorder(null);
     
+    resultPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
+    
+    testPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
+    southPanel.setBorder(new EmptyBorder( 10, 10, 10, 30));
+    
+    JLabel rimplexHolder = new JLabel("Rimplex Logo Goes here");
+    rimplexHolder.setPreferredSize(new Dimension(100, 50));
+    mainPanel.setPreferredSize(new Dimension(100, 50));
+    testPanel.add(rimplexHolder, BorderLayout.NORTH);
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(southPanel, BorderLayout.SOUTH);
+    testPanel.add(resultButton, BorderLayout.EAST);
     this.add(testPanel, BorderLayout.CENTER);
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
@@ -401,7 +414,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     if (command.equals(">")) {
         
         resultButton.setVisible(false);
-        //resultPanel.setPreferredSize(new Dimension(500,100));
+        
         resultPanel.setVisible(true);
         pack();
         setLocationRelativeTo(null);
