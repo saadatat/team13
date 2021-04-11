@@ -27,7 +27,7 @@ import calculations.Calculator;
 /**
  * The main window for the Rimplex GUI.
  * 
- * @author Dylan Moreno, Kory Erdmann
+ * @author Dylan Moreno, Kory Erdmann, Arman Saadat
  * @version Rimplex 1.0
  */
 public class MainWindow extends JFrame implements ActionListener, KeyListener
@@ -182,15 +182,25 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton.addKeyListener(this);
     inputTextField.addKeyListener(this);
     zero.addActionListener(this);
+    zero.addKeyListener(this);
     one.addActionListener(this);
+    one.addKeyListener(this);
     two.addActionListener(this);
+    two.addKeyListener(this);
     three.addActionListener(this);
+    three.addKeyListener(this);
     four.addActionListener(this);
+    four.addKeyListener(this);
     five.addActionListener(this);
+    five.addKeyListener(this);
     six.addActionListener(this);
+    six.addKeyListener(this);
     seven.addActionListener(this);
+    seven.addKeyListener(this);
     eight.addActionListener(this);
+    eight.addKeyListener(this);
     nine.addActionListener(this);
+    nine.addKeyListener(this);
   
 
     
@@ -352,50 +362,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     }
     else if (operators.contains(command))
     {
-      if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
-      {
-        if (!inputField.equals(""))
-        {
-          calculator.setLeftOperand(inputField);
-          calculator.setOperator(command);
-          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
-              + calculator.getOperator());
-        }
-        else if (result == null || result.trim().equals(""))
-        {
-          calculator.setLeftOperand("0+0i");
-          calculator.setOperator(command);
-          displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
-              + calculator.getOperator());
-        }
-        else
-        {
-
-          calculator.setLeftOperand(result);
-          calculator.setOperator(command);
-          displayLabel
-              .setText(calculator.formatDisplayOperand(calculator.getLeftOperand()) + command);
-        }
-      }
-      else if (calculator.getLeftOperand() != null
-          && !calculator.getLeftOperand().trim().equals(""))
-      {
-        if (!inputField.equals("") && (calculator.getRightOperand() == null
-            || calculator.getRightOperand().trim().equals("")))
-        {
-          String resultString = calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator();
-          calculator.setRightOperand(inputField);
-          resultString+= calculator.formatDisplayOperand(calculator.getRightOperand());
-          calculator.formResult();
-          resultString+= "=" + calculator.getResult();
-          calculator.setOperator(command);
-          calculator.setLeftOperand(calculator.getResult());
-          displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
-          resultHistory +=  resultString + "\n";
-          resultDisplayArea.setText(resultHistory);
-        }
-      }
-      inputTextField.setText("");
+      operationEvent(command);
+     
     }
     else if (command.equals("="))
     {
@@ -539,6 +507,59 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       resultDisplayArea.setText(resultHistory);
     }
   }
+  
+  public void operationEvent(String command)
+  {
+    String result = calculator.getResult();
+    String inputField = inputTextField.getText().trim();
+    inputField = inputField.replace("𝑖", "i");
+    
+    if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
+    {
+      if (!inputField.equals(""))
+      {
+        calculator.setLeftOperand(inputField);
+        calculator.setOperator(command);
+        displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
+            + calculator.getOperator());
+      }
+      else if (result == null || result.trim().equals(""))
+      {
+        calculator.setLeftOperand("0+0i");
+        calculator.setOperator(command);
+        displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
+            + calculator.getOperator());
+      }
+      else
+      {
+
+        calculator.setLeftOperand(result);
+        calculator.setOperator(command);
+        displayLabel
+            .setText(calculator.formatDisplayOperand(calculator.getLeftOperand()) + command);
+      }
+    }
+    else if (calculator.getLeftOperand() != null
+        && !calculator.getLeftOperand().trim().equals(""))
+    {
+      if (!inputField.equals("") && (calculator.getRightOperand() == null
+          || calculator.getRightOperand().trim().equals("")))
+      {
+        String resultString = calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator();
+        calculator.setRightOperand(inputField);
+        System.out.println(calculator.getRightOperand());
+        resultString+= calculator.formatDisplayOperand(calculator.getRightOperand());
+        calculator.formResult();
+        resultString+= "=" + calculator.getResult();
+        calculator.setOperator(command);
+        calculator.setLeftOperand(calculator.getResult());
+        displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
+        resultHistory +=  resultString + "\n";
+        resultDisplayArea.setText(resultHistory);
+      }
+    }
+    inputTextField.setText("");
+  }
 
   @Override
   public void keyTyped(KeyEvent e)
@@ -573,6 +594,48 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       inputTextField.setText(newText);
       
     }
+    
+    if(e.getKeyChar() == '*')
+    {
+      
+      operationEvent("x");
+    }
+    
+    if(e.getKeyChar() == '/')
+    {
+      
+      operationEvent("/");
+    }
+    
+    
+    if(e.getKeyChar() == '.')
+    {
+      String newText = inputTextField.getText().concat(".");
+      inputTextField.setText(newText);
+      
+    }
+    
+    if(e.getKeyChar() == 10)
+    {
+      equalsEvent();
+      
+    }
+    
+    if(e.getKeyChar() == '(')
+    {
+      String newText = inputTextField.getText().concat("(");
+      inputTextField.setText(newText);
+      
+    }
+    
+    if(e.getKeyChar() == ')')
+    {
+      String newText = inputTextField.getText().concat(")");
+      inputTextField.setText(newText);
+      
+    }
+    
+    
     
 
   }
