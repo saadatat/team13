@@ -9,9 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +40,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private static final long serialVersionUID = 2740437090361841747L;
   private Calculator calculator;
   private JButton addButton;
+  private JButton imaginaryButton;
   private JButton clearButton;
   private JButton divideButton;
   private JButton equalsButton;
@@ -117,8 +123,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultPanel = new JPanel(new BorderLayout());
     
     resultPanel.setVisible(false);
-    
-  
    
     displayLabel = new JLabel(" ");
    
@@ -139,6 +143,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
+    imaginaryButton = new JButton("𝑖");
     subtractButton = new JButton("-");
     multiplyButton = new JButton("x");
     divideButton = new JButton("/");
@@ -160,6 +165,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     addButton.addActionListener(this);
     this.addKeyListener(this);
     addButton.addKeyListener(this);
+    imaginaryButton.addActionListener(this);
+    imaginaryButton.addKeyListener(this);
     subtractButton.addActionListener(this);
     subtractButton.addKeyListener(this);
     divideButton.addActionListener(this);
@@ -215,6 +222,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     Color gray = new Color(204,204,204,255);
     Color yellow = new Color(131,139,82,255);
     Color green = new Color(99,164,157,255);
+    BufferedImage rimplexLogo = null;
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
@@ -238,6 +246,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(seven);
     southPanel.add(eight);
     southPanel.add(nine);
+    southPanel.add(imaginaryButton);
     
     southPanel.add(resultButton);
     
@@ -270,6 +279,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     multiplyButton.setContentAreaFilled(false);
     divideButton.setContentAreaFilled(false);
     addButton.setContentAreaFilled(false);
+    imaginaryButton.setContentAreaFilled(false);
     multiplyButton.setContentAreaFilled(false);
     subtractButton.setContentAreaFilled(false);
     fractionDisplayButton.setContentAreaFilled(false);
@@ -295,6 +305,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     divideButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     multiplyButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    imaginaryButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -324,7 +335,17 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     testPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
     southPanel.setBorder(new EmptyBorder( 10, 10, 10, 30));
     
-    JLabel rimplexHolder = new JLabel("Rimplex Logo Goes here");
+    try
+    {
+     rimplexLogo = ImageIO.read(new File("logoRimplex.png"));
+     
+    }
+    catch (IOException e)
+    {
+      System.out.println("HI");
+    }
+    
+    JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(100, 50));
     mainPanel.setPreferredSize(new Dimension(100, 50));
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
@@ -472,6 +493,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     if (command.equals("9"))
     {
       inputTextField.setText(inputField += "9");
+    }
+    if (command.equals("𝑖"))
+    {
+      inputTextField.setText(inputField += "𝑖");
     }
 
    
