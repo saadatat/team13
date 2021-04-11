@@ -426,7 +426,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
 
     if (command.equals("0"))
     {
-      inputTextField.setText("0");
+      inputTextField.setText(inputField += "0");
     }
 
     if (command.equals("1"))
