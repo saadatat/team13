@@ -48,8 +48,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton resetButton;
   private JButton subtractButton;
   private JButton signButton;
-  private JButton resultButton;
   private JButton fractionDisplayButton;
+  private JButton leftParenthesisButton;
+  private JButton rightParenthesisButton;
+  private JButton resultButton;
   private JLabel displayLabel;
   private JTextArea resultDisplayArea;
   private JPanel mainPanel;
@@ -162,6 +164,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight = new JButton("8");
     nine = new JButton("9");
     fractionDisplayButton = new JButton("Format ( / )");
+    leftParenthesisButton = new JButton("(");
+    rightParenthesisButton = new JButton(")");
     addButton.addActionListener(this);
     this.addKeyListener(this);
     addButton.addKeyListener(this);
@@ -183,6 +187,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     signButton.addKeyListener(this);
     resultButton.addActionListener(this);
     resultButton.addKeyListener(this);
+    leftParenthesisButton.addActionListener(this);
+    leftParenthesisButton.addKeyListener(this);
+    rightParenthesisButton.addActionListener(this);
+    rightParenthesisButton.addKeyListener(this);
     hideResultButton.addActionListener(this);
     hideResultButton.addKeyListener(this);
     fractionDisplayButton.addActionListener(this);
@@ -247,6 +255,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(eight);
     southPanel.add(nine);
     southPanel.add(imaginaryButton);
+    southPanel.add(leftParenthesisButton);
+    southPanel.add(rightParenthesisButton);
     
     southPanel.add(resultButton);
     
@@ -282,6 +292,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     imaginaryButton.setContentAreaFilled(false);
     multiplyButton.setContentAreaFilled(false);
     subtractButton.setContentAreaFilled(false);
+    leftParenthesisButton.setContentAreaFilled(false);
+    rightParenthesisButton.setContentAreaFilled(false);
     fractionDisplayButton.setContentAreaFilled(false);
     signButton.setContentAreaFilled(false);
     resultButton.setContentAreaFilled(false);
@@ -309,6 +321,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     
     resultDisplayArea.setBackground(lightBlue);
     mainPanel.setBackground(lightBlue);
@@ -497,6 +511,14 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     if (command.equals("𝑖"))
     {
       inputTextField.setText(inputField += "𝑖");
+    }
+    if (command.equals("("))
+    {
+      inputTextField.setText(inputField += "(");
+    }
+    if (command.equals(")"))
+    {
+      inputTextField.setText(inputField += ")");
     }
 
    
