@@ -372,8 +372,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resetButton.setForeground(green);
     decimal.setForeground(green);
     backspace.setForeground(yellow);
-    
-    
+    fractionDisplayButton.setForeground(green);
+    leftParenthesisButton.setForeground(green);
+    rightParenthesisButton.setForeground(green);
+    divideButton.setForeground(green);
+    decimal.setForeground(green);
     
     
     //Set borders
@@ -563,7 +566,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       inputTextField.setText(inputField += ")");
     }
 
-   
+    if (command.equals(".")) {
+      inputTextField.setText(inputField+= ".");
+    }
+    if (command.equals("<-") && inputField.length() > 0) {
+      inputTextField.setText(inputField.substring(0, inputField.length()-1));
+    }
 
   }
 
