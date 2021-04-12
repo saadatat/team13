@@ -237,32 +237,42 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
 
-    southPanel.add(resetButton);
-    southPanel.add(clearButton);
-    southPanel.add(addButton);
-    southPanel.add(subtractButton);
-    southPanel.add(multiplyButton);
-    southPanel.add(divideButton);
-    southPanel.add(equalsButton);
     southPanel.add(signButton);
-    southPanel.add(fractionDisplayButton);
-    southPanel.add(zero);
+    southPanel.add(clearButton);
+    southPanel.add(backspace);
+    southPanel.add(addButton);
+    southPanel.add(resetButton);
     southPanel.add(one);
     southPanel.add(two);
     southPanel.add(three);
+    southPanel.add(subtractButton);
+    southPanel.add(fractionDisplayButton);
     southPanel.add(four);
     southPanel.add(five);
     southPanel.add(six);
+    southPanel.add(multiplyButton);
+    southPanel.add(leftParenthesisButton);
     southPanel.add(seven);
     southPanel.add(eight);
     southPanel.add(nine);
-    southPanel.add(imaginaryButton);
-
-    southPanel.add(decimal);
-    southPanel.add(backspace);
-
-    southPanel.add(leftParenthesisButton);
+    southPanel.add(divideButton);
     southPanel.add(rightParenthesisButton);
+    southPanel.add(zero);
+    southPanel.add(imaginaryButton);
+    southPanel.add(equalsButton);
+    southPanel.add(decimal);
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+    
+    
 
     
     southPanel.add(resultButton);
