@@ -74,7 +74,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton eight;
   private JButton nine;
   private JPanel testPanel;
- 
+ private JButton backspace;
+ private JButton decimal;
   /**
    * Default Constructor.
    */
@@ -171,6 +172,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     seven = new JButton("7");
     eight = new JButton("8");
     nine = new JButton("9");
+    backspace = new JButton("<-");
+    decimal = new JButton(".");
     fractionDisplayButton = new JButton("Format ( / )");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
@@ -199,6 +202,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     clearButton.addKeyListener(this);
     signButton.addActionListener(this);
     signButton.addKeyListener(this);
+    backspace.addActionListener(this);
+    decimal.addActionListener(this);
     resultButton.addActionListener(this);
     resultButton.addKeyListener(this);
     leftParenthesisButton.addActionListener(this);
@@ -255,30 +260,32 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     //Add to main panel
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
-    
-    //Add buttons to south panel
-    southPanel.add(resetButton);
-    southPanel.add(clearButton);
-    southPanel.add(addButton);
-    southPanel.add(subtractButton);
-    southPanel.add(multiplyButton);
-    southPanel.add(divideButton);
-    southPanel.add(equalsButton);
+
     southPanel.add(signButton);
-    southPanel.add(fractionDisplayButton);
-    southPanel.add(zero);
+    southPanel.add(clearButton);
+    southPanel.add(backspace);
+    southPanel.add(addButton);
+    southPanel.add(resetButton);
     southPanel.add(one);
     southPanel.add(two);
     southPanel.add(three);
+    southPanel.add(subtractButton);
+    southPanel.add(fractionDisplayButton);
     southPanel.add(four);
     southPanel.add(five);
     southPanel.add(six);
+    southPanel.add(multiplyButton);
+    southPanel.add(leftParenthesisButton);
     southPanel.add(seven);
     southPanel.add(eight);
     southPanel.add(nine);
-    southPanel.add(imaginaryButton);
-    southPanel.add(leftParenthesisButton);
+    southPanel.add(divideButton);
     southPanel.add(rightParenthesisButton);
+    southPanel.add(zero);
+    southPanel.add(imaginaryButton);
+    southPanel.add(equalsButton);
+    southPanel.add(decimal);
+    
     southPanel.add(resultButton);
     
     //Misc Configurations
@@ -293,6 +300,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     //Set content area false
     resultButton.setContentAreaFilled(false);
+    decimal.setContentAreaFilled(false);
+    backspace.setContentAreaFilled(false);
     zero.setContentAreaFilled(false);
     one.setContentAreaFilled(false);
     two.setContentAreaFilled(false);
@@ -342,6 +351,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    backspace.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    decimal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     
@@ -357,9 +368,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     addButton.setForeground(green);
     subtractButton.setForeground(green);
     multiplyButton.setForeground(green);
-    subtractButton.setForeground(green);
     equalsButton.setForeground(green);
     resetButton.setForeground(green);
+    decimal.setForeground(green);
+    backspace.setForeground(yellow);
+    
     
     
     
