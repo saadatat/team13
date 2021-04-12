@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -85,7 +86,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(400, 300);
+    this.setSize(350, 400);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -122,7 +123,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
-    southPanel = new JPanel(new GridLayout(5, 5, 10, 5));
+    southPanel = new JPanel(new GridLayout(5, 0));
     resultPanel = new JPanel(new BorderLayout());
     
     resultPanel.setVisible(false);
@@ -132,7 +133,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultDisplayArea = new JTextArea(" ");
     
     scroll = new JScrollPane(resultDisplayArea);
-    scroll.setPreferredSize(new Dimension(300,200));
+   scroll.setPreferredSize(new Dimension(300,200));
     
     
     inputTextField = new JTextField("");
@@ -237,45 +238,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
 
-    southPanel.add(signButton);
-    southPanel.add(clearButton);
-    southPanel.add(backspace);
-    southPanel.add(addButton);
-    southPanel.add(resetButton);
-    southPanel.add(one);
-    southPanel.add(two);
-    southPanel.add(three);
-    southPanel.add(subtractButton);
-    southPanel.add(fractionDisplayButton);
-    southPanel.add(four);
-    southPanel.add(five);
-    southPanel.add(six);
-    southPanel.add(multiplyButton);
-    southPanel.add(leftParenthesisButton);
-    southPanel.add(seven);
-    southPanel.add(eight);
-    southPanel.add(nine);
-    southPanel.add(divideButton);
-    southPanel.add(rightParenthesisButton);
-    southPanel.add(zero);
-    southPanel.add(imaginaryButton);
-    southPanel.add(equalsButton);
-    southPanel.add(decimal);
-    
-    
-    
-    
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    southPanel.add(resultButton);
     
     resultButton.setBorderPainted(false);
     resultButton.setContentAreaFilled( false );
@@ -289,7 +251,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     resultPanel.add(scroll);
     
-    
+   
     resultButton.setContentAreaFilled(false);
     decimal.setContentAreaFilled(false);
     backspace.setContentAreaFilled(false);
@@ -373,6 +335,83 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     decimal.setForeground(green);
     
     
+    resultButton.setPreferredSize(new Dimension(30,30));
+    zero.setPreferredSize(new Dimension(75,30));
+    one.setPreferredSize(new Dimension(30,30));
+    two.setPreferredSize(new Dimension(30,30));
+    three.setPreferredSize(new Dimension(30,30));
+    four.setPreferredSize(new Dimension(30,30));
+    five.setPreferredSize(new Dimension(30,30));
+    six.setPreferredSize(new Dimension(30,30));
+    seven.setPreferredSize(new Dimension(30,30));
+    eight.setPreferredSize(new Dimension(30,30));
+    nine.setPreferredSize(new Dimension(30,30));
+    equalsButton.setPreferredSize(new Dimension(30,30));
+    resetButton.setPreferredSize(new Dimension(30,30));
+    clearButton.setPreferredSize(new Dimension(30,30));
+    divideButton.setPreferredSize(new Dimension(30,30));
+    multiplyButton.setPreferredSize(new Dimension(30,30));
+    addButton.setPreferredSize(new Dimension(30,30));
+    imaginaryButton.setPreferredSize(new Dimension(30,30));
+    subtractButton.setPreferredSize(new Dimension(30,30));
+    fractionDisplayButton.setPreferredSize(new Dimension(30,30));
+    signButton.setPreferredSize(new Dimension(30,30));
+
+    JPanel test1 = new JPanel(new FlowLayout( FlowLayout.CENTER, 15, 15));
+    JPanel test2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    JPanel test3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    JPanel test4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    JPanel test5 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    
+    
+   test1.add(signButton);
+   test1.add(clearButton);
+   test1.add(backspace);
+   test1.add(addButton);
+   test1.add(resetButton);
+   southPanel.add(test1);
+   test2.add(one);
+   test2.add(two);
+   test2.add(three);
+   test2.add(subtractButton);
+   test2.add(fractionDisplayButton);
+   southPanel.add(test2);
+   test3.add(four);
+   test3.add(five);
+   test3.add(six);
+   test3.add(multiplyButton);
+   test3.add(leftParenthesisButton);
+   southPanel.add(test3);
+   test4.add(seven);
+   test4.add(eight);
+   test4.add(nine);
+   test4.add(divideButton);
+   test4.add(rightParenthesisButton);
+   southPanel.add(test4);
+   test5.add(zero);
+   test5.add(imaginaryButton);
+   test5.add(equalsButton);
+   test5.add(decimal);
+   test1.setBackground(gray); 
+   test2.setBackground(gray); 
+   test3.setBackground(gray); 
+   test4.setBackground(gray); 
+   test5.setBackground(gray); 
+   southPanel.add(test5);
+   
+    backspace.setPreferredSize(new Dimension(30,30));
+    decimal.setPreferredSize(new Dimension(30,30));
+    
+    
+    leftParenthesisButton.setPreferredSize(new Dimension(30,30));
+    rightParenthesisButton.setPreferredSize(new Dimension(30,30));
+    leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    
+    
+    
+    southPanel.setPreferredSize(new Dimension(300,250));
+    mainPanel.setPreferredSize(new Dimension(50,50));
     
     inputTextField.setBorder(null);
     
@@ -393,7 +432,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(100, 50));
-    mainPanel.setPreferredSize(new Dimension(100, 50));
+    
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(southPanel, BorderLayout.SOUTH);
