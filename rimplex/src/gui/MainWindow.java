@@ -37,6 +37,8 @@ import calculations.Calculator;
  */
 public class MainWindow extends JFrame implements ActionListener, KeyListener
 {
+  
+  //Declare JButton
   private static final long serialVersionUID = 2740437090361841747L;
   private Calculator calculator;
   private JButton addButton;
@@ -119,29 +121,35 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void createComponents()
   {
+    
+    //Create the panels
     testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
     southPanel = new JPanel(new GridLayout(5, 5, 10, 5));
     resultPanel = new JPanel(new BorderLayout());
     
+    //Set Visibility
     resultPanel.setVisible(false);
    
+    //Set display labels to nothing to start
     displayLabel = new JLabel(" ");
    
     resultDisplayArea = new JTextArea(" ");
     
+    //Add scroll panel
     scroll = new JScrollPane(resultDisplayArea);
     scroll.setPreferredSize(new Dimension(300,200));
     
-    
+    //Set to nothing
     inputTextField = new JTextField("");
     
+    //Configurations
     inputTextField.setEditable(false);
     inputTextField.addKeyListener(this);
     displayLabel.addKeyListener(this);
     
     
-    
+    //Instantiate the JButtons
     resetButton = new JButton("R");
     clearButton = new JButton("C");
     addButton = new JButton("+");
@@ -166,6 +174,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton = new JButton("Format ( / )");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
+    
+    
+    /**
+     * Add action listeners(so it reacts when pressed) 
+     * and key listeners (so you can type and use buttons at once)
+     */
     addButton.addActionListener(this);
     this.addKeyListener(this);
     addButton.addKeyListener(this);
@@ -226,15 +240,23 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setComponents()
   {
+    //Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204,204,204,255);
     Color yellow = new Color(131,139,82,255);
     Color green = new Color(99,164,157,255);
+    
+    //Image stuff
     BufferedImage rimplexLogo = null;
+    
+    //Set the layout for main pane;
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    
+    //Add to main panel
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
-
+    
+    //Add buttons to south panel
     southPanel.add(resetButton);
     southPanel.add(clearButton);
     southPanel.add(addButton);
@@ -257,21 +279,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(imaginaryButton);
     southPanel.add(leftParenthesisButton);
     southPanel.add(rightParenthesisButton);
-    
     southPanel.add(resultButton);
     
+    //Misc Configurations
     resultButton.setBorderPainted(false);
     resultButton.setContentAreaFilled( false );
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled( false );
-resultPanel.add(hideResultButton, BorderLayout.LINE_END);
-    
-
+    resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     resultDisplayArea.setEditable(false);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     resultPanel.add(scroll);
     
-    
+    //Set content area false
     resultButton.setContentAreaFilled(false);
     zero.setContentAreaFilled(false);
     one.setContentAreaFilled(false);
@@ -297,9 +317,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     fractionDisplayButton.setContentAreaFilled(false);
     signButton.setContentAreaFilled(false);
     resultButton.setContentAreaFilled(false);
-    hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
     
+    //Set border painted configurations
+    hideResultButton.setBorderPainted(false);
     resultButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     zero.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     one.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -324,6 +345,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     
+    //Set background for areas
     resultDisplayArea.setBackground(lightBlue);
     mainPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
@@ -333,7 +355,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     clearButton.setForeground(yellow);
     signButton.setForeground(yellow);
     addButton.setForeground(green);
-   subtractButton.setForeground(green);
+    subtractButton.setForeground(green);
     multiplyButton.setForeground(green);
     subtractButton.setForeground(green);
     equalsButton.setForeground(green);
@@ -341,14 +363,13 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     
     
     
-    
-    inputTextField.setBorder(null);
-    
-    resultPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
-    
+    //Set borders
+    inputTextField.setBorder(null); 
+    resultPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));  
     testPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
     southPanel.setBorder(new EmptyBorder( 10, 10, 10, 30));
     
+    //Add the rimplex png
     try
     {
      rimplexLogo = ImageIO.read(new File("logoRimplex.png"));
@@ -356,11 +377,14 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     }
     catch (IOException e)
     {
-      System.out.println("HI");
+      System.out.println("Rimplex logo png not working. Check Path?");
     }
     
+    //Add photo
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(100, 50));
+    
+    //Add everything to window
     mainPanel.setPreferredSize(new Dimension(100, 50));
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
     testPanel.add(mainPanel, BorderLayout.CENTER);
@@ -380,8 +404,13 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     Listener listener = Listener.getInstance();
   }
 
+  /**
+   *Method is for if a soft button is pressed.
+   */
   public void actionPerformed(ActionEvent e)
   {
+    
+   
     WarningDialog warningDialog = WarningDialog.getInstance();
     String inputField = inputTextField.getText().trim();
     inputField = inputField.replace("𝑖", "i");
@@ -525,6 +554,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
 
   }
 
+  
+  /**
+   * For if the equals soft button or enter key is pressed.
+   */
   public void equalsEvent()
   {
     String inputField = inputTextField.getText().trim();
@@ -555,6 +588,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     }
   }
   
+  /**
+   * For if an operation needs to be performed
+   * @param command the operation (+-/*)
+   */
   public void operationEvent(String command)
   {
     String result = calculator.getResult();
@@ -608,6 +645,10 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     inputTextField.setText("");
   }
 
+  
+  /**
+   * Key listeners for the physical keyboard
+   */
   @Override
   public void keyTyped(KeyEvent e)
   {
@@ -689,13 +730,15 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
   
 
   
-  
+  /**
+   * Key pressing listener for enter key.
+   */
   @Override
   public void keyPressed(KeyEvent e)
   {
     if (e.getKeyCode() == KeyEvent.VK_ENTER)
     {
-      equalsEvent();
+     equalsEvent();
     }
    
   }
