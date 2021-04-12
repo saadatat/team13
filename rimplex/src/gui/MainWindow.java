@@ -70,7 +70,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton eight;
   private JButton nine;
   private JPanel testPanel;
- 
+ private JButton backspace;
+ private JButton decimal;
   /**
    * Default Constructor.
    */
@@ -161,6 +162,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     seven = new JButton("7");
     eight = new JButton("8");
     nine = new JButton("9");
+    backspace = new JButton("<-");
+    decimal = new JButton(".");
     fractionDisplayButton = new JButton("Format ( / )");
     addButton.addActionListener(this);
     this.addKeyListener(this);
@@ -181,6 +184,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     clearButton.addKeyListener(this);
     signButton.addActionListener(this);
     signButton.addKeyListener(this);
+    backspace.addActionListener(this);
+    decimal.addActionListener(this);
     resultButton.addActionListener(this);
     resultButton.addKeyListener(this);
     hideResultButton.addActionListener(this);
@@ -208,9 +213,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight.addKeyListener(this);
     nine.addActionListener(this);
     nine.addKeyListener(this);
-  
-
-    
   }
 
   /**
@@ -247,6 +249,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(eight);
     southPanel.add(nine);
     southPanel.add(imaginaryButton);
+    southPanel.add(decimal);
+    southPanel.add(backspace);
     
     southPanel.add(resultButton);
     
@@ -255,6 +259,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled( false );
 resultPanel.add(hideResultButton, BorderLayout.LINE_END);
+
     
 
     resultDisplayArea.setEditable(false);
@@ -263,6 +268,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     
     
     resultButton.setContentAreaFilled(false);
+    decimal.setContentAreaFilled(false);
+    backspace.setContentAreaFilled(false);
     zero.setContentAreaFilled(false);
     one.setContentAreaFilled(false);
     two.setContentAreaFilled(false);
@@ -309,6 +316,9 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    backspace.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    decimal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    
     
     resultDisplayArea.setBackground(lightBlue);
     mainPanel.setBackground(lightBlue);
@@ -324,6 +334,9 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     subtractButton.setForeground(green);
     equalsButton.setForeground(green);
     resetButton.setForeground(green);
+    decimal.setForeground(green);
+    backspace.setForeground(yellow);
+    
     
     
     
