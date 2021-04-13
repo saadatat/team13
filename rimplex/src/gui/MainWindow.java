@@ -825,6 +825,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     if(e.getKeyChar() == '/')
     {
+      
       operationEvent("/");
     }
     
@@ -834,33 +835,24 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       if (!hasDecimal()) {
       String newText = inputField.concat(".");
       inputTextField.setText(newText);
+      }
     }
     
     if(e.getKeyChar() == 10)
     {
       equalsEvent();
+      
     }
+    
     if(e.getKeyChar() == '(')
     {
       String newText = inputField.concat("(");
       inputTextField.setText(newText);
+      
     }
+    
     if(e.getKeyChar() == ')')
     {
-      String newText = inputTextField.getText().concat(")");
-      inputTextField.setText(newText); 
-      WarningDialog warningDialog = WarningDialog.getInstance();
-      if (inputTextField.getText().contains("("))
-        {
-          String newText = inputField.concat(")");
-            inputTextField.setText(newText);
-        } else
-        {
-          warningDialog.displayDialog();
-          
-        }
-      
-      
       WarningDialog warningDialog = WarningDialog.getInstance();
       if (inputTextField.getText().contains("("))
         {
@@ -874,29 +866,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       
       
     }
-
-    
-    if(e.getKeyChar() == 8)
-    {
-      if (inputTextField.getText().length() != 0)
-      {
-      String newText = inputField.substring(0, inputField.length() - 1);
-      inputTextField.setText(newText);
-      }
-    }
-    
-
-    
-    if(e.getKeyChar() == 8)
-    {
-      if (inputTextField.getText().length() != 0)
-      {
-      String newText = inputField.substring(0, inputField.length() - 1);
-      inputTextField.setText(newText);
-      }
-    }
-    
-
     
     if(e.getKeyChar() == 8)
     {
@@ -910,7 +879,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   }
   
-
  public boolean hasDecimal() {
    String[] test = inputTextField.getText().split("\\+|-");
    if (test.length == 1 && test[0].contains(".")) {
@@ -939,6 +907,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       equalsEvent();
     }
+   
   }
 
   @Override
@@ -946,4 +915,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
   
   }
+  
+  
 }
