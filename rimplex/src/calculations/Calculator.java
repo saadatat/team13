@@ -298,7 +298,7 @@ public class Calculator
   /**
    * calls the appropriate calculation method.
    */
-  public void formResult()
+  public boolean formResult()
   {
     if (operator.equals("+") && validOperands())
     {
@@ -314,8 +314,15 @@ public class Calculator
     }
     else if (operator.equals("/") && validOperands())
     {
+      String[] test = rightOperand.split("\\+|-");
+      
+      if (rightOperand == null || test[0].equals("0")) {
+        clear();
+        return false;
+      }
       divide();
     }
+    return true;
   }
 
   /**
