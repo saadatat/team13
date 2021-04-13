@@ -628,7 +628,6 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     
     if(e.getKeyChar() == '/')
     {
-      
       operationEvent("/");
     }
     
@@ -637,36 +636,23 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     {
       String newText = inputTextField.getText().concat(".");
       inputTextField.setText(newText);
-      
     }
     
     if(e.getKeyChar() == 10)
     {
       equalsEvent();
-      
     }
-    
     if(e.getKeyChar() == '(')
     {
       String newText = inputTextField.getText().concat("(");
       inputTextField.setText(newText);
-      
     }
-    
     if(e.getKeyChar() == ')')
     {
       String newText = inputTextField.getText().concat(")");
-      inputTextField.setText(newText);
-      
+      inputTextField.setText(newText); 
     }
-    
-    
-    
-
   }
-  
-
-  
   
   @Override
   public void keyPressed(KeyEvent e)
@@ -675,7 +661,6 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     {
       equalsEvent();
     }
-   
   }
 
   @Override
@@ -683,6 +668,4 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
   {
   
   }
-  
-  
 }
