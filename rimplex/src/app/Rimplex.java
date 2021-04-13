@@ -28,6 +28,7 @@ public class Rimplex implements Runnable
     catch (InterruptedException | InvocationTargetException e)
     {
       System.out.println("Unable to start the GUI.");
+      System.out.println(e);
     }
   }
 
