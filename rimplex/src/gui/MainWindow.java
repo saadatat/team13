@@ -830,8 +830,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     if(e.getKeyChar() == '-')
     {
-      if(!inputTextField.getText().contains("(") || inputTextField.getText().contains(")"))
+     
+      if( !inputTextField.getText().isBlank() && (!inputTextField.getText().contains("(") || inputTextField.getText().contains(")") ) )
       {
+        
         operationEvent("-");
       }
       else {
