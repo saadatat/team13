@@ -250,6 +250,7 @@ public class Calculator
   public void add()
   {
     result = Operations.addition(leftOperand, rightOperand);
+    
     resultResetHelper();
   }
 

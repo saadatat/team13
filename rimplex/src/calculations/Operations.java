@@ -1,6 +1,7 @@
 package calculations;
 
 import java.text.NumberFormat;
+import java.util.Arrays;
 
 public class Operations
 {
@@ -147,13 +148,26 @@ public class Operations
    *          The first complex number to parse, must not be in +- form.
    * @param operandTwo
    *          The second complex number to parse, must not be in +- form.
-   * @return returns the parsed strings as indididual doubleegers in a 2D array.
+   * @return returns the parsed strings as individual doubleegers in a 2D array.
    */
   private static double[][] parseTodouble(String operandOneIn, String operandTwoIn)
   {
+   
+    if(operandOneIn.equals("i"))
+    {
+  
+      operandOneIn = "1i";
+    }
+    
+    if(operandTwoIn.equals("i"))
+    {
+      operandTwoIn = "1i";
+    }
+    
     String operandOne = operandOneIn.replace("+-", "-");
     String operandTwo = operandTwoIn.replace("+-", "-");
-    
+    boolean neg1 = false;
+    boolean neg2 = false;
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -162,7 +176,8 @@ public class Operations
     double[] op2double;
     String[] op1;
     String[] op2;
-
+    String[] temp;
+    
     if (!operandOne.contains("i"))
     {
       operandOne += "+0i";
@@ -172,13 +187,17 @@ public class Operations
       operandTwo += "+0i";
     }
     
-    // Split the strings doubleo two doubles, the one before '+'/'-' and one before 'i'
+    
+    
+    
+    // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
 
     // Checks if first operand has negative values
     if (operandOne.charAt(0) == '-')
     {
       op1 = operandOne.substring(1).split("\\+|i|-");
       negModifier1A = -1;
+      neg1 = true;
     }
     else
       op1 = operandOne.split("\\+|i|-");
@@ -192,6 +211,7 @@ public class Operations
     {
       op2 = operandTwo.substring(1).split("\\+|i|-");
       negModifier2A = -1;
+      neg2 = true;
     }
     else
       op2 = operandTwo.split("\\+|i|-");
@@ -200,7 +220,33 @@ public class Operations
     if (operandTwo.substring(1).contains("-"))
       negModifier2B = -1;
 
-    
+  
+    if(op1.length == 1)
+    {
+      op1 = Arrays.copyOf(op1, 2);
+      if (!neg1) 
+      {
+        op1[1] = op1[0];
+      } else {
+        op1[1] = "-" + op1[0];
+        System.out.println(op1[1]);
+      }
+      
+      op1[0] = "0";
+    }
+    if(op2.length == 1)
+    {
+      op2 = Arrays.copyOf(op2, 2);
+      if (!neg2) 
+      {
+        op2[1] = op2[0];
+      } else {
+        op2[1] = "-" + op2[0];
+      }
+      op2[0] = "0";
+    }
+    neg1 = false;
+    neg2 = false;
     
     // Converting parsed string to doubleegers
     op1double = new double[2]; // Always make an array the size of two.

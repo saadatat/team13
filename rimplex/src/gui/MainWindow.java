@@ -73,8 +73,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton eight;
   private JButton nine;
   private JPanel testPanel;
- private JButton backspace;
- private JButton decimal;
+  private JButton backspace;
+  private JButton decimal;
   /**
    * Default Constructor.
    */
@@ -133,14 +133,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultDisplayArea = new JTextArea(" ");
     
     scroll = new JScrollPane(resultDisplayArea);
-   scroll.setPreferredSize(new Dimension(300,200));
+    scroll.setPreferredSize(new Dimension(300,200));
     
     
     inputTextField = new JTextField("");
     
     //Configurations
     inputTextField.setEditable(false);
-    inputTextField.addKeyListener(this);
     displayLabel.addKeyListener(this);
     
     
@@ -171,6 +170,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton = new JButton("Format ( / )");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
+    
+    //add listeners
     addButton.addActionListener(this);
     this.addKeyListener(this);
     addButton.addKeyListener(this);
@@ -230,15 +231,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setComponents()
   {
+    
+    //Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204,204,204,255);
     Color yellow = new Color(131,139,82,255);
     Color green = new Color(99,164,157,255);
     BufferedImage rimplexLogo = null;
+    //Layout
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    
+    //Add buttons
     mainPanel.add(displayLabel);
     mainPanel.add(inputTextField);
-
     southPanel.add(signButton);
     southPanel.add(clearButton);
     southPanel.add(backspace);
@@ -270,7 +275,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultButton.setContentAreaFilled( false );
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled( false );
-resultPanel.add(hideResultButton, BorderLayout.LINE_END);
+    resultPanel.add(hideResultButton, BorderLayout.LINE_END);
 
     
 
@@ -278,8 +283,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     resultPanel.add(scroll);
     
-    //Set content area false
-   
+    //Set content area false  
     resultButton.setContentAreaFilled(false);
     decimal.setContentAreaFilled(false);
     backspace.setContentAreaFilled(false);
@@ -331,15 +335,12 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     subtractButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     fractionDisplayButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     signButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
     backspace.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     decimal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-    
-
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-    
+    //Set backroung/foreground
     resultDisplayArea.setBackground(lightBlue);
     mainPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
@@ -349,7 +350,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     clearButton.setForeground(yellow);
     signButton.setForeground(yellow);
     addButton.setForeground(green);
-   subtractButton.setForeground(green);
+    subtractButton.setForeground(green);
     multiplyButton.setForeground(green);
     subtractButton.setForeground(green);
     equalsButton.setForeground(green);
@@ -362,7 +363,7 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     divideButton.setForeground(green);
     decimal.setForeground(green);
     
-    
+    //Sizes
     resultButton.setPreferredSize(new Dimension(30,30));
     zero.setPreferredSize(new Dimension(75,30));
     one.setPreferredSize(new Dimension(30,30));
@@ -397,6 +398,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     testPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));
     southPanel.setBorder(new EmptyBorder( 10, 10, 10, 30));
     
+    
+    //set image
     try
     {
      rimplexLogo = ImageIO.read(new File("logoRimplex.png"));
@@ -575,6 +578,8 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
     if (command.equals("<-") && inputField.length() > 0) {
       inputTextField.setText(inputField.substring(0, inputField.length()-1));
     }
+    
+    
 
   }
 
@@ -735,7 +740,14 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       
     }
     
-    
+    if(e.getKeyChar() == 8)
+    {
+      if (inputTextField.getText().length() != 0)
+      {
+      String newText = inputTextField.getText().substring(0, inputTextField.getText().length() - 1);
+      inputTextField.setText(newText);
+      }
+    }
     
 
   }
