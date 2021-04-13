@@ -286,7 +286,7 @@ public class Operations
   
   public static String formatFractionDisplay(String incoming) {
     
-    String splits[] = incoming.split("\\+|-|i");
+   String splits[] = incoming.split("\\+|-|i");
     String splits2[];
     String splits3[];
     int digits1;
@@ -342,6 +342,48 @@ public class Operations
     return getGCD(number2, number1 % number2);
   }
   
+
+
+  public static String test(String operandOne, String operandTwo) {
+    
+    String quotient1;
+    String quotient2;
+    char operator = '+';
+  double[][] opdoubles = parseTodouble(operandOne, operandTwo);
+
+  double ac = opdoubles[0][0] * opdoubles[1][0];
+  double bd = opdoubles[0][1] * opdoubles[1][1];
+  double ad = opdoubles[0][0] * opdoubles[1][1];
+  double bc = opdoubles[0][1] * opdoubles[1][0];
+
+  double top1 = ac + bd;
+  double top2 = bc - ad;
+
+  double cSquare = (double) Math.pow(opdoubles[1][0], 2);
+  double dSquare = (double) Math.pow(opdoubles[1][1], 2);
+
+  double denominator = cSquare + dSquare;
+  
+  if (top1 == 0) {
+    quotient1 = "0";
+  }else {
+  int gcd1 = getGCD((int)top1, (int)denominator);
+  int returnTop = (int)top1/gcd1;
+  int returnDen = (int)denominator/gcd1;
+  quotient1 = returnTop + "/" + returnDen;
+  }
+  if(top2 == 0) {
+    quotient2 = "0";
+  }else {
+    int gcd1 = getGCD((int)top1, (int)denominator);
+    int returnTop = (int)top2/gcd1;
+    int returnDen = (int)denominator/gcd1;
+    quotient2 = returnTop + "/" + returnDen;
+  }
+
+
+  return quotient1 + operator + quotient2;
+  }
   
   
 }

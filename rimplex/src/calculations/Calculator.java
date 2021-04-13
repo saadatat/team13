@@ -277,12 +277,16 @@ public class Calculator
    */
   public void divide()
   {
-    result = Operations.divide(leftOperand, rightOperand);
+    if (fractionDisplay) {
+      result = Operations.test(leftOperand, rightOperand);
+    }else {
+      result = Operations.divide(leftOperand, rightOperand);
+    }
     resultResetHelper();
   }
   
   /**
-   * Helper method for whrn operations are called.
+   * Helper method for when operations are called.
    */
   private void resultResetHelper()
   {

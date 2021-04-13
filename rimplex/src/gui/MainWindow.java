@@ -167,7 +167,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     nine = new JButton("9");
     backspace = new JButton("<-");
     decimal = new JButton(".");
-    fractionDisplayButton = new JButton("Format ( / )");
+    fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
     
@@ -391,7 +391,54 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JPanel test3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
     JPanel test4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
     JPanel test5 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-    
+    test1.add(signButton);
+    test1.add(clearButton);
+    test1.add(backspace);
+    test1.add(addButton);
+    test1.add(resetButton);
+    southPanel.add(test1);
+    test2.add(one);
+    test2.add(two);
+    test2.add(three);
+    test2.add(subtractButton);
+    test2.add(fractionDisplayButton);
+    southPanel.add(test2);
+    test3.add(four);
+    test3.add(five);
+    test3.add(six);
+    test3.add(multiplyButton);
+    test3.add(leftParenthesisButton);
+    southPanel.add(test3);
+    test4.add(seven);
+    test4.add(eight);
+    test4.add(nine);
+    test4.add(divideButton);
+    test4.add(rightParenthesisButton);
+    southPanel.add(test4);
+    test5.add(zero);
+    test5.add(imaginaryButton);
+    test5.add(equalsButton);
+    test5.add(decimal);
+    test1.setBackground(gray); 
+    test2.setBackground(gray); 
+    test3.setBackground(gray); 
+    test4.setBackground(gray); 
+    test5.setBackground(gray); 
+    southPanel.add(test5);
+
+     backspace.setPreferredSize(new Dimension(30,30));
+     decimal.setPreferredSize(new Dimension(30,30));
+
+
+     leftParenthesisButton.setPreferredSize(new Dimension(30,30));
+     rightParenthesisButton.setPreferredSize(new Dimension(30,30));
+     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+
+
+     southPanel.setPreferredSize(new Dimension(300,250));
+     mainPanel.setPreferredSize(new Dimension(50,50));
     //Set borders
     inputTextField.setBorder(null); 
     resultPanel.setBorder(new EmptyBorder( 10, 10, 10, 10));  
@@ -500,14 +547,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       resultButton.setText(">");
     }
     
-    if (command.equals("Format ( / )")) {
-      fractionDisplayButton.setText("Format ( . )");
+    if (command.equals("D")) {
+      fractionDisplayButton.setText("F");
       calculator.setFractionDisplay(true);
+      fractionDisplayButton.setContentAreaFilled(true);
+      fractionDisplayButton.setBackground(new Color(210, 237, 255, 255));
     }
     
-    if (command.equals("Format ( . )")) {
-      fractionDisplayButton.setText("Format ( / )");
+    if (command.equals("F")) {
+      fractionDisplayButton.setText("D");
       calculator.setFractionDisplay(false);
+      fractionDisplayButton.setContentAreaFilled(false);
     }
 
     if (command.equals("0"))
