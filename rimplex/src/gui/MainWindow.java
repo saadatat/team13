@@ -559,7 +559,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       calculator.setFractionDisplay(false);
       fractionDisplayButton.setContentAreaFilled(false);
     }
-
+    
+    if (!hasImaginary()) {
     if (command.equals("0"))
     {
       inputTextField.setText(inputField += "0");
@@ -609,9 +610,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       inputTextField.setText(inputField += "9");
     }
+    }
     if (command.equals("𝑖"))
     {
+      if(inputField.charAt(inputField.length()-1) != '.' && !hasImaginary()) {
       inputTextField.setText(inputField += "𝑖");
+      }
     }
     if (command.equals("("))
     {
@@ -623,7 +627,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
 
     if (command.equals(".")) {
+      if (!hasDecimal()) {
       inputTextField.setText(inputField+= ".");
+      }
     }
     if (command.equals("<-") && inputField.length() > 0) {
       inputTextField.setText(inputField.substring(0, inputField.length()-1));
@@ -719,33 +725,37 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   @Override
   public void keyTyped(KeyEvent e)
   {
+    String inputField = inputTextField.getText();
     if (e.getKeyChar() == 'i')
     {
-      String newText = inputTextField.getText().concat("𝑖");
+     if(inputField.charAt(inputField.length()-1) != '.' && !hasImaginary()) {
+      String newText = inputField.concat("𝑖");
       inputTextField.setText(newText);
+      }
     }
     
+    if(!hasImaginary()) {
     for(int i = 48; i < 58; i++)
     {
       if (e.getKeyChar() == i)
       {
-        String newText = inputTextField.getText().concat((char)i + "");
+        String newText = inputField.concat((char)i + "");
         inputTextField.setText(newText);
         
       }
       
     }
-    
+    }
     if(e.getKeyChar() == '+')
     {
-      String newText = inputTextField.getText().concat("+");
+      String newText = inputField.concat("+");
       inputTextField.setText(newText);
       
     }
     
     if(e.getKeyChar() == '-')
     {
-      String newText = inputTextField.getText().concat("-");
+      String newText = inputField.concat("-");
       inputTextField.setText(newText);
       
     }
@@ -765,9 +775,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     if(e.getKeyChar() == '.')
     {
-      String newText = inputTextField.getText().concat(".");
+      if (!hasDecimal()) {
+      String newText = inputField.concat(".");
       inputTextField.setText(newText);
-      
+      }
     }
     
     if(e.getKeyChar() == 10)
@@ -778,14 +789,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     if(e.getKeyChar() == '(')
     {
-      String newText = inputTextField.getText().concat("(");
+      String newText = inputField.concat("(");
       inputTextField.setText(newText);
       
     }
     
     if(e.getKeyChar() == ')')
     {
-      String newText = inputTextField.getText().concat(")");
+      String newText = inputField.concat(")");
       inputTextField.setText(newText);
       
     }
@@ -794,7 +805,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (inputTextField.getText().length() != 0)
       {
-      String newText = inputTextField.getText().substring(0, inputTextField.getText().length() - 1);
+      String newText = inputField.substring(0, inputField.length() - 1);
       inputTextField.setText(newText);
       }
     }
@@ -802,7 +813,25 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   }
   
-
+ public boolean hasDecimal() {
+   String[] test = inputTextField.getText().split("\\+|-");
+   if (test.length == 1 && test[0].contains(".")) {
+     return true;
+   }else if(test.length == 2 && test[1].contains(".")) {
+     return true;
+   }
+   return false;
+ }
+ 
+ public boolean hasImaginary() {
+   String[] test = inputTextField.getText().split("\\+|-");
+   if (test.length == 1 && (test[0].contains("𝑖") || test[0].contains("i"))) {
+     return true;
+   }else if(test.length == 2 && (test[0].contains("𝑖") || test[0].contains("i"))) {
+     return true;
+   }
+   return false;
+ }
   
   
   @Override
