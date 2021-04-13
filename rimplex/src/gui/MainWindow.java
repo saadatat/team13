@@ -655,7 +655,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
 
     if (command.equals(".")) {
-      if (!hasDecimal()) {
+      if (!hasDecimal() && !hasImaginary()) {
       inputTextField.setText(inputField+= ".");
       }
     }
@@ -688,12 +688,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       displayLabel.setText(
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
-      calculator.formResult();
+      boolean valid = calculator.formResult();
+      if (valid) {
       displayLabel
           .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
       inputTextField.setText("");
       resultHistory += displayLabel.getText() + "\n";
       resultDisplayArea.setText(resultHistory);
+      }else {
+        WarningDialog warningDialog = WarningDialog.getInstance();
+        warningDialog.displayDialog();
+        clear();
+      }
     }
   }
   
@@ -747,13 +753,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         calculator.setRightOperand(inputField);
         System.out.println(calculator.getRightOperand());
         resultString+= calculator.formatDisplayOperand(calculator.getRightOperand());
-        calculator.formResult();
+       boolean valid =  calculator.formResult();
+       if (valid) {
         resultString+= "=" + calculator.getResult();
         calculator.setOperator(command);
         calculator.setLeftOperand(calculator.getResult());
         displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
         resultHistory +=  resultString + "\n";
         resultDisplayArea.setText(resultHistory);
+       }else {
+         WarningDialog warningDialog = WarningDialog.getInstance();
+         warningDialog.displayDialog();
+         clear();
+       }
       }
     }
     inputTextField.setText("");
@@ -832,7 +844,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     if(e.getKeyChar() == '.')
     {
-      if (!hasDecimal()) {
+      if (!hasDecimal() && !hasImaginary()) {
       String newText = inputField.concat(".");
       inputTextField.setText(newText);
       }
@@ -916,5 +928,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   
   }
   
+  public void clear() {
+    inputTextField.setText("");
+    displayLabel.setText("");
+  }
   
 }
