@@ -153,8 +153,6 @@ public class Operations
   private static double[][] parseTodouble(String operandOneIn, String operandTwoIn)
   {
     
-    //KORY CAN YOU SEE THIS????
-    
    
     if(operandOneIn.equals("i"))
     {
