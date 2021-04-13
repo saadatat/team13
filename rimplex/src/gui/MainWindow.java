@@ -482,10 +482,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     
     boolean par = false;
+    String command = e.getActionCommand();
     
     String inputField = inputTextField.getText().trim();
-    if(inputTextField.getText().contains(")") )
+    if(inputTextField.getText().contains(")") || command.equals("x") ||
+        command.equals("/") || !inputTextField.getText().contains("("))
     {
+      
      par = true;
      inputField = inputField.replace(")", "");
      inputField = inputField.replace("(", "");
@@ -494,12 +497,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
     inputField = inputField.replace("𝑖", "i");
-    String command = e.getActionCommand();
     String operators = "+-/x";
     String result = calculator.getResult();
     
    
-    System.out.println(inputField);
+    
     if (!(inputField.matches("^[0-9i+-.]*$")) && inputField.charAt(0) != '(')
     {
       
@@ -515,9 +517,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       {
       operationEvent(command);
       } else {
+  
         inputTextField.setText(inputField += command);
       }
-     
+    
     }
     else if (command.equals("="))
     {
@@ -671,6 +674,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     String inputField = inputTextField.getText().trim();
     inputField = inputField.replace("𝑖", "i");
+    inputField = inputField.replace("(", "");
+    inputField = inputField.replace(")", "");
 
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
@@ -707,11 +712,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     
     String inputField = inputTextField.getText().trim();
-    if(inputField.contains(")"))
-    {
+   
       inputField = inputField.replace(")", "");
       inputField = inputField.replace("(", "");
-    }
+    
     
     
     String result = calculator.getResult();
@@ -804,28 +808,29 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     if(e.getKeyChar() == '+')
     {
-      String newText = inputField.concat("+");
-      inputTextField.setText(newText);
       
-      if(inputTextField.getText().contains(")"))
+      
+      if(!inputTextField.getText().contains("(") || inputTextField.getText().contains(")"))
       {
-        newText = inputField.substring(1, inputField.length() - 1);
-        inputTextField.setText(newText);
+        
         operationEvent("+");
+      }
+      else {
+        String newText = inputField.concat("+");
+        inputTextField.setText(newText);
       }
       
     }
     
     if(e.getKeyChar() == '-')
     {
-      String newText = inputField.concat("-");
-      inputTextField.setText(newText);
-      
-      if(inputTextField.getText().contains(")"))
+      if(!inputTextField.getText().contains("(") || inputTextField.getText().contains(")"))
       {
-        newText = inputField.substring(1, inputField.length() - 1);
-        inputTextField.setText(newText);
         operationEvent("-");
+      }
+      else {
+        String newText = inputField.concat("-");
+        inputTextField.setText(newText);
       }
     }
     
