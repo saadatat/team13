@@ -168,7 +168,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     nine = new JButton("9");
     backspace = new JButton("<-");
     decimal = new JButton(".");
-    fractionDisplayButton = new JButton("Format ( / )");
+    fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
     addButton.addActionListener(this);
@@ -544,14 +544,17 @@ resultPanel.add(hideResultButton, BorderLayout.LINE_END);
       resultButton.setText(">");
     }
     
-    if (command.equals("Format ( / )")) {
-      fractionDisplayButton.setText("Format ( . )");
+    if (command.equals("D")) {
+      fractionDisplayButton.setText("F");
       calculator.setFractionDisplay(true);
+      fractionDisplayButton.setContentAreaFilled(true);
+      fractionDisplayButton.setBackground(new Color(210, 237, 255, 255));
     }
     
-    if (command.equals("Format ( . )")) {
-      fractionDisplayButton.setText("Format ( / )");
+    if (command.equals("F")) {
+      fractionDisplayButton.setText("D");
       calculator.setFractionDisplay(false);
+      fractionDisplayButton.setContentAreaFilled(false);
     }
 
     if (command.equals("0"))
