@@ -450,11 +450,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     try
     {
      rimplexLogo = ImageIO.read(new File("rimplex/images/logoRimplex.png"));
-     
     }
     catch (IOException e)
     {
-      System.out.println(e);
+      try
+      {
+        rimplexLogo = ImageIO.read(new File("images/logoRimplex.png"));
+      }
+      catch (IOException e1)
+      {
+        e1.printStackTrace();
+      }
     }
     
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
