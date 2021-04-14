@@ -761,7 +761,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
       }
-      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      else if (!hasDecimal() && !hasImaginary())
       {
         inputTextField.setText(inputField += ".");
       }else {
@@ -1015,7 +1015,7 @@ if (result.contains("/")){
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
       }
-      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      else if (!hasDecimal() && !hasImaginary())
       {
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
@@ -1071,8 +1071,10 @@ if (result.contains("/")){
 
   public boolean hasDecimal()
   {
+    
     String[] test = inputTextField.getText().split("\\+|-");
-    if (test.length == 1 && test[0].contains("."))
+   
+    if (test.length == 1 && test[0].contains(".") && !(inputTextField.getText().contains("+") || inputTextField.getText().contains("-")))
     {
       return true;
     }
