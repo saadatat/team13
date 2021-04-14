@@ -682,7 +682,7 @@ warningDialog.displayDialog();
     if (command.equals(")") && inputField.contains("(") && !inputField.contains(")"))
     {
       if (inputField.charAt(inputField.length() - 1) == '-'
-          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i')
+          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i' || !(inputField.contains("+") || inputField.contains("-")))
       {
         warningDialog.displayDialog();
       }
@@ -694,7 +694,7 @@ warningDialog.displayDialog();
 
     if (command.equals("."))
     {
-      if (!hasDecimal() && !hasImaginary())
+      if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
       {
         inputTextField.setText(inputField += ".");
       }
@@ -918,7 +918,7 @@ warningDialog.displayDialog();
 
     if (e.getKeyChar() == '.')
     {
-      if (!hasDecimal() && !hasImaginary())
+      if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
       {
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
@@ -941,19 +941,15 @@ warningDialog.displayDialog();
     if (e.getKeyChar() == ')' && !inputField.contains(")") && inputField.contains("("))
     {
       WarningDialog warningDialog = WarningDialog.getInstance();
-      if (inputTextField.getText().contains("(")
-          && !(inputField.charAt(inputField.length() - 1) == '-'
-              || inputField.charAt(inputField.length() - 1) == '+'))
+      if (inputField.charAt(inputField.length() - 1) == '-'
+          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i' || !(inputField.contains("+") || inputField.contains("-")))
       {
-        String newText = inputField.concat(")");
-        inputTextField.setText(newText);
+        warningDialog.displayDialog();
       }
       else
       {
-        warningDialog.displayDialog();
-
+        inputTextField.setText(inputField += ")");
       }
-
     }
 
     if (e.getKeyChar() == 8)
