@@ -308,7 +308,10 @@ public class Operations
     }else {
       operator = "-";
     }
-    
+   System.out.println(splits[0]);
+   System.out.println(splits[1]);
+   
+   
     if (splits[0].contains(".")) {
       splits2 = splits[0].split("\\.");
       digits1 = splits2[1].length();
@@ -329,10 +332,14 @@ public class Operations
       gcd2 = getGCD(numerator2, denominator2);
       returnString += operator + numerator2 / gcd2 + "/" + denominator2 / gcd2;
     }else {
-      returnString += operator + splits[1]; 
+      if (splits.length > 2) {
+        returnString += operator + splits[1].substring(0,splits[1].length() - 1) + "i/" + splits[2]; 
+      }else {
+      returnString += operator + splits[1] + "i"; 
+      }
     }
      
-   return returnString + "i";
+   return returnString;
     
   }
   
