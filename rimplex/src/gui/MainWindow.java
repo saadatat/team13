@@ -550,6 +550,20 @@ warningDialog.displayDialog();
 
     if (command.equals("+/-") && !inputField.equals(""))
     {
+      if (inputField.contains("(")) {
+      if (inputField.charAt(1) != '-')
+      {
+        inputTextField.setText("(-" + inputField.substring(1, inputField.length()));
+      }
+      else
+      {
+        StringBuffer newString = new StringBuffer(inputField); 
+        newString.deleteCharAt(1);
+        inputTextField.setText(newString.toString());
+      }
+      
+      } 
+      if (!inputField.contains("("))
       if (inputField.charAt(0) != '-')
       {
         inputTextField.setText("-" + inputField);
@@ -845,8 +859,11 @@ warningDialog.displayDialog();
       }
       else
       {
-        String newText = inputField.concat("+");
-        inputTextField.setText(newText);
+        if (!inputField.contains("+") && !inputField.contains("-")) {
+          String newText = inputField.concat("+");
+          inputTextField.setText(newText);
+        }
+        
       }
 
     }
@@ -862,8 +879,10 @@ warningDialog.displayDialog();
       }
       else
       {
-        String newText = inputField.concat("-");
-        inputTextField.setText(newText);
+        if (!inputField.contains("+") && !inputField.contains("-")) {
+          String newText = inputField.concat("-");
+          inputTextField.setText(newText);
+        }
       }
     }
 
