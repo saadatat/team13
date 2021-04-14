@@ -308,9 +308,7 @@ public class Operations
     }else {
       operator = "-";
     }
-   System.out.println(splits[0]);
-   System.out.println(splits[1]);
-   
+  
    
     if (splits[0].contains(".")) {
       splits2 = splits[0].split("\\.");
@@ -333,9 +331,11 @@ public class Operations
       returnString += operator + numerator2 / gcd2 + "/" + denominator2 / gcd2;
     }else {
       if (splits.length > 2) {
-        returnString += operator + splits[1].substring(0,splits[1].length() - 1) + "i/" + splits[2]; 
+        System.out.println(splits[2]);
+        returnString += operator  + splits[2] + "i"; 
       }else {
-      returnString += operator + splits[1] + "i"; 
+        System.out.println(splits[1]);
+      returnString += operator + splits[1].replace("/", "i/");
       }
     }
      
