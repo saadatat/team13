@@ -890,6 +890,8 @@ if (result.contains("/")){
   @Override
   public void keyTyped(KeyEvent e)
   {
+    WarningDialog warningDialog = WarningDialog.getInstance();
+    
     String inputField = inputTextField.getText();
     inputField = inputField.replace("𝑖", "i");
     
@@ -901,6 +903,8 @@ if (result.contains("/")){
         {
           String newText = inputField.concat("𝑖");
           inputTextField.setText(newText);
+        }else {
+          warningDialog.displayDialog();
         }
       }
       else
@@ -910,8 +914,11 @@ if (result.contains("/")){
       }
     }
 
+    if (e.getKeyChar() > 47 && e.getKeyChar() < 58) {
     if (!hasImaginary())
     {
+    
+ 
       for (int i = 48; i < 58; i++)
       {
         if (e.getKeyChar() == i)
@@ -922,7 +929,11 @@ if (result.contains("/")){
         }
 
       }
+    }else {
+      warningDialog.displayDialog();
     }
+    }
+    
     if (e.getKeyChar() == '+')
     {
 
@@ -934,6 +945,8 @@ if (result.contains("/")){
       else if (!inputField.contains("+") && inputField.charAt(inputField.length()-1) != '(' && !inputField.contains("-")) {
           String newText = inputField.concat("+");
           inputTextField.setText(newText);
+        }else {
+          warningDialog.displayDialog();
         }
 
     }
@@ -950,13 +963,15 @@ if (result.contains("/")){
       {
           String newText = inputField.concat("-");
           inputTextField.setText(newText);
+        }else{
+          warningDialog.displayDialog();
         }
     }
 
     if (e.getKeyChar() == '*')
     {
       if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
-        WarningDialog warningDialog = WarningDialog.getInstance();
+      
         warningDialog.displayDialog();
       }
       else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
@@ -966,7 +981,7 @@ if (result.contains("/")){
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
+       
         warningDialog.displayDialog();
       }
 
@@ -976,7 +991,7 @@ if (result.contains("/")){
     {
 
       if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
-        WarningDialog warningDialog = WarningDialog.getInstance();
+       
         warningDialog.displayDialog();
       }
       else if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
@@ -986,7 +1001,7 @@ if (result.contains("/")){
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
+        
         warningDialog.displayDialog();
       }
     }
@@ -1001,6 +1016,8 @@ if (result.contains("/")){
       {
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
+      }else {
+        warningDialog.displayDialog();
       }
     }
 
@@ -1010,17 +1027,23 @@ if (result.contains("/")){
 
     }
 
-    if (e.getKeyChar() == '(' && inputField.trim().equals(""))
+    if (e.getKeyChar() == '(')
     {
+      if (inputField.trim().equals("")) {
       String newText = inputField.concat("(");
       inputTextField.setText(newText);
+      }else {
+        warningDialog.displayDialog();
+      }
 
     }
 
-    if (e.getKeyChar() == ')' && !inputField.contains(")") && inputField.contains("("))
+    if (e.getKeyChar() == ')')
     {
-      WarningDialog warningDialog = WarningDialog.getInstance();
-      if (inputField.charAt(inputField.length() - 1) == '-'
+      if (inputField.contains(")") || !inputField.contains("(")) {
+        warningDialog.displayDialog();
+      }
+      else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i'  || !(inputField.contains("+") || inputField.contains("-")))
       {
         
