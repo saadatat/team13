@@ -512,10 +512,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       if (par)
       {
         if ((command.equals("x") || command.equals("/"))
-            && (inputField.charAt(inputField.length() - 1) == '+'
-                || inputField.charAt(inputField.length() - 1) == '-'))
+           && ((inputField.length() != 0 )&& (inputField.charAt(inputField.length() - 1) == '+'
+                || inputField.charAt(inputField.length() - 1) == '-')) 
+           )
         {
-warningDialog.displayDialog();
+            warningDialog.displayDialog();
         }else {
         operationEvent(command);
         }
@@ -857,14 +858,10 @@ warningDialog.displayDialog();
 
         operationEvent("+");
       }
-      else
-      {
-        if (!inputField.contains("+") && !inputField.contains("-")) {
+      else if (!inputField.contains("+") ) {
           String newText = inputField.concat("+");
           inputTextField.setText(newText);
         }
-        
-      }
 
     }
 
@@ -877,19 +874,17 @@ warningDialog.displayDialog();
 
         operationEvent("-");
       }
-      else
+      else if ( !inputField.concat("-").contains("--")) 
       {
-        if (!inputField.contains("+") && !inputField.contains("-")) {
           String newText = inputField.concat("-");
           inputTextField.setText(newText);
         }
-      }
     }
 
     if (e.getKeyChar() == '*')
     {
-      if (inputField.charAt(inputField.length() - 1) != '+'
-          && inputField.charAt(inputField.length() - 1) != '-')
+      if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
+          && inputField.charAt(inputField.length() - 1) != '-') )
       {
         operationEvent("x");
       }
@@ -904,7 +899,7 @@ warningDialog.displayDialog();
     if (e.getKeyChar() == '/')
     {
 
-      if (inputField.charAt(inputField.length() - 1) != '+'
+      if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-')
       {
         operationEvent("/");
