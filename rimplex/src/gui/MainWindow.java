@@ -518,6 +518,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         {
             warningDialog.displayDialog();
         }else {
+         
         operationEvent(command);
         }
       }
@@ -666,7 +667,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (inputField.length() != 0)
       {
-        if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary())
+        if(inputField.contains("(") && !(inputField.contains("-") || inputField.contains("+")))
+        {
+          //do nothing
+        }
+        else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary() && !inputField.contains("i"))
         {
           inputTextField.setText(inputField += "𝑖");
         }
@@ -836,7 +841,11 @@ if (result.contains("/")){
     {
       if (inputField.length() != 0)
       {
-        if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary())
+        if(inputField.contains("(") && !(inputField.contains("-") || inputField.contains("+")))
+        {
+          //do nothing
+        }
+        else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary() && !inputField.contains("i"))
         {
           String newText = inputField.concat("𝑖");
           inputTextField.setText(newText);
@@ -894,9 +903,14 @@ if (result.contains("/")){
 
     if (e.getKeyChar() == '*')
     {
-      if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
+      
+      if (inputField.contains("(") && !inputField.contains(")"))
+      {
+        
+      } else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-') )
       {
+       
         operationEvent("x");
       }
       else
@@ -952,7 +966,9 @@ if (result.contains("/")){
     {
       WarningDialog warningDialog = WarningDialog.getInstance();
       if (inputField.charAt(inputField.length() - 1) == '-'
-          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i'  || !(inputField.contains("+") || inputField.contains("-")))
+          || inputField.charAt(inputField.length() - 1) == '+' || 
+          inputField.charAt(inputField.length()-1) != 'i'  || !(inputField.contains("+") 
+              || inputField.contains("-")))
       {
         
         warningDialog.displayDialog();
