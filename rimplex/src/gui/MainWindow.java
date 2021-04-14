@@ -721,7 +721,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       {
         if(inputField.contains("(") && !(inputField.contains("-") || inputField.contains("+")))
         {
-          //do nothing
+          warningDialog.displayDialog();
         }
         else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary() && !inputField.contains("i"))
         {
@@ -1097,12 +1097,14 @@ if (result.contains("/")){
 
   public boolean hasImaginary()
   {
+    
     String[] test = inputTextField.getText().split("\\+|-");
-    if (test.length == 1 && (test[0].contains("𝑖") || test[0].contains("i")))
+   
+    if (test.length == 1 && (test[0].contains("𝑖") || test[0].contains("i") || test[0].contains("?")))
     {
       return true;
     }
-    else if (test.length == 2 && (test[0].contains("𝑖") || test[0].contains("i")))
+    else if (test.length == 2 && (test[1].contains("𝑖") || test[1].contains("i") || test[1].contains("?")))
     {
       return true;
     }
