@@ -654,11 +654,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField += "𝑖");
       }
     }
-    if (command.equals("("))
+    if (command.equals("(") && inputField.trim().equals(""))
     {
       inputTextField.setText(inputField += "(");
     }
-    if (command.equals(")"))
+    if (command.equals(")") && inputField.contains("(") && !inputField.contains(")"))
     {
       inputTextField.setText(inputField += ")");
     }
@@ -869,14 +869,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       
     }
     
-    if(e.getKeyChar() == '(')
+    if(e.getKeyChar() == '(' && inputField.trim().equals(""))
     {
       String newText = inputField.concat("(");
       inputTextField.setText(newText);
       
     }
     
-    if(e.getKeyChar() == ')')
+    if(e.getKeyChar() == ')' && !inputField.contains(")") && inputField.contains("("))
     {
       WarningDialog warningDialog = WarningDialog.getInstance();
       if (inputTextField.getText().contains("("))
