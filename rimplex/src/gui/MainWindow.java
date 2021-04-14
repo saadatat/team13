@@ -696,7 +696,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     if (command.equals("."))
     {
-      if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      if (inputField.length() == 0) {
+        String newText = inputField.concat(".");
+        inputTextField.setText(newText);
+      }
+      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
       {
         inputTextField.setText(inputField += ".");
       }
@@ -871,8 +875,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (e.getKeyChar() == '-')
     {
 
-      if (!inputTextField.getText().isBlank()
-          && (!inputTextField.getText().contains("(") || inputTextField.getText().contains(")")))
+      if ( (!inputTextField.getText().contains("(") || inputTextField.getText().contains(")")))
       {
 
         operationEvent("-");
@@ -916,7 +919,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     if (e.getKeyChar() == '.')
     {
-      if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      if (inputField.length() == 0) {
+        String newText = inputField.concat(".");
+        inputTextField.setText(newText);
+      }
+      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
       {
         String newText = inputField.concat(".");
         inputTextField.setText(newText);

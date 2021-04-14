@@ -371,7 +371,11 @@ public class Operations
   int gcd1 = getGCD((int)top1, (int)denominator);
   int returnTop = (int)top1/gcd1;
   int returnDen = (int)denominator/gcd1;
+  if (returnDen == 1) {
+    quotient1 = returnTop + "";
+  }else {
   quotient1 = returnTop + "/" + returnDen;
+  }
   }
   
   if(top2 == 0) {
@@ -380,7 +384,11 @@ public class Operations
     int gcd1 = getGCD((int)top2, (int)denominator);
     int returnTop = (int)top2/gcd1;
     int returnDen = (int)denominator/gcd1;
+    if (returnDen == 1) {
+      quotient2 = "" + returnTop;
+    }else {
     quotient2 = returnTop + "/" + returnDen;
+    }
   }
 
 
