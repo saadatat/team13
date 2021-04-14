@@ -373,10 +373,11 @@ public class Operations
   int returnDen = (int)denominator/gcd1;
   quotient1 = returnTop + "/" + returnDen;
   }
+  
   if(top2 == 0) {
     quotient2 = "0";
   }else {
-    int gcd1 = getGCD((int)top1, (int)denominator);
+    int gcd1 = getGCD((int)top2, (int)denominator);
     int returnTop = (int)top2/gcd1;
     int returnDen = (int)denominator/gcd1;
     quotient2 = returnTop + "/" + returnDen;
