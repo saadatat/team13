@@ -523,7 +523,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        if (!inputField.contains("+") && !inputField.contains("-"))
+        if (!inputField.contains("+") && !inputField.contains("-") && inputField.charAt(inputField.length()-1) != '(')
         {
           inputTextField.setText(inputField += command);
         }
@@ -689,6 +689,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
+        
         inputTextField.setText(inputField += ")");
       }
     }
@@ -820,6 +821,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   public void keyTyped(KeyEvent e)
   {
     String inputField = inputTextField.getText();
+    inputField = inputField.replace("𝑖", "i");
+    
     if (e.getKeyChar() == 'i')
     {
       if (inputField.length() != 0)
@@ -858,7 +861,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
         operationEvent("+");
       }
-      else if (!inputField.contains("+") ) {
+      else if (!inputField.contains("+") && inputField.charAt(inputField.length()-1) != '(' && !inputField.contains("-")) {
           String newText = inputField.concat("+");
           inputTextField.setText(newText);
         }
@@ -874,7 +877,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
         operationEvent("-");
       }
-      else if ( !inputField.concat("-").contains("--")) 
+      else if ( !inputField.concat("-").contains("--") && !inputField.contains("+") && inputField.charAt(inputField.length()-1) != '(') 
       {
           String newText = inputField.concat("-");
           inputTextField.setText(newText);
@@ -937,8 +940,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       WarningDialog warningDialog = WarningDialog.getInstance();
       if (inputField.charAt(inputField.length() - 1) == '-'
-          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i' || !(inputField.contains("+") || inputField.contains("-")))
+          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i'  || !(inputField.contains("+") || inputField.contains("-")))
       {
+        
         warningDialog.displayDialog();
       }
       else
