@@ -817,8 +817,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         warningDialog.displayDialog();
         clear();
       }
-    }else {
-      warningDialog.displayDialog();
     }
   }
 
