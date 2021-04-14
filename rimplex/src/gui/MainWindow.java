@@ -681,14 +681,14 @@ warningDialog.displayDialog();
     }
     if (command.equals(")") && inputField.contains("(") && !inputField.contains(")"))
     {
-      if (inputField.charAt(inputField.length() - 2) == '-'
-          || inputField.charAt(inputField.length() - 2) == '+')
+      if (inputField.charAt(inputField.length() - 1) == '-'
+          || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i')
       {
-        inputTextField.setText(inputField += ")");
+        warningDialog.displayDialog();
       }
       else
       {
-        warningDialog.displayDialog();
+        inputTextField.setText(inputField += ")");
       }
     }
 
