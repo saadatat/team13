@@ -486,11 +486,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (inputTextField.getText().contains(")") || command.equals("x") || command.equals("/")
         || !inputTextField.getText().contains("("))
     {
-
       par = true;
       inputField = inputField.replace(")", "");
       inputField = inputField.replace("(", "");
-
     }
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
@@ -517,7 +515,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
            )
         {
             warningDialog.displayDialog();
-        }else {
+        }else if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
+          warningDialog.displayDialog();
+        }
+        else {
          
         operationEvent(command);
         }
@@ -527,6 +528,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         if (!inputField.contains("+") && !inputField.contains("-") && inputField.charAt(inputField.length()-1) != '(')
         {
           inputTextField.setText(inputField += command);
+        }else {
+          warningDialog.displayDialog();
         }
 
       }
@@ -611,58 +614,107 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fractionDisplayButton.setContentAreaFilled(false);
     }
 
-    if (!hasImaginary())
-    {
+    
       if (command.equals("0"))
       {
-        inputTextField.setText(inputField += "0");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "0");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("1"))
       {
-        inputTextField.setText(inputField += "1");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "1");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("2"))
       {
-        inputTextField.setText(inputField += "2");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "2");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("3"))
       {
-        inputTextField.setText(inputField += "3");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "3");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("4"))
       {
-        inputTextField.setText(inputField += "4");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "4");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("5"))
       {
-        inputTextField.setText(inputField += "5");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "5");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("6"))
       {
-        inputTextField.setText(inputField += "6");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "6");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("7"))
       {
-        inputTextField.setText(inputField += "7");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "7");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("8"))
       {
-        inputTextField.setText(inputField += "8");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "8");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("9"))
       {
-        inputTextField.setText(inputField += "9");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "9");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
-    }
+    
     if (command.equals("𝑖"))
     {
       if (inputField.length() != 0)
@@ -674,6 +726,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary() && !inputField.contains("i"))
         {
           inputTextField.setText(inputField += "𝑖");
+        }else {
+          warningDialog.displayDialog();
         }
       }
       else
@@ -681,13 +735,20 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField += "𝑖");
       }
     }
-    if (command.equals("(") && inputField.trim().equals(""))
+    if (command.equals("("))
     {
+      if (inputField.trim().equals("")) {
       inputTextField.setText(inputField += "(");
+      }else {
+        warningDialog.displayDialog();
+      }
     }
-    if (command.equals(")") && inputField.contains("(") && !inputField.contains(")"))
+    if (command.equals(")"))
     {
-      if (inputField.charAt(inputField.length() - 1) == '-'
+      if (!inputField.contains("(") || inputField.contains(")")) {
+        warningDialog.displayDialog();
+      }
+      else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i' || !(inputField.contains("+") || inputField.contains("-")))
       {
         warningDialog.displayDialog();
@@ -705,9 +766,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
       }
-      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      else if (!hasDecimal() && !hasImaginary())
       {
         inputTextField.setText(inputField += ".");
+      }else {
+        warningDialog.displayDialog();
       }
     }
     if (command.equals("<-") && inputField.length() > 0)
@@ -723,7 +786,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputField = inputField.replace("𝑖", "i");
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
-
+    WarningDialog warningDialog = WarningDialog.getInstance();
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
       if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
@@ -751,10 +814,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
         warningDialog.displayDialog();
         clear();
       }
+    }else {
+      warningDialog.displayDialog();
     }
   }
 
@@ -834,6 +898,8 @@ if (result.contains("/")){
   @Override
   public void keyTyped(KeyEvent e)
   {
+    WarningDialog warningDialog = WarningDialog.getInstance();
+    
     String inputField = inputTextField.getText();
     inputField = inputField.replace("𝑖", "i");
     
@@ -849,6 +915,8 @@ if (result.contains("/")){
         {
           String newText = inputField.concat("𝑖");
           inputTextField.setText(newText);
+        }else {
+          warningDialog.displayDialog();
         }
       }
       else
@@ -858,8 +926,11 @@ if (result.contains("/")){
       }
     }
 
+    if (e.getKeyChar() > 47 && e.getKeyChar() < 58) {
     if (!hasImaginary())
     {
+    
+ 
       for (int i = 48; i < 58; i++)
       {
         if (e.getKeyChar() == i)
@@ -870,7 +941,11 @@ if (result.contains("/")){
         }
 
       }
+    }else {
+      warningDialog.displayDialog();
     }
+    }
+    
     if (e.getKeyChar() == '+')
     {
 
@@ -882,6 +957,8 @@ if (result.contains("/")){
       else if (!inputField.contains("+") && inputField.charAt(inputField.length()-1) != '(' && !inputField.contains("-")) {
           String newText = inputField.concat("+");
           inputTextField.setText(newText);
+        }else {
+          warningDialog.displayDialog();
         }
 
     }
@@ -898,15 +975,17 @@ if (result.contains("/")){
       {
           String newText = inputField.concat("-");
           inputTextField.setText(newText);
+        }else{
+          warningDialog.displayDialog();
         }
     }
 
     if (e.getKeyChar() == '*')
     {
       
-      if (inputField.contains("(") && !inputField.contains(")"))
-      {
-        
+      if (inputField.contains("(") && !inputField.contains(")")){
+      
+        warningDialog.displayDialog();
       } else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-') )
       {
@@ -915,7 +994,7 @@ if (result.contains("/")){
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
+       
         warningDialog.displayDialog();
       }
 
@@ -924,14 +1003,18 @@ if (result.contains("/")){
     if (e.getKeyChar() == '/')
     {
 
-      if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
+      if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
+       
+        warningDialog.displayDialog();
+      }
+      else if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-')
       {
         operationEvent("/");
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
+        
         warningDialog.displayDialog();
       }
     }
@@ -942,10 +1025,12 @@ if (result.contains("/")){
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
       }
-      else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
+      else if (!hasDecimal() && !hasImaginary())
       {
         String newText = inputField.concat(".");
         inputTextField.setText(newText);
+      }else {
+        warningDialog.displayDialog();
       }
     }
 
@@ -955,17 +1040,23 @@ if (result.contains("/")){
 
     }
 
-    if (e.getKeyChar() == '(' && inputField.trim().equals(""))
+    if (e.getKeyChar() == '(')
     {
+      if (inputField.trim().equals("")) {
       String newText = inputField.concat("(");
       inputTextField.setText(newText);
+      }else {
+        warningDialog.displayDialog();
+      }
 
     }
 
-    if (e.getKeyChar() == ')' && !inputField.contains(")") && inputField.contains("("))
+    if (e.getKeyChar() == ')')
     {
-      WarningDialog warningDialog = WarningDialog.getInstance();
-      if (inputField.charAt(inputField.length() - 1) == '-'
+      if (inputField.contains(")") || !inputField.contains("(")) {
+        warningDialog.displayDialog();
+      }
+      else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+' || 
           inputField.charAt(inputField.length()-1) != 'i'  || !(inputField.contains("+") 
               || inputField.contains("-")))
@@ -992,8 +1083,10 @@ if (result.contains("/")){
 
   public boolean hasDecimal()
   {
+    
     String[] test = inputTextField.getText().split("\\+|-");
-    if (test.length == 1 && test[0].contains("."))
+   
+    if (test.length == 1 && test[0].contains(".") && !(inputTextField.getText().contains("+") || inputTextField.getText().contains("-")))
     {
       return true;
     }
