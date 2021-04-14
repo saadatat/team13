@@ -527,6 +527,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         if (!inputField.contains("+") && !inputField.contains("-") && inputField.charAt(inputField.length()-1) != '(')
         {
           inputTextField.setText(inputField += command);
+        }else {
+          warningDialog.displayDialog();
         }
 
       }
@@ -779,7 +781,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputField = inputField.replace("𝑖", "i");
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
-
+    WarningDialog warningDialog = WarningDialog.getInstance();
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
       if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
@@ -807,10 +809,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        WarningDialog warningDialog = WarningDialog.getInstance();
         warningDialog.displayDialog();
         clear();
       }
+    }else {
+      warningDialog.displayDialog();
     }
   }
 
