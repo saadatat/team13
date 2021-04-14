@@ -517,7 +517,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
            )
         {
             warningDialog.displayDialog();
-        }else {
+        }else if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
+          warningDialog.displayDialog();
+        }
+        else {
         operationEvent(command);
         }
       }
@@ -894,7 +897,11 @@ if (result.contains("/")){
 
     if (e.getKeyChar() == '*')
     {
-      if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
+      if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
+        WarningDialog warningDialog = WarningDialog.getInstance();
+        warningDialog.displayDialog();
+      }
+      else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-') )
       {
         operationEvent("x");
@@ -910,7 +917,11 @@ if (result.contains("/")){
     if (e.getKeyChar() == '/')
     {
 
-      if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
+      if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")")){
+        WarningDialog warningDialog = WarningDialog.getInstance();
+        warningDialog.displayDialog();
+      }
+      else if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-')
       {
         operationEvent("/");
