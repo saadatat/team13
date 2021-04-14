@@ -335,7 +335,12 @@ public class Operations
         returnString += operator  + splits[2] + "i"; 
       }else {
         System.out.println(splits[1]);
-      returnString += operator + splits[1].replace("/", "i/");
+        if (splits[1].contains("/")) {
+          returnString += operator + splits[1].replace("/", "i/");
+        }else {
+          returnString += operator + splits[1] + "i";
+        }
+      
       }
     }
      
