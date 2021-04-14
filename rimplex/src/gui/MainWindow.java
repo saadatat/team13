@@ -486,11 +486,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (inputTextField.getText().contains(")") || command.equals("x") || command.equals("/")
         || !inputTextField.getText().contains("("))
     {
-
       par = true;
       inputField = inputField.replace(")", "");
       inputField = inputField.replace("(", "");
-
     }
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
@@ -613,58 +611,107 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fractionDisplayButton.setContentAreaFilled(false);
     }
 
-    if (!hasImaginary())
-    {
+    
       if (command.equals("0"))
       {
-        inputTextField.setText(inputField += "0");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "0");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("1"))
       {
-        inputTextField.setText(inputField += "1");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "1");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("2"))
       {
-        inputTextField.setText(inputField += "2");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "2");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("3"))
       {
-        inputTextField.setText(inputField += "3");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "3");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("4"))
       {
-        inputTextField.setText(inputField += "4");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "4");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("5"))
       {
-        inputTextField.setText(inputField += "5");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "5");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("6"))
       {
-        inputTextField.setText(inputField += "6");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "6");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("7"))
       {
-        inputTextField.setText(inputField += "7");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "7");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("8"))
       {
-        inputTextField.setText(inputField += "8");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "8");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
 
       if (command.equals("9"))
       {
-        inputTextField.setText(inputField += "9");
+        if (!hasImaginary())
+        {
+          inputTextField.setText(inputField += "9");
+        }else {
+          warningDialog.displayDialog();
+        }
       }
-    }
+    
     if (command.equals("𝑖"))
     {
       if (inputField.length() != 0)
@@ -672,6 +719,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary())
         {
           inputTextField.setText(inputField += "𝑖");
+        }else {
+          warningDialog.displayDialog();
         }
       }
       else
@@ -679,13 +728,20 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField += "𝑖");
       }
     }
-    if (command.equals("(") && inputField.trim().equals(""))
+    if (command.equals("("))
     {
+      if (inputField.trim().equals("")) {
       inputTextField.setText(inputField += "(");
+      }else {
+        warningDialog.displayDialog();
+      }
     }
-    if (command.equals(")") && inputField.contains("(") && !inputField.contains(")"))
+    if (command.equals(")"))
     {
-      if (inputField.charAt(inputField.length() - 1) == '-'
+      if (!inputField.contains("(") || inputField.contains(")")) {
+        warningDialog.displayDialog();
+      }
+      else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+' || inputField.charAt(inputField.length()-1) != 'i' || !(inputField.contains("+") || inputField.contains("-")))
       {
         warningDialog.displayDialog();
@@ -706,6 +762,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       else if (!hasDecimal() && !hasImaginary() && inputField.charAt(inputField.length() - 1) != '-' && inputField.charAt(inputField.length() - 1) != '+')
       {
         inputTextField.setText(inputField += ".");
+      }else {
+        warningDialog.displayDialog();
       }
     }
     if (command.equals("<-") && inputField.length() > 0)
