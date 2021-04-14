@@ -783,11 +783,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-
+if (result.contains("/")){
+  WarningDialog warningDialog = WarningDialog.getInstance();
+  warningDialog.displayDialog();
+  clear();
+}else {
         calculator.setLeftOperand(result);
         calculator.setOperator(command);
         displayLabel
             .setText(calculator.formatDisplayOperand(calculator.getLeftOperand()) + command);
+}
       }
     }
     else if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().trim().equals(""))
