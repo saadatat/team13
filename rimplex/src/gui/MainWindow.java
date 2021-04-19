@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 
@@ -490,7 +491,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JMenuItem  portugese = new JMenuItem("Portugese");
     JMenuItem  japanese = new JMenuItem("Japanese");
     JMenuItem  russian = new JMenuItem("Russian");
-    
+    JMenuItem print = new JMenuItem("Print");
+    print.addActionListener(this);
     JMenu settings = new JMenu("Settings");
     JMenu languages = new JMenu("Languages");
     languages.add(english);
@@ -506,9 +508,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     settings.add(languages);
     menuBar.add(settings);
+    menuBar.add(print);
     menuBar.setPreferredSize(new Dimension(100,25));
     this.add(menuBar, BorderLayout.NORTH);
-
+    
   }
 
   /**
@@ -522,6 +525,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   public void actionPerformed(ActionEvent e)
   {
 
+    if (e.getActionCommand().equals("Print")) {
+      try
+      {
+        resultDisplayArea.print();
+      }
+      catch (PrinterException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+    }
     boolean par = false;
     String command = e.getActionCommand();
     String inputField = inputTextField.getText().trim();
