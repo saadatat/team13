@@ -574,24 +574,24 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     if (e.getSource() == spanish)
     {
-      settings.setText("ajustes");
-      print.setText("impresión");
-      languages.setText("idiomas");
-      english.setText("inglés");
-      chinese.setText("chino");
+      settings.setText("Ajustes");
+      print.setText("Impresión");
+      languages.setText("Idiomas");
+      english.setText("Inglés");
+      chinese.setText("Chino");
       spanish.setText("Español");
-      hindi.setText("hindi");
-      french.setText("francés");
+      hindi.setText("Hindi");
+      french.setText("Francés");
      
-      portugese.setText("portugués");
-      japanese.setText("japonés");
-      russian.setText("ruso");
+      portugese.setText("Portugués");
+      japanese.setText("Japonés");
+      russian.setText("Ruso");
     }
     if (e.getSource() == hindi)
     {
       settings.setText("समायोजन");
-      print.setText("प्रिंट");
-      languages.setText("भाषाओं");
+      print.setText("छाप");
+      languages.setText("बोली");
       english.setText("अंग्रेज़ी");
       chinese.setText("चीनी");
       spanish.setText("स्पेनिश");
@@ -605,37 +605,38 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (e.getSource() == french)
     {
       settings.setText("Les paramètres");
-      print.setText("imprimer");
-      languages.setText("les langues");
+      print.setText("Imprimer");
+      languages.setText("Les langues");
       english.setText("Anglais");
-      chinese.setText("chinois");
+      chinese.setText("Chinois");
       spanish.setText("Espanol");
-      hindi.setText("hindi");
-      french.setText("français");
+      hindi.setText("Hindi");
+      french.setText("Français");
      
       portugese.setText("Portugais");
       japanese.setText("Japonais");
-      russian.setText("russe");
+      russian.setText("Russe");
     }
 
     if (e.getSource() == portugese)
     {
-      settings.setText("definições");
-      print.setText("impressão");
-      languages.setText("línguas");
-      english.setText("inglês");
-      chinese.setText("chinês");
-      spanish.setText("espanhol");
-      hindi.setText("hindi");
-      french.setText("francês");
+      settings.setText("Definições");
+      print.setText("Impressão");
+      languages.setText("Línguas");
+      english.setText("Inglês");
+      chinese.setText("Chinês");
+      spanish.setText("Espanhol");
+      hindi.setText("Hindi");
+      french.setText("Francês");
       
-      portugese.setText("português");
-      japanese.setText("japonês");
-      russian.setText("russo");
+      portugese.setText("Português");
+      japanese.setText("Japonês");
+      russian.setText("Russo");
     }
     if (e.getSource() == japanese)
     {
-      settings.setText("設定");
+      settings.setText("設定\r\n"
+          + "");
       print.setText("印刷");
       languages.setText("言語");
       english.setText("英語");
@@ -650,16 +651,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     if (e.getSource() == russian)
     {
-      settings.setText("настройки");
+      settings.setText("Настройки");
       print.setText("Распечатать");
-      languages.setText("языки");
+      languages.setText("Языки");
       english.setText("английский");
       chinese.setText("китайский язык");
       spanish.setText("испанский");
       hindi.setText("хинди");
       french.setText("Французский");
       
-      portugese.setText("португальский");
+      portugese.setText("Португальский");
       japanese.setText("Японский");
       russian.setText("русский");
     }
