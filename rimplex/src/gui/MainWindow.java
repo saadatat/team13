@@ -94,7 +94,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setListeners(); // set listeners for components
     setResizable(false);
     this.setSize(350, 425);
-    this.setTitle("Rimplex");
+    this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
     centerForm();
