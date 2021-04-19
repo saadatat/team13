@@ -9,6 +9,12 @@ import calculations.Operations;
 class OperationsTest 
 {
   NumberFormat fmat;
+  
+  @Test
+  void testConstructor()
+  {
+    new Operations();
+  }
 
   @Test
   void additionTest()
@@ -52,7 +58,7 @@ class OperationsTest
             // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
             fmat = NumberFormat.getInstance();
             fmat.setMinimumFractionDigits(0);
-            fmat.setMaximumFractionDigits(2);
+            fmat.setMaximumFractionDigits(3);
 
             String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
             String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
@@ -99,7 +105,7 @@ class OperationsTest
             // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
             fmat = NumberFormat.getInstance();
             fmat.setMinimumFractionDigits(0);
-            fmat.setMaximumFractionDigits(2);
+            fmat.setMaximumFractionDigits(3);
 
             String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
             String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
@@ -119,7 +125,6 @@ class OperationsTest
   @Test
   void divideTest()
   {
-
     String termPositive1 = "2+5i";
     String termPositive2 = "4+3i";
     String termNegative1 = "-2-5i";
@@ -133,7 +138,49 @@ class OperationsTest
     assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
     assertEquals("-0.28+1.04i", Operations.divide(termPositive1, termFirstNegOnly2));
     assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
-
+  }
+  
+  @Test
+  void divisionTestComprehensive()
+  {
+    for (double i = -2; i <= 2; i += 0.25)
+    {
+      for (double j = -2; j <= 2; j += 0.25)
+      {
+        for (double k = -2; k <= 2; k += 0.25)
+        {
+          for (double l = -2; l <= 2; l += 0.25)
+          {
+            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
+            fmat = NumberFormat.getInstance();
+            fmat.setMinimumFractionDigits(0);
+            fmat.setMaximumFractionDigits(3);
+            
+            double scale = Math.pow(10, 3);
+            double quotient1;
+            double quotient2;
+            double ac = i * k;
+            double bd = j * l;
+            double ad = i * l;
+            double bc = j * k;
+            double top1 = ac + bd;
+            double top2 = bc - ad;
+            double cSquare = (double) Math.pow(k, 2);
+            double dSquare = (double) Math.pow(l, 2);
+            double denominator = cSquare + dSquare;
+            quotient1 = Math.round((top1 / denominator) * scale ) / scale;
+            quotient2 = Math.round((top2 / denominator) * scale ) / scale;
+            
+            String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+            String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+            String one = fmat.format(quotient1);
+            String two = fmat.format(quotient2);
+            String expected = String.format("%s+%si", one, two).replace("+-", "-");
+            assertEquals(expected, Operations.divide(firstOp, secondOp));
+          }
+        }
+      }
+    }
   }
 
   /*
@@ -142,7 +189,6 @@ class OperationsTest
   @Test
   void multiplyTest()
   {
-
     String validNum1 = "6+1i";
     String validNum2 = "4+2i";
     String zeroImaginary = "3+0i";
@@ -158,7 +204,6 @@ class OperationsTest
     // Check when theres a minus
     assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
     assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
-
   }
   
   /*

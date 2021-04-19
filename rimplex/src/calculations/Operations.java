@@ -151,20 +151,7 @@ public class Operations
    * @return returns the parsed strings as individual doubleegers in a 2D array.
    */
   private static double[][] parseTodouble(String operandOneIn, String operandTwoIn)
-  {
-    
-   
-    if(operandOneIn.equals("i"))
-    {
-  
-      operandOneIn = "1i";
-    }
-    
-    if(operandTwoIn.equals("i"))
-    {
-      operandTwoIn = "1i";
-    }
-    
+  { 
     String operandOne = operandOneIn.replace("+-", "-");
     String operandTwo = operandTwoIn.replace("+-", "-");
     boolean neg1 = false;
@@ -187,12 +174,17 @@ public class Operations
     {
       operandTwo += "+0i";
     }
-    
-    
-    
+    if(operandOne.equals("i"))
+    {
+      operandOneIn = "1i";
+    }
+    if(operandTwo.equals("i"))
+    {
+      operandTwoIn = "1i";
+    }
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
-
+    
     // Checks if first operand has negative values
     if (operandOne.charAt(0) == '-')
     {
@@ -308,8 +300,6 @@ public class Operations
     }else {
       operator = "-";
     }
-  
-  
    
     if (splits[0].contains(".")) {
       splits2 = splits[0].split("\\.");
@@ -366,50 +356,48 @@ public class Operations
     String quotient1;
     String quotient2;
     char operator = '+';
-  double[][] opdoubles = parseTodouble(operandOne, operandTwo);
+    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
-  double ac = opdoubles[0][0] * opdoubles[1][0];
-  double bd = opdoubles[0][1] * opdoubles[1][1];
-  double ad = opdoubles[0][0] * opdoubles[1][1];
-  double bc = opdoubles[0][1] * opdoubles[1][0];
+    double ac = opdoubles[0][0] * opdoubles[1][0];
+    double bd = opdoubles[0][1] * opdoubles[1][1];
+    double ad = opdoubles[0][0] * opdoubles[1][1];
+    double bc = opdoubles[0][1] * opdoubles[1][0];
 
-  double top1 = ac + bd;
-  double top2 = bc - ad;
+    double top1 = ac + bd;
+    double top2 = bc - ad;
 
-  double cSquare = (double) Math.pow(opdoubles[1][0], 2);
-  double dSquare = (double) Math.pow(opdoubles[1][1], 2);
+    double cSquare = (double) Math.pow(opdoubles[1][0], 2);
+    double dSquare = (double) Math.pow(opdoubles[1][1], 2);
 
-  double denominator = cSquare + dSquare;
+    double denominator = cSquare + dSquare;
   
-  if (top1 == 0) {
-    quotient1 = "0";
-  }else {
-  int gcd1 = getGCD((int)top1, (int)denominator);
-  int returnTop = (int)top1/gcd1;
-  int returnDen = (int)denominator/gcd1;
-  if (returnDen == 1) {
-    quotient1 = returnTop + "";
-  }else {
-  quotient1 = returnTop + "/" + returnDen;
-  }
-  }
-  
-  if(top2 == 0) {
-    quotient2 = "0";
-  }else {
-    int gcd1 = getGCD((int)top2, (int)denominator);
-    int returnTop = (int)top2/gcd1;
-    int returnDen = (int)denominator/gcd1;
-    if (returnDen == 1) {
-      quotient2 = "" + returnTop;
+    if (top1 == 0) {
+      quotient1 = "0";
     }else {
-    quotient2 = returnTop + "/" + returnDen;
+      int gcd1 = getGCD((int)top1, (int)denominator);
+      int returnTop = (int)top1/gcd1;
+      int returnDen = (int)denominator/gcd1;
+      if (returnDen == 1) {
+        quotient1 = returnTop + "";
+      }else {
+        quotient1 = returnTop + "/" + returnDen;
+      }
     }
-  }
+  
+    if(top2 == 0) {
+      quotient2 = "0";
+    }else {
+      int gcd1 = getGCD((int)top2, (int)denominator);
+      int returnTop = (int)top2/gcd1;
+      int returnDen = (int)denominator/gcd1;
+      if (returnDen == 1) {
+        quotient2 = "" + returnTop;
+      }else {
+        quotient2 = returnTop + "/" + returnDen;
+      }
+    }
 
 
   return quotient1 + operator + quotient2;
   }
-  
-  
 }
