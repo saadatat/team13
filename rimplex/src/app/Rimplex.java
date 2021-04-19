@@ -21,6 +21,8 @@ public class Rimplex implements Runnable
    */
   public static void main(final String[] args)
   {
+    System.setProperty("apple.laf.useScreenMenuBar", "true");
+    System.setProperty("apple.awt.application.name", "rimpleX");
     try
     {
       SwingUtilities.invokeAndWait(new Rimplex());
