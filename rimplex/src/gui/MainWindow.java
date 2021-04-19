@@ -21,6 +21,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -75,6 +78,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JPanel testPanel;
   private JButton backspace;
   private JButton decimal;
+  private JMenuBar menuBar;
+  
 
   /**
    * Default Constructor.
@@ -87,7 +92,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(350, 400);
+    this.setSize(350, 425);
     this.setTitle("Rimplex");
     this.setVisible(true);
     resultHistory = "";
@@ -122,6 +127,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void createComponents()
   {
+    
     testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
     southPanel = new JPanel(new GridLayout(5, 0));
@@ -223,6 +229,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight.addKeyListener(this);
     nine.addActionListener(this);
     nine.addKeyListener(this);
+    
+    menuBar = new JMenuBar();
   }
 
   /**
@@ -433,6 +441,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     southPanel.setPreferredSize(new Dimension(300, 250));
     mainPanel.setPreferredSize(new Dimension(50, 50));
+    
     // Set borders
     inputTextField.setBorder(null);
     resultPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -457,7 +466,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
 
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
-    rimplexHolder.setPreferredSize(new Dimension(100, 50));
+    rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
     testPanel.add(mainPanel, BorderLayout.CENTER);
@@ -467,6 +476,39 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
     setLocationRelativeTo(null);
+    
+    
+    
+    ///MENU TESTINGS
+    JMenuItem  english = new JMenuItem("English");
+    JMenuItem  chinese = new JMenuItem("Chinese");
+    JMenuItem  hindi = new JMenuItem("Hindi");
+    JMenuItem  spanish = new JMenuItem("Spanish");
+    JMenuItem  french = new JMenuItem("French");
+    JMenuItem  arabic = new JMenuItem("Arabic");
+    JMenuItem  bengali = new JMenuItem("Bengali");
+    JMenuItem  portugese = new JMenuItem("Portugese");
+    JMenuItem  japanese = new JMenuItem("Japanese");
+    JMenuItem  russian = new JMenuItem("Russian");
+    
+    JMenu settings = new JMenu("Settings");
+    JMenu languages = new JMenu("Languages");
+    languages.add(english);
+    languages.add(chinese);
+    languages.add(hindi);
+    languages.add(spanish);
+    languages.add(french);
+    languages.add(arabic);
+    languages.add(bengali);
+    languages.add(portugese);
+    languages.add(japanese);
+    languages.add(russian);
+    
+    settings.add(languages);
+    menuBar.add(settings);
+    menuBar.setPreferredSize(new Dimension(100,25));
+    this.add(menuBar, BorderLayout.NORTH);
+
   }
 
   /**
