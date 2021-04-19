@@ -46,8 +46,6 @@ class CalculatorTest
 
   }
 
-
-
   @Test
   void setLeftOperandTest()
   {
