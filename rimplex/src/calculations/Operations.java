@@ -348,10 +348,8 @@ public class Operations
     }
     return getGCD(number2, number1 % number2);
   }
-  
 
-
-  public static String test(String operandOne, String operandTwo) {
+  public static String fractionFormat(String operandOne, String operandTwo) {
     
     String quotient1;
     String quotient2;
