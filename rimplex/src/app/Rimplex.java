@@ -39,6 +39,7 @@ public class Rimplex implements Runnable
   public void run()
   {
     MainWindow window = new MainWindow();
+    window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setVisible(true);
   }
 }
