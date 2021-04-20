@@ -111,7 +111,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
-    centerForm();
+    centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
   }
@@ -189,61 +189,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
-
-    // add listeners
-    addButton.addActionListener(this);
-    this.addKeyListener(this);
-    addButton.addKeyListener(this);
-    imaginaryButton.addActionListener(this);
-    imaginaryButton.addKeyListener(this);
-    subtractButton.addActionListener(this);
-    subtractButton.addKeyListener(this);
-    divideButton.addActionListener(this);
-    divideButton.addKeyListener(this);
-    multiplyButton.addActionListener(this);
-    multiplyButton.addKeyListener(this);
-    equalsButton.addActionListener(this);
-    equalsButton.addKeyListener(this);
-    resetButton.addActionListener(this);
-    resetButton.addKeyListener(this);
-    clearButton.addActionListener(this);
-    clearButton.addKeyListener(this);
-    signButton.addActionListener(this);
-    signButton.addKeyListener(this);
-    backspace.addActionListener(this);
-    decimal.addActionListener(this);
-    resultButton.addActionListener(this);
-    resultButton.addKeyListener(this);
-    leftParenthesisButton.addActionListener(this);
-    leftParenthesisButton.addKeyListener(this);
-    rightParenthesisButton.addActionListener(this);
-    rightParenthesisButton.addKeyListener(this);
-    hideResultButton.addActionListener(this);
-    hideResultButton.addKeyListener(this);
-    fractionDisplayButton.addActionListener(this);
-    fractionDisplayButton.addKeyListener(this);
-    inputTextField.addKeyListener(this);
-    zero.addActionListener(this);
-    zero.addKeyListener(this);
-    one.addActionListener(this);
-    one.addKeyListener(this);
-    two.addActionListener(this);
-    two.addKeyListener(this);
-    three.addActionListener(this);
-    three.addKeyListener(this);
-    four.addActionListener(this);
-    four.addKeyListener(this);
-    five.addActionListener(this);
-    five.addKeyListener(this);
-    six.addActionListener(this);
-    six.addKeyListener(this);
-    seven.addActionListener(this);
-    seven.addKeyListener(this);
-    eight.addActionListener(this);
-    eight.addKeyListener(this);
-    nine.addActionListener(this);
-    nine.addKeyListener(this);
     
+    // Create menubar
     menuBar = new JMenuBar();
   }
 
@@ -289,7 +236,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(imaginaryButton);
     southPanel.add(equalsButton);
     southPanel.add(decimal);
-    
     southPanel.add(resultButton);
 
     resultButton.setBorderPainted(false);
@@ -545,135 +491,66 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private void setListeners()
   {
     Listener listener = Listener.getInstance();
+    
+    // add listeners
+    addButton.addActionListener(this);
+    this.addKeyListener(this);
+    addButton.addKeyListener(this);
+    imaginaryButton.addActionListener(this);
+    imaginaryButton.addKeyListener(this);
+    subtractButton.addActionListener(this);
+    subtractButton.addKeyListener(this);
+    divideButton.addActionListener(this);
+    divideButton.addKeyListener(this);
+    multiplyButton.addActionListener(this);
+    multiplyButton.addKeyListener(this);
+    equalsButton.addActionListener(this);
+    equalsButton.addKeyListener(this);
+    resetButton.addActionListener(this);
+    resetButton.addKeyListener(this);
+    clearButton.addActionListener(this);
+    clearButton.addKeyListener(this);
+    signButton.addActionListener(this);
+    signButton.addKeyListener(this);
+    backspace.addActionListener(this);
+    decimal.addActionListener(this);
+    resultButton.addActionListener(this);
+    resultButton.addKeyListener(this);
+    leftParenthesisButton.addActionListener(this);
+    leftParenthesisButton.addKeyListener(this);
+    rightParenthesisButton.addActionListener(this);
+    rightParenthesisButton.addKeyListener(this);
+    hideResultButton.addActionListener(this);
+    hideResultButton.addKeyListener(this);
+    fractionDisplayButton.addActionListener(this);
+    fractionDisplayButton.addKeyListener(this);
+    inputTextField.addKeyListener(this);
+    zero.addActionListener(this);
+    zero.addKeyListener(this);
+    one.addActionListener(this);
+    one.addKeyListener(this);
+    two.addActionListener(this);
+    two.addKeyListener(this);
+    three.addActionListener(this);
+    three.addKeyListener(this);
+    four.addActionListener(this);
+    four.addKeyListener(this);
+    five.addActionListener(this);
+    five.addKeyListener(this);
+    six.addActionListener(this);
+    six.addKeyListener(this);
+    seven.addActionListener(this);
+    seven.addKeyListener(this);
+    eight.addActionListener(this);
+    eight.addKeyListener(this);
+    nine.addActionListener(this);
+    nine.addKeyListener(this);
   }
 
   public void actionPerformed(ActionEvent e)
   {
+    changeLanguage(e);
     
-    /// Language Listeners
-    if (e.getSource() == english)
-    {
-      settings.setText("Settings");
-      print.setText("Print");
-      languages.setText("Languages");
-      english.setText("English");
-      chinese.setText("Chinese");
-      spanish.setText("Spanish");
-      hindi.setText("Hindi");
-      french.setText("French");
-      
-      portugese.setText("Portugese");
-      japanese.setText("Japanese");
-      russian.setText("Russian");
-      
-    }
-    if (e.getSource() == chinese)
-    {
-      settings.setText("设定");
-      print.setText("打印");
-      languages.setText("语言");
-      english.setText("英语");
-      chinese.setText("中国人");
-      spanish.setText("西班牙语");
-      hindi.setText("印地语");
-      french.setText("印地语");
-      
-      portugese.setText("印地语");
-      japanese.setText("印地语");
-      russian.setText("印地语");
-    }
-    if (e.getSource() == spanish)
-    {
-      settings.setText("Ajustes");
-      print.setText("Impresión");
-      languages.setText("Idiomas");
-      english.setText("Inglés");
-      chinese.setText("Chino");
-      spanish.setText("Español");
-      hindi.setText("Hindi");
-      french.setText("Francés");
-     
-      portugese.setText("Portugués");
-      japanese.setText("Japonés");
-      russian.setText("Ruso");
-    }
-    if (e.getSource() == hindi)
-    {
-      settings.setText("समायोजन");
-      print.setText("छाप");
-      languages.setText("बोली");
-      english.setText("अंग्रेज़ी");
-      chinese.setText("चीनी");
-      spanish.setText("स्पेनिश");
-      hindi.setText("हिंदी");
-      french.setText("फ्रेंच");
-     
-      portugese.setText("पुर्तगाली");
-      japanese.setText("जापानी");
-      russian.setText("रूसी");
-    }
-    if (e.getSource() == french)
-    {
-      settings.setText("Les paramètres");
-      print.setText("Imprimer");
-      languages.setText("Les langues");
-      english.setText("Anglais");
-      chinese.setText("Chinois");
-      spanish.setText("Espanol");
-      hindi.setText("Hindi");
-      french.setText("Français");
-     
-      portugese.setText("Portugais");
-      japanese.setText("Japonais");
-      russian.setText("Russe");
-    }
-
-    if (e.getSource() == portugese)
-    {
-      settings.setText("Definições");
-      print.setText("Impressão");
-      languages.setText("Línguas");
-      english.setText("Inglês");
-      chinese.setText("Chinês");
-      spanish.setText("Espanhol");
-      hindi.setText("Hindi");
-      french.setText("Francês");
-      
-      portugese.setText("Português");
-      japanese.setText("Japonês");
-      russian.setText("Russo");
-    }
-    if (e.getSource() == japanese)
-    {
-      settings.setText("設定\r\n"
-          + "");
-      print.setText("印刷");
-      languages.setText("言語");
-      english.setText("英語");
-      chinese.setText("中国語");
-      spanish.setText("スペイン語");
-      hindi.setText("ヒンディー語");
-      french.setText("フランス語");
-     
-      portugese.setText("ポルトガル語");
-      japanese.setText("日本語");
-      russian.setText("ロシア");
-    }
-    if (e.getSource() == russian)
-    {
-      settings.setText("Настройки");
-      print.setText("Распечатать");
-      languages.setText("Языки");
-      english.setText("английский");
-      chinese.setText("китайский язык");
-      spanish.setText("испанский");
-      hindi.setText("хинди");
-      french.setText("Французский");
-      
-      portugese.setText("Португальский");
-      japanese.setText("Японский");
-      russian.setText("русский");
-    }
 
     ////
     if (e.getActionCommand().equals("Print"))
@@ -1406,19 +1283,151 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       equalsEvent();
     }
-
   }
 
   @Override
   public void keyReleased(KeyEvent e)
   {
-
   }
-
+  
+  /**
+   * Clear text fields.
+   */
   public void clear()
   {
     inputTextField.setText("");
     displayLabel.setText("");
   }
+  
+  /**
+   * Helper method to change languages depending on user input.
+   * @param e Action event passed from ActionPerformed.
+   */
+  private void changeLanguage(ActionEvent e)
+  {
+  /// Language Listeners
+    if (e.getSource() == english)
+    {
+      settings.setText("Settings");
+      print.setText("Print");
+      languages.setText("Languages");
+      english.setText("English");
+      chinese.setText("Chinese");
+      spanish.setText("Spanish");
+      hindi.setText("Hindi");
+      french.setText("French");
+      
+      portugese.setText("Portugese");
+      japanese.setText("Japanese");
+      russian.setText("Russian");
+      
+    }
+    if (e.getSource() == chinese)
+    {
+      settings.setText("设定");
+      print.setText("打印");
+      languages.setText("语言");
+      english.setText("英语");
+      chinese.setText("中国人");
+      spanish.setText("西班牙语");
+      hindi.setText("印地语");
+      french.setText("印地语");
+      
+      portugese.setText("印地语");
+      japanese.setText("印地语");
+      russian.setText("印地语");
+    }
+    if (e.getSource() == spanish)
+    {
+      settings.setText("Ajustes");
+      print.setText("Impresión");
+      languages.setText("Idiomas");
+      english.setText("Inglés");
+      chinese.setText("Chino");
+      spanish.setText("Español");
+      hindi.setText("Hindi");
+      french.setText("Francés");
+     
+      portugese.setText("Portugués");
+      japanese.setText("Japonés");
+      russian.setText("Ruso");
+    }
+    if (e.getSource() == hindi)
+    {
+      settings.setText("समायोजन");
+      print.setText("छाप");
+      languages.setText("बोली");
+      english.setText("अंग्रेज़ी");
+      chinese.setText("चीनी");
+      spanish.setText("स्पेनिश");
+      hindi.setText("हिंदी");
+      french.setText("फ्रेंच");
+     
+      portugese.setText("पुर्तगाली");
+      japanese.setText("जापानी");
+      russian.setText("रूसी");
+    }
+    if (e.getSource() == french)
+    {
+      settings.setText("Les paramètres");
+      print.setText("Imprimer");
+      languages.setText("Les langues");
+      english.setText("Anglais");
+      chinese.setText("Chinois");
+      spanish.setText("Espanol");
+      hindi.setText("Hindi");
+      french.setText("Français");
+     
+      portugese.setText("Portugais");
+      japanese.setText("Japonais");
+      russian.setText("Russe");
+    }
 
+    if (e.getSource() == portugese)
+    {
+      settings.setText("Definições");
+      print.setText("Impressão");
+      languages.setText("Línguas");
+      english.setText("Inglês");
+      chinese.setText("Chinês");
+      spanish.setText("Espanhol");
+      hindi.setText("Hindi");
+      french.setText("Francês");
+      
+      portugese.setText("Português");
+      japanese.setText("Japonês");
+      russian.setText("Russo");
+    }
+    if (e.getSource() == japanese)
+    {
+      settings.setText("設定\r\n"
+          + "");
+      print.setText("印刷");
+      languages.setText("言語");
+      english.setText("英語");
+      chinese.setText("中国語");
+      spanish.setText("スペイン語");
+      hindi.setText("ヒンディー語");
+      french.setText("フランス語");
+     
+      portugese.setText("ポルトガル語");
+      japanese.setText("日本語");
+      russian.setText("ロシア");
+    }
+    if (e.getSource() == russian)
+    {
+      settings.setText("Настройки");
+      print.setText("Распечатать");
+      languages.setText("Языки");
+      english.setText("английский");
+      chinese.setText("китайский язык");
+      spanish.setText("испанский");
+      hindi.setText("хинди");
+      french.setText("Французский");
+      
+      portugese.setText("Португальский");
+      japanese.setText("Японский");
+      russian.setText("русский");
+    }
+  }
 }
