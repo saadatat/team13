@@ -15,7 +15,9 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -23,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -453,12 +456,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JMenu help = new JMenu("Help");
     JMenu fileTab = new JMenu("File");
     JMenuItem about = new JMenuItem("About");
+    JMenuItem fileSetting = new JMenuItem("Save Recorded Calculations");
     JMenuItem helpPage = new JMenuItem("Instructions");
     JMenuItem recordButton = new JMenuItem("Recording (Off)");
     about.addActionListener(this);
+    fileSetting.addActionListener(this);
     help.add(about);
     help.add(helpPage);
     helpPage.addActionListener(this);
+  
     
     languages = new JMenu("Languages");
     languages.add(english);
@@ -478,7 +484,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     portugese.addActionListener(this);
     japanese.addActionListener(this);
     russian.addActionListener(this);
-
+    
+    fileTab.add(fileSetting);
     settings.add(languages);
     fileTab.add(recordButton);
     fileTab.add(print);
@@ -556,6 +563,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // Call helper method to notify application of a change in language if there is one.
     changeLanguage(e);
     
+    // Open systems print dialog if selected
     if (e.getActionCommand().equals("Print"))
     {
       try
@@ -564,14 +572,46 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       catch (PrinterException e1)
       {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     }
+    
+    // Open about dialog if selected
     if (e.getActionCommand().equals("About")) {
       aboutDialog = AboutDialog.getInstance();
       aboutDialog.display();
     }
+    
+    // Open save dialog
+    if (e.getActionCommand().equals("Save Recorded Calculations")) {
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Specify a location to save calculations");   
+
+      int userSelection = fileChooser.showSaveDialog(null);
+       
+      File theFile = new File("");
+      PrintWriter outFile;
+      try
+      {
+        outFile = new PrintWriter(theFile);
+        outFile.print("asdf");
+        outFile.close();
+      }
+      catch (FileNotFoundException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+      
+      fileChooser.setSelectedFile(theFile);
+      
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+          File fileToSave = fileChooser.getSelectedFile();
+          System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+      }
+    }
+    
+    // Open help webpage in default browser
     if (e.getActionCommand().equals("Instructions")) {
       try
       {
@@ -583,6 +623,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         e1.printStackTrace();
       }
     }
+    
     boolean par = false;
     String command = e.getActionCommand();
     String inputField = inputTextField.getText().trim();
@@ -624,7 +665,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         }
         else
         {
-
           operationEvent(command);
         }
       }
