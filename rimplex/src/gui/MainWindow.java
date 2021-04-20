@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.MenuBar;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -43,6 +45,7 @@ import calculations.Calculator;
 public class MainWindow extends JFrame implements ActionListener, KeyListener
 {
   private static final long serialVersionUID = 2740437090361841747L;
+  private AboutDialog aboutDialog;
   private Calculator calculator;
   private JButton addButton;
   private JButton imaginaryButton;
@@ -128,7 +131,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void createComponents()
   {
-    
     testPanel = new JPanel(new BorderLayout());
     mainPanel = new JPanel();
     southPanel = new JPanel(new GridLayout(5, 0));
@@ -238,14 +240,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    * Set-up the components used by this window.
    */
   private void setComponents()
-  {
-
-    // Configure colors
+  {// Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204, 204, 204, 255);
     Color yellow = new Color(131, 139, 82, 255);
     Color green = new Color(99, 164, 157, 255);
     BufferedImage rimplexLogo = null;
+    
     // Layout
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
@@ -276,7 +277,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(imaginaryButton);
     southPanel.add(equalsButton);
     southPanel.add(decimal);
-
+    
     southPanel.add(resultButton);
 
     resultButton.setBorderPainted(false);
@@ -478,8 +479,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     pack();
     setLocationRelativeTo(null);
     
-    
-    
     ///MENU TESTINGS
     JMenuItem  english = new JMenuItem("English");
     JMenuItem  chinese = new JMenuItem("Chinese");
@@ -494,6 +493,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JMenuItem print = new JMenuItem("Print");
     print.addActionListener(this);
     JMenu settings = new JMenu("Settings");
+    JMenuItem about = new JMenuItem("About");
+    about.addActionListener(this);
     JMenu languages = new JMenu("Languages");
     languages.add(english);
     languages.add(chinese);
@@ -507,11 +508,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     languages.add(russian);
     
     settings.add(languages);
+    menuBar.add(about);
     menuBar.add(settings);
     menuBar.add(print);
     menuBar.setPreferredSize(new Dimension(100,25));
-    this.add(menuBar, BorderLayout.NORTH);
-    
+    this.add(menuBar, BorderLayout.NORTH);  
   }
 
   /**
@@ -524,7 +525,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public void actionPerformed(ActionEvent e)
   {
-
     if (e.getActionCommand().equals("Print")) {
       try
       {
@@ -535,6 +535,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         // TODO Auto-generated catch block
         e1.printStackTrace();
       }
+    }
+    if (e.getActionCommand().equals("About")) {
+      aboutDialog = AboutDialog.getInstance();
+      aboutDialog.display();
     }
     boolean par = false;
     String command = e.getActionCommand();
@@ -1132,14 +1136,11 @@ if (result.contains("/")){
         inputTextField.setText(newText);
       }
     }
-
   }
 
   public boolean hasDecimal()
   {
-    
     String[] test = inputTextField.getText().split("\\+|-");
-   
     if (test.length == 1 && test[0].contains(".") && !(inputTextField.getText().contains("+") || inputTextField.getText().contains("-")))
     {
       return true;
@@ -1153,7 +1154,6 @@ if (result.contains("/")){
 
   public boolean hasImaginary()
   {
-    
     String[] test = inputTextField.getText().split("\\+|-");
    
     if (test.length == 1 && (test[0].contains("𝑖") || test[0].contains("i") || test[0].contains("?")))
