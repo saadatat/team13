@@ -451,8 +451,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     print.addActionListener(this);
     settings = new JMenu("Settings");
     JMenu help = new JMenu("Help");
+    JMenu fileTab = new JMenu("File");
     JMenuItem about = new JMenuItem("About");
     JMenuItem helpPage = new JMenuItem("Instructions");
+    JMenuItem recordButton = new JMenuItem("Recording (Off)");
     about.addActionListener(this);
     help.add(about);
     help.add(helpPage);
@@ -478,9 +480,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     russian.addActionListener(this);
 
     settings.add(languages);
-    menuBar.add(help);
+    fileTab.add(recordButton);
+    fileTab.add(print);
+    menuBar.add(fileTab);
     menuBar.add(settings);
-    menuBar.add(print);
+    menuBar.add(help);
     menuBar.setPreferredSize(new Dimension(100,25));
     this.add(menuBar, BorderLayout.NORTH);  
   }
@@ -549,10 +553,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public void actionPerformed(ActionEvent e)
   {
+    // Call helper method to notify application of a change in language if there is one.
     changeLanguage(e);
     
-
-    ////
     if (e.getActionCommand().equals("Print"))
     {
       try
@@ -959,7 +962,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public void operationEvent(String command)
   {
-
     String inputField = inputTextField.getText().trim();
 
     inputField = inputField.replace(")", "");
@@ -1037,8 +1039,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   public void keyTyped(KeyEvent e)
   {
     WarningDialog warningDialog = WarningDialog.getInstance();
-
     String inputField = inputTextField.getText();
+    
     inputField = inputField.replace("𝑖", "i");
 
     if (e.getKeyChar() == 'i')
@@ -1238,9 +1240,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(newText);
       }
     }
-
   }
-
+  
   public boolean hasDecimal()
   {
     String[] test = inputTextField.getText().split("\\+|-");
@@ -1259,8 +1260,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   public boolean hasImaginary()
   {
-
-
     String[] test = inputTextField.getText().split("\\+|-");
 
     if (test.length == 1
