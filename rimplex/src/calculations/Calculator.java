@@ -278,7 +278,7 @@ public class Calculator
   public void divide()
   {
     if (fractionDisplay) {
-      result = Operations.test(leftOperand, rightOperand);
+      result = Operations.fractionFormat(leftOperand, rightOperand);
     }else {
       result = Operations.divide(leftOperand, rightOperand);
     }
