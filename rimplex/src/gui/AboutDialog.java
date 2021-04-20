@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +35,6 @@ public class AboutDialog extends JOptionPane
    */
   public void display()
   {
-    showMessageDialog(null, "rimpleX is a desktop calculator designed to work with (R)eal, (IM)aginary and com(PLEX) numbers.\nDeveloped by SagaciousMedia.", "About rimpleX", JOptionPane.INFORMATION_MESSAGE);
+    showMessageDialog(null, "rimpleX is a desktop calculator designed to work with\n\n       Real\n       IMaginary and\ncomPLEX numbers\n\nDeveloped by SagaciousMedia", "About rimpleX", JOptionPane.PLAIN_MESSAGE);
   }
 }
