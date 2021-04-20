@@ -1,7 +1,6 @@
 package app;
 
 import gui.*;
-import calculations.*;
 import java.lang.reflect.*;
 import javax.swing.*;
 
