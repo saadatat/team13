@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -87,8 +88,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem chinese;
   private JMenuItem spanish;
   private JMenuItem hindi;
-  private JMenuItem french;
-  
+  private JMenuItem french; 
   private JMenuItem portugese;
   private JMenuItem japanese;
   private JMenuItem russian;
@@ -500,11 +500,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     portugese = new JMenuItem("Portugese");
     japanese = new JMenuItem("Japanese");
     russian = new JMenuItem("Russian");
+
     print = new JMenuItem("Print");
     print.addActionListener(this);
     settings = new JMenu("Settings");
+    JMenu help = new JMenu("Help");
     JMenuItem about = new JMenuItem("About");
+    JMenuItem helpPage = new JMenuItem("Instructions");
     about.addActionListener(this);
+    help.add(about);
+    help.add(helpPage);
+    helpPage.addActionListener(this);
     
     languages = new JMenu("Languages");
     languages.add(english);
@@ -526,7 +532,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     russian.addActionListener(this);
 
     settings.add(languages);
-    menuBar.add(about);
+    menuBar.add(help);
     menuBar.add(settings);
     menuBar.add(print);
     menuBar.setPreferredSize(new Dimension(100,25));
@@ -685,6 +691,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (e.getActionCommand().equals("About")) {
       aboutDialog = AboutDialog.getInstance();
       aboutDialog.display();
+    }
+    if (e.getActionCommand().equals("Instructions")) {
+      try
+      {
+        Desktop.getDesktop().open(new File("webpages/helpPage.html"));
+      }
+      catch (IOException e1)
+      {
+        System.out.println("Unable to open webpage. May be incorrect directory.");
+        e1.printStackTrace();
+      }
     }
     boolean par = false;
     String command = e.getActionCommand();
