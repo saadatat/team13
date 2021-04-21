@@ -154,8 +154,6 @@ public class Operations
   { 
     String operandOne = operandOneIn.replace("+-", "-");
     String operandTwo = operandTwoIn.replace("+-", "-");
-    boolean neg1 = false;
-    boolean neg2 = false;
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -166,6 +164,8 @@ public class Operations
     String[] op2;
     String[] temp;
     
+    // If this method is passed a single real number without and imaginary
+    // counterpart then convert it to standard form.
     if (!operandOne.contains("i"))
     {
       operandOne += "+0i";
@@ -174,13 +174,15 @@ public class Operations
     {
       operandTwo += "+0i";
     }
+    
+    // If this method is passed i convert it to 1i.
     if(operandOne.equals("i"))
     {
-      operandOneIn = "1i";
+      operandOne = "1i";
     }
     if(operandTwo.equals("i"))
     {
-      operandTwoIn = "1i";
+      operandTwo = "1i";
     }
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
@@ -190,7 +192,6 @@ public class Operations
     {
       op1 = operandOne.substring(1).split("\\+|i|-");
       negModifier1A = -1;
-      neg1 = true;
     }
     else
       op1 = operandOne.split("\\+|i|-");
@@ -204,7 +205,6 @@ public class Operations
     {
       op2 = operandTwo.substring(1).split("\\+|i|-");
       negModifier2A = -1;
-      neg2 = true;
     }
     else
       op2 = operandTwo.split("\\+|i|-");
@@ -212,34 +212,6 @@ public class Operations
     // Checks second term for negative
     if (operandTwo.substring(1).contains("-"))
       negModifier2B = -1;
-
-  
-    if(op1.length == 1)
-    {
-      op1 = Arrays.copyOf(op1, 2);
-      if (!neg1) 
-      {
-        op1[1] = op1[0];
-      } else {
-        op1[1] = "-" + op1[0];
-        System.out.println(op1[1]);
-      }
-      
-      op1[0] = "0";
-    }
-    if(op2.length == 1)
-    {
-      op2 = Arrays.copyOf(op2, 2);
-      if (!neg2) 
-      {
-        op2[1] = op2[0];
-      } else {
-        op2[1] = "-" + op2[0];
-      }
-      op2[0] = "0";
-    }
-    neg1 = false;
-    neg2 = false;
     
     // Converting parsed string to doubleegers
     op1double = new double[2]; // Always make an array the size of two.
@@ -277,8 +249,9 @@ public class Operations
     return returnString;
   }
   
-  public static String formatFractionDisplay(String incoming) {
-    
+  // Formats fractions for all operators besides division.
+  public static String formatFractionDisplay(String incoming)
+  {
    String splits[] = incoming.split("\\+|-|i");
     String splits2[];
     String splits3[];
@@ -342,60 +315,10 @@ public class Operations
     
   }
   
-  public static int getGCD(int number1, int number2) {
+  private static int getGCD(int number1, int number2) {
     if (number2 == 0) {
       return number1;
     }
     return getGCD(number2, number1 % number2);
-  }
-
-  public static String fractionFormat(String operandOne, String operandTwo) {
-    
-    String quotient1;
-    String quotient2;
-    char operator = '+';
-    double[][] opdoubles = parseTodouble(operandOne, operandTwo);
-
-    double ac = opdoubles[0][0] * opdoubles[1][0];
-    double bd = opdoubles[0][1] * opdoubles[1][1];
-    double ad = opdoubles[0][0] * opdoubles[1][1];
-    double bc = opdoubles[0][1] * opdoubles[1][0];
-
-    double top1 = ac + bd;
-    double top2 = bc - ad;
-
-    double cSquare = (double) Math.pow(opdoubles[1][0], 2);
-    double dSquare = (double) Math.pow(opdoubles[1][1], 2);
-
-    double denominator = cSquare + dSquare;
-  
-    if (top1 == 0) {
-      quotient1 = "0";
-    }else {
-      int gcd1 = getGCD((int)top1, (int)denominator);
-      int returnTop = (int)top1/gcd1;
-      int returnDen = (int)denominator/gcd1;
-      if (returnDen == 1) {
-        quotient1 = returnTop + "";
-      }else {
-        quotient1 = returnTop + "/" + returnDen;
-      }
-    }
-  
-    if(top2 == 0) {
-      quotient2 = "0";
-    }else {
-      int gcd1 = getGCD((int)top2, (int)denominator);
-      int returnTop = (int)top2/gcd1;
-      int returnDen = (int)denominator/gcd1;
-      if (returnDen == 1) {
-        quotient2 = "" + returnTop;
-      }else {
-        quotient2 = returnTop + "/" + returnDen;
-      }
-    }
-
-
-  return quotient1 + operator + quotient2;
   }
 }

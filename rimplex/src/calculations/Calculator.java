@@ -252,7 +252,6 @@ public class Calculator
   public void add()
   {
     result = Operations.addition(leftOperand, rightOperand);
-    
     resultResetHelper();
   }
 
@@ -279,11 +278,7 @@ public class Calculator
    */
   public void divide()
   {
-    if (fractionDisplay) {
-      result = Operations.fractionFormat(leftOperand, rightOperand);
-    }else {
-      result = Operations.divide(leftOperand, rightOperand);
-    }
+    result = Operations.divide(leftOperand, rightOperand);
     resultResetHelper();
   }
   
