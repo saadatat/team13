@@ -239,12 +239,18 @@ public class Operations
    *          - the imaginary.
    * @return String - the formatted result.
    */
-  public static String formatResult(double real, char operator, double imaginary)
+  public static String formatResult(double real, char operator, double imaginary, boolean asFraction)
   {
     NumberFormat fmat = NumberFormat.getInstance();
+    String returnString;
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
-    String returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
+    if (asFraction)
+    {
+      returnString = String.format("%s%c%si", toFraction(real), operator, toFraction(imaginary));
+    } else {
+      returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
+    }
     returnString = returnString.replace(",", "");
     return returnString;
   }
@@ -316,24 +322,32 @@ public class Operations
   /**
    * Takes in a double decimal and converts it to a mixed fraction as a string.
    * @param numberToConvert
-   * @return Returns the formatted mixed number fraction.
+   * @return Returns the formatted mixed number fraction. "1 1/2"
    */
   private static String toFraction (double numberToConvert)
   {
-    int wholeNumber = (int) numberToConvert;
+    NumberFormat fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+    
+    String numberAsText = fmat.format(Double.toString(Math.abs(numberToConvert)));
+    int decimalPlaces = numberAsText.length() - numberAsText.indexOf('.') - 1;
+    int decimalPlaceFactor = (int) Math.pow(10, decimalPlaces);
+    
+    int wholeNumber = (int) numberToConvert ;
     double onlyDecimal = numberToConvert - wholeNumber;
-    int numerator = (int) (onlyDecimal * 100);
-    int denominator = 100;
+    int numerator = (int) (onlyDecimal * decimalPlaceFactor);
+    int denominator = decimalPlaceFactor;
     
     // Simplify the fraction part
-    int gcd = getGCD(numerator, denominator);
+    int gcd = Operations.getGCD(numerator, denominator);
     numerator /= gcd;
     denominator /= gcd; 
     
     return String.format("%d %d/%d", wholeNumber, numerator, denominator);
   }
   
-  public static int getGCD(int number1, int number2) {
+  private static int getGCD(int number1, int number2) {
     if (number2 == 0) {
       return number1;
     }
