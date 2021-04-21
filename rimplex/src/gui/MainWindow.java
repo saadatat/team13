@@ -819,6 +819,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField += "𝑖");
       }
     }
+    
+    
+    
+    
     if (command.equals("("))
     {
       if (inputField.trim().equals(""))
@@ -830,6 +834,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         warningDialog.displayDialog();
       }
     }
+    
     if (command.equals(")"))
     {
       if (!inputField.contains("(") || inputField.contains(")"))
@@ -865,6 +870,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         warningDialog.displayDialog();
       }
     }
+    
     if (command.equals("<-") && inputField.length() > 0)
     {
       inputTextField.setText(inputField.substring(0, inputField.length() - 1));
@@ -996,206 +1002,99 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputTextField.setText("");
   }
 
+  /**
+   * keyTyped method inherited from JFrame.
+   * This method essentially maps physical keys to the GUI buttons.
+   */
   @Override
   public void keyTyped(KeyEvent e)
   {
-    WarningDialog warningDialog = WarningDialog.getInstance();
-    String inputField = inputTextField.getText();
-    
-    inputField = inputField.replace("𝑖", "i");
-
     if (e.getKeyChar() == 'i')
     {
-      if (inputField.length() != 0)
-      {
-        if (inputField.contains("(") && !(inputField.contains("-") || inputField.contains("+")))
-        {
-          // do nothing
-        }
-        else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary()
-            && !inputField.contains("i"))
-        {
-          String newText = inputField.concat("𝑖");
-          inputTextField.setText(newText);
-        }
-        else
-        {
-          warningDialog.displayDialog();
-        }
-      }
-      else
-      {
-        String newText = inputField.concat("𝑖");
-        inputTextField.setText(newText);
-      }
+      imaginaryButton.doClick();
     }
 
+    // For numbers
     if (e.getKeyChar() > 47 && e.getKeyChar() < 58)
     {
-      if (!hasImaginary())
-      {
-
-        for (int i = 48; i < 58; i++)
-        {
-          if (e.getKeyChar() == i)
-          {
-            String newText = inputField.concat((char) i + "");
-            inputTextField.setText(newText);
-
-          }
-
-        }
-      }
-      else
-      {
-        warningDialog.displayDialog();
+      switch(e.getKeyChar()) {
+        case KeyEvent.VK_0:
+          zero.doClick();
+          break;
+        case KeyEvent.VK_1:
+          one.doClick();
+          break;
+        case KeyEvent.VK_2:
+          two.doClick();
+          break;
+        case KeyEvent.VK_3:
+          three.doClick();
+          break;
+        case KeyEvent.VK_4:
+          four.doClick();
+          break;
+        case KeyEvent.VK_5:
+          five.doClick();
+          break;
+        case KeyEvent.VK_6:
+          six.doClick();
+          break;
+        case KeyEvent.VK_7:
+          seven.doClick();
+          break;
+        case KeyEvent.VK_8:
+          eight.doClick();
+          break;
+        case KeyEvent.VK_9:
+          nine.doClick();
+          break;
       }
     }
 
     if (e.getKeyChar() == '+')
     {
-
-      if (!inputTextField.getText().contains("(") || inputTextField.getText().contains(")"))
-      {
-
-        operationEvent("+");
-      }
-      else if (!inputField.contains("+") && inputField.charAt(inputField.length() - 1) != '('
-          && !inputField.contains("-"))
-      {
-        String newText = inputField.concat("+");
-        inputTextField.setText(newText);
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-
+      addButton.doClick();
     }
 
     if (e.getKeyChar() == '-')
     {
-
-      if ((!inputTextField.getText().contains("(") || inputTextField.getText().contains(")")))
-      {
-
-        operationEvent("-");
-      }
-      else if (!inputField.concat("-").contains("--") && !inputField.contains("+")
-          && inputField.charAt(inputField.length() - 1) != '(')
-      {
-        String newText = inputField.concat("-");
-        inputTextField.setText(newText);
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
+      subtractButton.doClick();
     }
 
     if (e.getKeyChar() == '*')
     {
-      
-      if (inputField.contains("(") && !inputField.contains(")"))
-      {
-
-        warningDialog.displayDialog();
-      }
-      else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
-          && inputField.charAt(inputField.length() - 1) != '-'))
-      {
-        operationEvent("x");
-      }
-      else
-      {
-
-        warningDialog.displayDialog();
-      }
+      multiplyButton.doClick();
     }
 
     if (e.getKeyChar() == '/')
     {
-      if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")"))
-      {
-        warningDialog.displayDialog();
-      }
-      else if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
-          && inputField.charAt(inputField.length() - 1) != '-')
-      {
-        operationEvent("/");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
+      divideButton.doClick();
     }
 
     if (e.getKeyChar() == '.')
     {
-      if (inputField.length() == 0)
-      {
-        String newText = inputField.concat(".");
-        inputTextField.setText(newText);
-      }
-      else if (!hasDecimal() && !hasImaginary())
-      {
-        String newText = inputField.concat(".");
-        inputTextField.setText(newText);
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
+      decimal.doClick();
     }
 
-    if (e.getKeyChar() == '=')
+    if (e.getKeyChar() == '=' || e.getKeyChar() == KeyEvent.VK_ENTER)
     {
-      equalsEvent();
+      equalsButton.doClick();
     }
 
     if (e.getKeyChar() == '(')
     {
-      if (inputField.trim().equals(""))
-      {
-        String newText = inputField.concat("(");
-        inputTextField.setText(newText);
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-
+      leftParenthesisButton.doClick();
     }
 
     if (e.getKeyChar() == ')')
     {
-      if (inputField.contains(")") || !inputField.contains("("))
-      {
-        warningDialog.displayDialog();
-      }
-      else if (inputField.charAt(inputField.length() - 1) == '-'
-          || inputField.charAt(inputField.length() - 1) == '+'
-          || inputField.charAt(inputField.length() - 1) != 'i'
-          || !(inputField.contains("+") || inputField.contains("-")))
-      {
-
-        warningDialog.displayDialog();
-      }
-      else
-      {
-        inputTextField.setText(inputField += ")");
-      }
+      rightParenthesisButton.doClick();
     }
-
-    if (e.getKeyChar() == 8)
+    
+    if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE)
     {
-      if (inputTextField.getText().length() != 0)
-      {
-        String newText = inputField.substring(0, inputField.length() - 1);
-        inputTextField.setText(newText);
-      }
+      backspace.doClick();
     }
-
   }
   
   public boolean hasDecimal()
