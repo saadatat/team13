@@ -194,8 +194,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // Instantiate the JButtons
     resetButton = new JButton("R");
     clearButton = new JButton("C");
-    addButton = new JButton("+");
     imaginaryButton = new JButton("𝑖");
+    addButton = new JButton("+");
     subtractButton = new JButton("-");
     multiplyButton = new JButton("x");
     divideButton = new JButton("/");
@@ -599,7 +599,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     if (e.getActionCommand().equals("Toggle Record"))
     {
       recordingEnabled = !recordingEnabled;
-      
       if (recordingEnabled)
       {
         recordButton.setForeground(new Color(128, 0, 0));
@@ -666,12 +665,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     if (!(inputField.matches("^[0-9i+-.]*$")) && inputField.charAt(0) != '(')
     {
-
       if (!inputField.trim().equals("") && (operators.contains(command) || command.equals("=")))
       {
         warningDialog.displayDialog();
       }
-
     }
     else if (operators.contains(command))
     {
@@ -848,7 +845,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-
         inputTextField.setText(inputField += ")");
       }
     }
@@ -873,7 +869,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       inputTextField.setText(inputField.substring(0, inputField.length() - 1));
     }
-
   }
 
   /**
@@ -1100,7 +1095,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     if (e.getKeyChar() == '*')
     {
-
+      
       if (inputField.contains("(") && !inputField.contains(")"))
       {
 
@@ -1109,7 +1104,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       else if (inputField.length() == 0 || (inputField.charAt(inputField.length() - 1) != '+'
           && inputField.charAt(inputField.length() - 1) != '-'))
       {
-
         operationEvent("x");
       }
       else
@@ -1117,15 +1111,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
         warningDialog.displayDialog();
       }
-
     }
 
     if (e.getKeyChar() == '/')
     {
-
       if (inputTextField.getText().contains("(") && !inputTextField.getText().contains(")"))
       {
-
         warningDialog.displayDialog();
       }
       else if (inputField.length() == 0 || inputField.charAt(inputField.length() - 1) != '+'
@@ -1135,7 +1126,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-
         warningDialog.displayDialog();
       }
     }
@@ -1158,10 +1148,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
     }
 
-    if (e.getKeyChar() == 10)
+    if (e.getKeyChar() == '=')
     {
       equalsEvent();
-
     }
 
     if (e.getKeyChar() == '(')
@@ -1206,6 +1195,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(newText);
       }
     }
+
   }
   
   public boolean hasDecimal()
@@ -1244,10 +1234,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   @Override
   public void keyPressed(KeyEvent e)
   {
-    if (e.getKeyCode() == KeyEvent.VK_ENTER)
-    {
-      equalsEvent();
-    }
   }
 
   @Override
