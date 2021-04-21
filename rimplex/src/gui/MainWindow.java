@@ -1095,7 +1095,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       backspace.doClick();
     }
   }
-  
+  //
   public boolean hasDecimal()
   {
     String[] test = inputTextField.getText().split("\\+|-");
