@@ -38,10 +38,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import calculations.Calculator;
 
@@ -88,7 +94,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   // Calculator Display/Input Fields
   private JLabel displayLabel;
   private JTextField inputTextField;
-  private JTextArea resultDisplayArea;
+  private JTextPane resultDisplayArea;
   
   // Panels and Panes
   private JButton hideResultButton;
@@ -110,9 +116,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem print;
   private JMenuItem recordButton;
   private JMenuItem english;
-
   private JMenuItem spanish;
-
   private JMenuItem french; 
   private JMenuItem portugese;
   private JMenuItem japanese;
@@ -184,7 +188,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     displayLabel = new JLabel(" ");
 
-    resultDisplayArea = new JTextArea(" ");
+    resultDisplayArea = new JTextPane();
 
     scroll = new JScrollPane(resultDisplayArea);
     scroll.setPreferredSize(new Dimension(300, 200));
@@ -1044,6 +1048,28 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
     }
     inputTextField.setText("");
+  }
+  
+  /**
+   * When called it reformats all text fields that display i to be italisized.
+   * @throws BadLocationException 
+   */
+  public void formatImaginarySymbol() throws BadLocationException
+  { 
+    // Set textpane and set up default styles
+    JTextPane textPane = new JTextPane();
+    
+    // Create attribute set for imaginary number font
+    SimpleAttributeSet imagNumAttributes = new SimpleAttributeSet();
+    StyleConstants.setItalic(imagNumAttributes, true);
+    StyleConstants.setFontFamily(imagNumAttributes, "Times New Roman");
+    StyleConstants.setFontSize(imagNumAttributes, textPane.getFont().getSize() + 4);
+    
+    StyledDocument doc = textPane.getStyledDocument();
+    Style style = textPane.addStyle("", null);
+    
+    style.addAttributes(imagNumAttributes);
+    doc.insertString(doc.getLength(), "i", style);
   }
 
   /**
