@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -108,9 +110,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem print;
   private JMenuItem recordButton;
   private JMenuItem english;
-  private JMenuItem chinese;
+
   private JMenuItem spanish;
-  private JMenuItem hindi;
+
   private JMenuItem french; 
   private JMenuItem portugese;
   private JMenuItem japanese;
@@ -222,9 +224,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // Languages Menu Items
     languages = new JMenu("Languages");
     english = new JMenuItem("English");
-    chinese = new JMenuItem("Chinese");
     spanish = new JMenuItem("Spanish");
-    hindi = new JMenuItem("Hindi");
     french = new JMenuItem("French");
     portugese = new JMenuItem("Portugese");
     japanese = new JMenuItem("Japanese");
@@ -491,8 +491,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     help.add(helpPage);
     
     languages.add(english);
-    languages.add(chinese);
-    languages.add(hindi);
+
     languages.add(spanish);
     languages.add(french);  
     languages.add(portugese);
@@ -571,9 +570,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     // Language Option Listeners
     english.addActionListener(this);
-    chinese.addActionListener(this);
     spanish.addActionListener(this);
-    hindi.addActionListener(this);
+
     french.addActionListener(this);  
     portugese.addActionListener(this);
     japanese.addActionListener(this);
@@ -596,7 +594,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     changeLanguage(e);
     
     // Toggle recording, toggles boolean value and highlighting is handled here.
-    if (e.getActionCommand().equals("Toggle Record"))
+    if (e.getSource() == recordButton)
     {
       recordingEnabled = !recordingEnabled;
       
@@ -612,7 +610,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     
     // Open systems print dialog if selected
-    if (e.getActionCommand().equals("Print"))
+    if (e.getSource() == print)
     {
       try
       {
@@ -625,18 +623,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     
     // Open about dialog if selected
-    if (e.getActionCommand().equals("About")) {
+    if (e.getSource() == about) {
       aboutDialog = AboutDialog.getInstance();
       aboutDialog.display();
     }
     
     // Open save dialog
-    if (e.getActionCommand().equals("Save Recorded Calculations")) {
+    if (e.getSource() == fileSetting) {
        FileDialog.saveCalcs(recordHistory);
     }
     
     // Open help webpage in default browser
-    if (e.getActionCommand().equals("Instructions")) {
+    if (e.getSource() == helpPage) {
       try
       {
         Desktop.getDesktop().open(new File("webpages/helpPage.html"));
@@ -1277,75 +1275,58 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       print.setText("Print");
       languages.setText("Languages");
       english.setText("English");
-      chinese.setText("Chinese");
       spanish.setText("Spanish");
-      hindi.setText("Hindi");
       french.setText("French");
-      
       portugese.setText("Portugese");
       japanese.setText("Japanese");
       russian.setText("Russian");
+      help.setText("Help");
+      about.setText("About");
+      helpPage.setText("Instructions");
+      fileSetting.setText("Save Recorded Calculations");
+      recordButton.setText("Toggle Recording");
+      fileTab.setText("File");
       
     }
-    if (e.getSource() == chinese)
-    {
-      settings.setText("设定");
-      print.setText("打印");
-      languages.setText("语言");
-      english.setText("英语");
-      chinese.setText("中国人");
-      spanish.setText("西班牙语");
-      hindi.setText("印地语");
-      french.setText("印地语");
-      
-      portugese.setText("印地语");
-      japanese.setText("印地语");
-      russian.setText("印地语");
-    }
+   
     if (e.getSource() == spanish)
     {
       settings.setText("Ajustes");
       print.setText("Impresión");
       languages.setText("Idiomas");
       english.setText("Inglés");
-      chinese.setText("Chino");
       spanish.setText("Español");
-      hindi.setText("Hindi");
-      french.setText("Francés");
      
+      french.setText("Francés");  
       portugese.setText("Portugués");
       japanese.setText("Japonés");
       russian.setText("Ruso");
+      help.setText("Ayudar");
+      about.setText("Acerca de");
+      helpPage.setText("Instrucciones");
+      fileSetting.setText("Guardar cálculos registrados");
+      recordButton.setText("Alternar grabación");
+      fileTab.setText("Archivo");
     }
-    if (e.getSource() == hindi)
-    {
-      settings.setText("समायोजन");
-      print.setText("छाप");
-      languages.setText("बोली");
-      english.setText("अंग्रेज़ी");
-      chinese.setText("चीनी");
-      spanish.setText("स्पेनिश");
-      hindi.setText("हिंदी");
-      french.setText("फ्रेंच");
-     
-      portugese.setText("पुर्तगाली");
-      japanese.setText("जापानी");
-      russian.setText("रूसी");
-    }
+   
     if (e.getSource() == french)
     {
       settings.setText("Les paramètres");
       print.setText("Imprimer");
       languages.setText("Les langues");
       english.setText("Anglais");
-      chinese.setText("Chinois");
       spanish.setText("Espanol");
-      hindi.setText("Hindi");
-      french.setText("Français");
      
+      french.setText("Français"); 
       portugese.setText("Portugais");
       japanese.setText("Japonais");
       russian.setText("Russe");
+      help.setText("Aider");
+      about.setText("À propos");
+      helpPage.setText("Instructions");
+      fileSetting.setText("Enregistrer les calculs enregistrés");
+      recordButton.setText("Basculer l'enregistrement");
+      fileTab.setText("Déposer");
     }
 
     if (e.getSource() == portugese)
@@ -1354,30 +1335,35 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       print.setText("Impressão");
       languages.setText("Línguas");
       english.setText("Inglês");
-      chinese.setText("Chinês");
       spanish.setText("Espanhol");
-      hindi.setText("Hindi");
       french.setText("Francês");
-      
       portugese.setText("Português");
       japanese.setText("Japonês");
       russian.setText("Russo");
+      help.setText("Ajuda");
+      about.setText("Cerca de");
+      helpPage.setText("Instruções");
+      fileSetting.setText("Salvar cálculos registrados");
+      recordButton.setText("Alternar gravação");
+      fileTab.setText("Arquivo");
     }
     if (e.getSource() == japanese)
     {
-      settings.setText("設定\r\n"
-          + "");
+      settings.setText("設定");
       print.setText("印刷");
       languages.setText("言語");
       english.setText("英語");
-      chinese.setText("中国語");
       spanish.setText("スペイン語");
-      hindi.setText("ヒンディー語");
       french.setText("フランス語");
-     
       portugese.setText("ポルトガル語");
       japanese.setText("日本語");
       russian.setText("ロシア");
+      help.setText("助けて");
+      about.setText("約");
+      helpPage.setText("指示");
+      fileSetting.setText("記録された計算を保存する");
+      recordButton.setText("録音の切り替え");
+      fileTab.setText("ファイル");
     }
     if (e.getSource() == russian)
     {
@@ -1385,14 +1371,17 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       print.setText("Распечатать");
       languages.setText("Языки");
       english.setText("английский");
-      chinese.setText("китайский язык");
       spanish.setText("испанский");
-      hindi.setText("хинди");
       french.setText("Французский");
-      
       portugese.setText("Португальский");
       japanese.setText("Японский");
       russian.setText("русский");
+      help.setText("Помощь");
+      about.setText("О");
+      helpPage.setText("инструкции");
+      fileSetting.setText("Сохранить записанные расчеты");
+      recordButton.setText("Переключить запись");
+      fileTab.setText("Файл");
     }
   }
 }
