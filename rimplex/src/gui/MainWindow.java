@@ -52,8 +52,11 @@ import calculations.Calculator;
 public class MainWindow extends JFrame implements ActionListener, KeyListener
 {
   private static final long serialVersionUID = 2740437090361841747L;
-  private AboutDialog aboutDialog;
+  
+  // Calculator Reference
   private Calculator calculator;
+  
+  // Calculator Buttons
   private JButton addButton;
   private JButton imaginaryButton;
   private JButton clearButton;
@@ -67,15 +70,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton leftParenthesisButton;
   private JButton rightParenthesisButton;
   private JButton resultButton;
-  private JLabel displayLabel;
-  private JTextArea resultDisplayArea;
-  private JPanel mainPanel;
-  private JPanel southPanel;
-  private JPanel resultPanel;
-  private JTextField inputTextField;
-  private String resultHistory;
-  private JScrollPane scroll;
-  private JButton hideResultButton;
+  private JButton backspace;
+  private JButton decimal;
   private JButton zero;
   private JButton one;
   private JButton two;
@@ -86,10 +82,31 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton seven;
   private JButton eight;
   private JButton nine;
+  
+  // Calculator Display/Input Fields
+  private JLabel displayLabel;
+  private JTextField inputTextField;
+  private JTextArea resultDisplayArea;
+  
+  // Panels and Panes
+  private JButton hideResultButton;
+  private JPanel mainPanel;
+  private JPanel southPanel;
+  private JPanel resultPanel;
+  private JScrollPane scroll;
   private JPanel testPanel;
-  private JButton backspace;
-  private JButton decimal;
+  
+  // Menu Items
   private JMenuBar menuBar;
+  private JMenu fileTab;
+  private JMenu settings;
+  private JMenu languages;
+  private JMenu help;
+  private JMenuItem about;
+  private JMenuItem fileSetting;
+  private JMenuItem helpPage;
+  private JMenuItem print;
+  private JMenuItem recordButton;
   private JMenuItem english;
   private JMenuItem chinese;
   private JMenuItem spanish;
@@ -98,11 +115,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem portugese;
   private JMenuItem japanese;
   private JMenuItem russian;
-  private JMenuItem print;
-  private JMenu settings;
-  private JMenu languages;
-  private JMenuItem recordButton;
+  
+  // Dialogs and Prompts
+  private AboutDialog aboutDialog;
+  
+  // Values
   private boolean recordingEnabled = false;
+  private String resultHistory;
+  private String recordHistory;
 
   /**
    * Default Constructor.
@@ -458,11 +478,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     print = new JMenuItem("Print");
     print.addActionListener(this);
     settings = new JMenu("Settings");
-    JMenu help = new JMenu("Help");
-    JMenu fileTab = new JMenu("File");
-    JMenuItem about = new JMenuItem("About");
-    JMenuItem fileSetting = new JMenuItem("Save Recorded Calculations");
-    JMenuItem helpPage = new JMenuItem("Instructions");
+    help = new JMenu("Help");
+    fileTab = new JMenu("File");
+    about = new JMenuItem("About");
+    fileSetting = new JMenuItem("Save Recorded Calculations");
+    helpPage = new JMenuItem("Instructions");
     recordButton = new JMenuItem("Toggle Record");
     recordButton.addActionListener(this);
     about.addActionListener(this);
