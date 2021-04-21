@@ -199,10 +199,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     imaginaryButton = new JButton("𝑖");
     addButton = new JButton("+");
     subtractButton = new JButton("-");
-    multiplyButton = new JButton("x");
-    divideButton = new JButton("/");
+    multiplyButton = new JButton("×");
+    divideButton = new JButton("÷");
     equalsButton = new JButton("=");
-    signButton = new JButton("+/-");
+    signButton = new JButton("±");
     resultButton = new JButton(">");
     hideResultButton = new JButton("<");
     zero = new JButton("0");
@@ -215,7 +215,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     seven = new JButton("7");
     eight = new JButton("8");
     nine = new JButton("9");
-    backspace = new JButton("<-");
+    backspace = new JButton("←");
     decimal = new JButton(".");
     fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
@@ -648,7 +648,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     boolean par = false;
     String command = e.getActionCommand();
     String inputField = inputTextField.getText().trim();
-    if (inputTextField.getText().contains(")") || command.equals("x") || command.equals("/")
+    if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
     {
       par = true;
@@ -658,7 +658,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
     inputField = inputField.replace("𝑖", "i");
-    String operators = "+-/x";
+    String operators = "+-÷×";
     String result = calculator.getResult();
 
     if (!(inputField.matches("^[0-9i+-.]*$")) && inputField.charAt(0) != '(')
@@ -672,7 +672,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (par)
       {
-        if ((command.equals("x") || command.equals("/"))
+        if ((command.equals("×") || command.equals("÷"))
             && ((inputField.length() != 0) && (inputField.charAt(inputField.length() - 1) == '+'
                 || inputField.charAt(inputField.length() - 1) == '-')))
         {
@@ -719,7 +719,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       calculator.clear();
     }
 
-    if (command.equals("+/-") && !inputField.equals(""))
+    if (command.equals("±") && !inputField.equals(""))
     {
       if (inputField.contains("("))
       {
@@ -773,7 +773,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fractionDisplayButton.setContentAreaFilled(true);
       fractionDisplayButton.setBackground(new Color(210, 237, 255, 255));
     }
-
+  
     if (command.equals("F"))
     {
       fractionDisplayButton.setText("D");
@@ -869,7 +869,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
     }
     
-    if (command.equals("<-") && inputField.length() > 0)
+    if (command.equals("←") && inputField.length() > 0)
     {
       inputTextField.setText(inputField.substring(0, inputField.length() - 1));
     }
@@ -931,6 +931,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     inputField = inputField.replace(")", "");
     inputField = inputField.replace("(", "");
+    
 
     String result = calculator.getResult();
 

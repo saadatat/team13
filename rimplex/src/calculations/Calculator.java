@@ -123,6 +123,7 @@ public class Calculator
    */
   public String getOperator()
   {
+    
     return operator;
   }
 
@@ -205,7 +206,9 @@ public class Calculator
    */
   public void setOperator(String incomingOperator)
   {
+    
     operator = incomingOperator;
+    
   }
 
   /**
@@ -307,11 +310,11 @@ public class Calculator
     {
       subtract();
     }
-    else if (operator.equals("x") && validOperands())
+    else if (operator.equals("×") && validOperands())
     {
       multiply();
     }
-    else if (operator.equals("/") && validOperands())
+    else if (operator.equals("÷") && validOperands())
     {
       String[] test = rightOperand.split("\\+|-");
       
