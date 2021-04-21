@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 
 public abstract class FileDialog
 { 
-  public static void saveCalcs()
+  public static void saveCalcs(String saveText)
   {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Specify a location to save calculations");   
@@ -21,7 +21,7 @@ public abstract class FileDialog
       try
       {
         PrintWriter outFile = new PrintWriter(fileToSave);
-        outFile.print("asdf");
+        outFile.print(saveText);
         outFile.close();
       }
       catch (FileNotFoundException e1)

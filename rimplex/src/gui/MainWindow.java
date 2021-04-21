@@ -139,6 +139,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
+    recordHistory = "";
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
@@ -626,7 +627,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     // Open save dialog
     if (e.getActionCommand().equals("Save Recorded Calculations")) {
-       FileDialog.saveCalcs();
+       FileDialog.saveCalcs(recordHistory);
     }
     
     // Open help webpage in default browser
@@ -1008,6 +1009,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
             .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
         inputTextField.setText("");
         resultHistory += displayLabel.getText() + "\n";
+        
+        // If recording is enabled append calculations
+        if (recordingEnabled)
+        {
+          recordHistory += displayLabel.getText() + "\n";
+        }
+        
         resultDisplayArea.setText(resultHistory);
       }
       else
