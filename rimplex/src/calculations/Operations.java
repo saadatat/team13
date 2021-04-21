@@ -309,13 +309,31 @@ public class Operations
         }
       
       }
-    }
-     
+    }   
    return returnString;
-    
   }
   
-  private static int getGCD(int number1, int number2) {
+  /**
+   * Takes in a double decimal and converts it to a mixed fraction as a string.
+   * @param numberToConvert
+   * @return Returns the formatted mixed number fraction.
+   */
+  private static String toFraction (double numberToConvert)
+  {
+    int wholeNumber = (int) numberToConvert;
+    double onlyDecimal = numberToConvert - wholeNumber;
+    int numerator = (int) (onlyDecimal * 100);
+    int denominator = 100;
+    
+    // Simplify the fraction part
+    int gcd = getGCD(numerator, denominator);
+    numerator /= gcd;
+    denominator /= gcd; 
+    
+    return String.format("%d %d/%d", wholeNumber, numerator, denominator);
+  }
+  
+  public static int getGCD(int number1, int number2) {
     if (number2 == 0) {
       return number1;
     }
