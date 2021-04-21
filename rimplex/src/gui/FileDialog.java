@@ -6,8 +6,17 @@ import java.io.PrintWriter;
 
 import javax.swing.JFileChooser;
 
+/**
+ * Utility class to bring up to save a file based on a string of text.
+ * @author Max Berger
+ *
+ */
 public abstract class FileDialog
 { 
+  /**
+   * Utility method, saves file.
+   * @param saveText The text to be written out.
+   */
   public static void saveCalcs(String saveText)
   {
     JFileChooser fileChooser = new JFileChooser();
