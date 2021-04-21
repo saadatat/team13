@@ -46,7 +46,7 @@ import calculations.Calculator;
 /**
  * The main window for the Rimplex GUI.
  * 
- * @author Dylan Moreno, Kory Erdmann, Arman Saadat
+ * @author Dylan Moreno, Kory Erdmann, Arman Saadat, Max Berger
  * @version Rimplex 1.0
  */
 public class MainWindow extends JFrame implements ActionListener, KeyListener
@@ -218,6 +218,27 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
+    
+    // Languages Menu Items
+    languages = new JMenu("Languages");
+    english = new JMenuItem("English");
+    chinese = new JMenuItem("Chinese");
+    spanish = new JMenuItem("Spanish");
+    hindi = new JMenuItem("Hindi");
+    french = new JMenuItem("French");
+    portugese = new JMenuItem("Portugese");
+    japanese = new JMenuItem("Japanese");
+    russian = new JMenuItem("Russian");
+    
+    // Menu items
+    print = new JMenuItem("Print");
+    settings = new JMenu("Settings");
+    help = new JMenu("Help");
+    fileTab = new JMenu("File");
+    about = new JMenuItem("About");
+    fileSetting = new JMenuItem("Save Recorded Calculations");
+    helpPage = new JMenuItem("Instructions");
+    recordButton = new JMenuItem("Toggle Record");
     
     // Create menubar
     menuBar = new JMenuBar();
@@ -465,35 +486,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
     setLocationRelativeTo(null);
-
-    /// MENU TESTINGS
-    english = new JMenuItem("English");
-    chinese = new JMenuItem("Chinese");
-    spanish = new JMenuItem("Spanish");
-    hindi = new JMenuItem("Hindi");
-    french = new JMenuItem("French");
-    portugese = new JMenuItem("Portugese");
-    japanese = new JMenuItem("Japanese");
-    russian = new JMenuItem("Russian");
-
-    print = new JMenuItem("Print");
-    print.addActionListener(this);
-    settings = new JMenu("Settings");
-    help = new JMenu("Help");
-    fileTab = new JMenu("File");
-    about = new JMenuItem("About");
-    fileSetting = new JMenuItem("Save Recorded Calculations");
-    helpPage = new JMenuItem("Instructions");
-    recordButton = new JMenuItem("Toggle Record");
-    recordButton.addActionListener(this);
-    about.addActionListener(this);
-    fileSetting.addActionListener(this);
+  
     help.add(about);
     help.add(helpPage);
-    helpPage.addActionListener(this);
-  
     
-    languages = new JMenu("Languages");
     languages.add(english);
     languages.add(chinese);
     languages.add(hindi);
@@ -502,15 +498,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     languages.add(portugese);
     languages.add(japanese);
     languages.add(russian);
-    
-    english.addActionListener(this);
-    chinese.addActionListener(this);
-    spanish.addActionListener(this);
-    hindi.addActionListener(this);
-    french.addActionListener(this);  
-    portugese.addActionListener(this);
-    japanese.addActionListener(this);
-    russian.addActionListener(this);
     
     fileTab.add(fileSetting);
     settings.add(languages);
@@ -528,8 +515,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setListeners()
   {
-    Listener listener = Listener.getInstance();
-    
     // add listeners
     addButton.addActionListener(this);
     this.addKeyListener(this);
@@ -583,8 +568,28 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight.addKeyListener(this);
     nine.addActionListener(this);
     nine.addKeyListener(this);
+    
+    // Language Option Listeners
+    english.addActionListener(this);
+    chinese.addActionListener(this);
+    spanish.addActionListener(this);
+    hindi.addActionListener(this);
+    french.addActionListener(this);  
+    portugese.addActionListener(this);
+    japanese.addActionListener(this);
+    russian.addActionListener(this);
+    
+    // Menu Item Listeners
+    print.addActionListener(this);
+    recordButton.addActionListener(this);
+    about.addActionListener(this);
+    fileSetting.addActionListener(this);
+    helpPage.addActionListener(this);
   }
 
+  /**
+   * Handles any new button presses or other actions.
+   */
   public void actionPerformed(ActionEvent e)
   {
     // Call helper method to notify application of a change in language if there is one.
@@ -704,7 +709,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     else if (command.equals("="))
     {
-
       equalsEvent();
     }
 
@@ -781,120 +785,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       calculator.setFractionDisplay(false);
       fractionDisplayButton.setContentAreaFilled(false);
     }
-
-    if (command.equals("0"))
+    
+    // If command is a number append it.
+    if (command.matches("[0-9]"))
     {
       if (!hasImaginary())
       {
-        inputTextField.setText(inputField += "0");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("1"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "1");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("2"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "2");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("3"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "3");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("4"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "4");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("5"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "5");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("6"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "6");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("7"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "7");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("8"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "8");
-      }
-      else
-      {
-        warningDialog.displayDialog();
-      }
-    }
-
-    if (command.equals("9"))
-    {
-      if (!hasImaginary())
-      {
-        inputTextField.setText(inputField += "9");
+        inputTextField.setText(inputField += command);
       }
       else
       {
@@ -979,6 +876,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
   }
 
+  /**
+   * Code to be run if the equals button is pressed.
+   */
   public void equalsEvent()
   {
     String inputField = inputTextField.getText().trim();
