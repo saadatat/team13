@@ -646,7 +646,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     
     boolean par = false;
-    String command = e.getActionCommand();
+    String command = e.getActionCommand(); 
     String inputField = inputTextField.getText().trim();
     if (inputTextField.getText().contains(")") || command.equals("x") || command.equals("/")
         || !inputTextField.getText().contains("("))
@@ -655,6 +655,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       inputField = inputField.replace(")", "");
       inputField = inputField.replace("(", "");
     }
+    
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
     inputField = inputField.replace("𝑖", "i");
@@ -700,25 +701,28 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         }
 
       }
-
     }
+    
+    // Equals button
     else if (command.equals("="))
     {
       equalsEvent();
     }
 
+    // Clear button
     if (command.equals("C"))
     {
       inputTextField.setText("");
     }
 
+    // Reset button
     if (command.equals("R"))
     {
-      inputTextField.setText("");
-      displayLabel.setText(" ");
+      this.clear();
       calculator.clear();
     }
-
+    
+    // Sign switch button
     if (command.equals("+/-") && !inputField.equals(""))
     {
       if (inputField.contains("("))
@@ -746,19 +750,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         }
     }
 
+    // Expand history
     if (command.equals(">"))
     {
-
       resultButton.setVisible(false);
-
       resultPanel.setVisible(true);
       pack();
       setLocationRelativeTo(null);
     }
 
+    // Collapse history
     if (command.equals("<"))
     {
-
       resultButton.setVisible(true);
       resultPanel.setVisible(false);
       pack();
@@ -766,6 +769,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       resultButton.setText(">");
     }
 
+    // When enabling fraction display.
     if (command.equals("D"))
     {
       fractionDisplayButton.setText("F");
@@ -774,6 +778,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fractionDisplayButton.setBackground(new Color(210, 237, 255, 255));
     }
 
+    // When disabling fraction display.
     if (command.equals("F"))
     {
       fractionDisplayButton.setText("D");
@@ -790,10 +795,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        warningDialog.displayDialog();
+        warningDialog.displayDialog("Please enter a complex number in standard form.");
       }
     }
 
+    // When the imaginary number button is pressed.
     if (command.equals("𝑖"))
     {
       if (inputField.length() != 0)
@@ -818,9 +824,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
     }
     
-    
-    
-    
+    // When left paranthesis is pressed.
     if (command.equals("("))
     {
       if (inputField.trim().equals(""))
@@ -829,22 +833,23 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        warningDialog.displayDialog();
+        warningDialog.displayDialog("Paranthesis must be at beginning of input for complex calculations.");
       }
     }
     
+    // When right paranthesis is pressed.
     if (command.equals(")"))
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog();
+        warningDialog.displayDialog("Must exactly one of each paranthesis correctly.");
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
           || inputField.charAt(inputField.length() - 1) != 'i'
           || !(inputField.contains("+") || inputField.contains("-")))
       {
-        warningDialog.displayDialog();
+        warningDialog.displayDialog("Please enter a complex number in standard form if using paranthesis.");
       }
       else
       {
