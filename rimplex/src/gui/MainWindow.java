@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.MenuBar;
 import java.awt.Toolkit;
@@ -35,7 +36,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import calculations.Calculator;
@@ -98,6 +101,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem print;
   private JMenu settings;
   private JMenu languages;
+  private JMenuItem recordButton;
+  private boolean recordingEnabled = false;
 
   /**
    * Default Constructor.
@@ -458,7 +463,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JMenuItem about = new JMenuItem("About");
     JMenuItem fileSetting = new JMenuItem("Save Recorded Calculations");
     JMenuItem helpPage = new JMenuItem("Instructions");
-    JMenuItem recordButton = new JMenuItem("Recording (Off)");
+    recordButton = new JMenuItem("Toggle Record");
+    recordButton.addActionListener(this);
     about.addActionListener(this);
     fileSetting.addActionListener(this);
     help.add(about);
@@ -562,6 +568,22 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     // Call helper method to notify application of a change in language if there is one.
     changeLanguage(e);
+    
+    // Toggle recording, toggles boolean value and highlighting is handled here.
+    if (e.getActionCommand().equals("Toggle Record"))
+    {
+      recordingEnabled = !recordingEnabled;
+      
+      if (recordingEnabled)
+      {
+        recordButton.setForeground(new Color(128, 0, 0));
+      }
+      else
+      {
+        // Default color
+        recordButton.setForeground(UIManager.getColor("TextField.foreground"));
+      }
+    }
     
     // Open systems print dialog if selected
     if (e.getActionCommand().equals("Print"))
