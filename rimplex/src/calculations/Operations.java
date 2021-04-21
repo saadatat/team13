@@ -14,23 +14,20 @@ public class Operations
    *          Second complex number to add
    * @return Returns the answer.
    */
-  public static String addition(String operandOne, String operandTwo)
+  public static double[] addition(String operandOne, String operandTwo)
   {
     double[][] opdoubles = parseTodouble(operandOne, operandTwo);
+    double[] returnDoubles;
 
     double realSum = (opdoubles[0][0] + opdoubles[1][0]);
     double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
 
     char operator = '+';
-
-    // Handles negative imaginary
-    if (imagSum < 0)
-    {
-      operator = '-';
-      imagSum = -1 * imagSum;
-    }
-
-    return formatResult(realSum, operator, imagSum);
+    
+    returnDoubles = new double[2];
+    returnDoubles[0] = realSum;
+    returnDoubles[1] = imagSum;  
+    return returnDoubles;
   }
 
   /**
@@ -42,23 +39,17 @@ public class Operations
    *          Second complex, the amount to subtract.
    * @return Returns the answer.
    */
-  public static String subtraction(String operandOne, String operandTwo)
+  public static double[] subtraction(String operandOne, String operandTwo)
   {
     double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
     double realDiff = (opdoubles[0][0] - opdoubles[1][0]);
     double imagDiff = (opdoubles[0][1] - opdoubles[1][1]);
 
-    char operator = '+';
-
-    // Handles negative imaginary
-    if (imagDiff < 0)
-    {
-      operator = '-';
-      imagDiff = -1 * imagDiff;
-    }
-
-    return formatResult(realDiff, operator, imagDiff);
+    double[] returnDoubles = new double[2];
+    returnDoubles[0] = realDiff;
+    returnDoubles[1] = imagDiff;  
+    return returnDoubles;
   }
 
   /**
@@ -71,7 +62,7 @@ public class Operations
    *          - the second operand
    * @return String - the product
    */
-  public static String multiply(String operandOne, String operandTwo)
+  public static double[] multiply(String operandOne, String operandTwo)
   {
     double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
@@ -83,16 +74,10 @@ public class Operations
     double realProduct = ac - bd;
     double imagProduct = ad + bc;
 
-    char operator = '+';
-
-    // Handles negative imaginary
-    if (imagProduct < 0)
-    {
-      operator = '-';
-      imagProduct = -1 * imagProduct;
-    }
-
-    return formatResult(realProduct, operator, imagProduct);
+    double[] returnDoubles = new double[2];
+    returnDoubles[0] = realProduct;
+    returnDoubles[1] = imagProduct;  
+    return returnDoubles;
   }
 
   /**
@@ -105,7 +90,7 @@ public class Operations
    *          - the second operand
    * @return String - the quotient
    */
-  public static String divide(String operandOne, String operandTwo)
+  public static double[] divide(String operandOne, String operandTwo)
   {
     double scale = Math.pow(10, 3);
     double quotient1;
@@ -130,14 +115,10 @@ public class Operations
     quotient1 = Math.round((top1 / denominator) *scale ) / scale;
     quotient2 = Math.round((top2 / denominator) *scale ) / scale;
 
-    if (quotient2 < 0)
-    {
-      
-      operator = '-';
-      quotient2 = -1 * quotient2;
-    }
-
-    return formatResult(quotient1, operator, quotient2);
+    double[] returnDoubles = new double[2];
+    returnDoubles[0] = quotient1;
+    returnDoubles[1] = quotient2;  
+    return returnDoubles;
   }
 
   /**
