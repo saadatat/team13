@@ -145,6 +145,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
+   
+    
   }
 
   /**
@@ -240,8 +242,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     helpPage = new JMenuItem("Instructions");
     recordButton = new JMenuItem("Toggle Record");
     
+    
     // Create menubar
     menuBar = new JMenuBar();
+    
+    
+    
   }
 
   /**
@@ -355,6 +361,35 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
+    //Fonts
+    Font timesFont = new Font("Times New Roman", Font.BOLD, 16);
+    Font dialogFont = new Font("Dialog", Font.BOLD, 16);
+    Font dialogFont2 = new Font("Dialog", 0, 16);
+    zero.setFont(timesFont);
+    one.setFont(timesFont);
+    two.setFont(timesFont);
+    three.setFont(timesFont);
+    four.setFont(timesFont);
+    five.setFont(timesFont);
+    six.setFont(timesFont);
+    seven.setFont(timesFont);
+    eight.setFont(timesFont);
+    nine.setFont(timesFont);
+    equalsButton.setFont(dialogFont);
+    decimal.setFont(dialogFont);
+    addButton.setFont(dialogFont);
+    multiplyButton.setFont(dialogFont);
+    subtractButton.setFont(dialogFont);
+    divideButton.setFont(dialogFont);
+    leftParenthesisButton.setFont(dialogFont);
+    rightParenthesisButton.setFont(dialogFont);
+    fractionDisplayButton.setFont(timesFont);
+    resetButton.setFont(timesFont);
+    clearButton.setFont(timesFont);
+    backspace.setFont(timesFont);
+    imaginaryButton.setFont(dialogFont);
+    signButton.setFont(dialogFont2);
+    
     // Set backroung/foreground
     resultDisplayArea.setBackground(lightBlue);
     mainPanel.setBackground(lightBlue);
@@ -753,7 +788,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
           inputTextField.setText(inputField.substring(1, inputField.length()));
         }
     }
-
     // Expand history
     if (command.equals(">"))
     {
