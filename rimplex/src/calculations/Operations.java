@@ -22,7 +22,6 @@ public class Operations
     double realSum = (opdoubles[0][0] + opdoubles[1][0]);
     double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
 
-    char operator = '+';
     
     returnDoubles = new double[2];
     returnDoubles[0] = realSum;
@@ -226,6 +225,7 @@ public class Operations
     String returnString;
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
+    
     if (asFraction)
     {
       returnString = String.format("%s%c%si", toFraction(real), operator, toFraction(imaginary));
@@ -233,7 +233,7 @@ public class Operations
       returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
     }
     returnString = returnString.replace(",", "");
-    return returnString;
+    return returnString.replace("+-", "-");
   }
   
   // Formats fractions for all operators besides division.

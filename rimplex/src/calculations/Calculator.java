@@ -12,6 +12,7 @@ public class Calculator
   private String leftOperand;
   private String rightOperand;
   private String result;
+  private double[] resultDoubles; // Double representation of answer with real first and imaginary second.
   private String operator;
   private boolean fractionDisplay;
 
@@ -25,6 +26,7 @@ public class Calculator
     rightOperand = null;
     result = null;
     fractionDisplay = false;
+    resultDoubles = new double[2];
   }
 
   /**
@@ -123,7 +125,6 @@ public class Calculator
    */
   public String getOperator()
   {
-    
     return operator;
   }
 
@@ -156,6 +157,10 @@ public class Calculator
    */
   public String getResult()
   {
+    double real = resultDoubles[0];
+    double imag = resultDoubles[1];
+    result = Operations.formatResult(real, '+', imag, false);
+    
     if (result == null)
     {
       return null;
@@ -251,7 +256,7 @@ public class Calculator
    */
   public void add()
   {
-    result = Operations.addition(leftOperand, rightOperand);
+    resultDoubles = Operations.addition(leftOperand, rightOperand);
     resultResetHelper();
   }
 
@@ -260,7 +265,7 @@ public class Calculator
    */
   public void subtract()
   {
-    result = Operations.subtraction(leftOperand, rightOperand);
+    resultDoubles = Operations.subtraction(leftOperand, rightOperand);
     resultResetHelper();
   }
 
@@ -269,7 +274,7 @@ public class Calculator
    */
   public void multiply()
   {
-    result = Operations.multiply(leftOperand, rightOperand);
+    resultDoubles = Operations.multiply(leftOperand, rightOperand);
     resultResetHelper();
   }
 
@@ -278,7 +283,7 @@ public class Calculator
    */
   public void divide()
   {
-    result = Operations.divide(leftOperand, rightOperand);
+    resultDoubles = Operations.divide(leftOperand, rightOperand);
     resultResetHelper();
   }
   
