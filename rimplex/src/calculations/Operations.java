@@ -321,6 +321,7 @@ public class Operations
   
   /**
    * Takes in a double decimal and converts it to a mixed fraction as a string.
+   * If the fraction evaluates to zero is passes a blank string.
    * @param numberToConvert
    * @return Returns the formatted mixed number fraction. "1 1/2"
    */
@@ -344,7 +345,18 @@ public class Operations
     numerator /= gcd;
     denominator /= gcd; 
     
-    return String.format("%d %d/%d", wholeNumber, numerator, denominator);
+    // Code to append string, only appends if evaluated to other than zero.
+    String rval = "";
+    if (wholeNumber != 0)
+    {
+      rval += wholeNumber;
+    }
+    if (numerator != 0)
+    {
+      rval += String.format(" %d/%d", numerator, denominator);
+    }
+    
+    return rval;
   }
   
   private static int getGCD(int number1, int number2) {
