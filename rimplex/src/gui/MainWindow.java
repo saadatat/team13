@@ -893,7 +893,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        inputTextField.setText(inputField += ")");
+        inputTextField.setText(inputTextField.getText() + ")");
       }
     }
 
