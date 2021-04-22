@@ -8,25 +8,6 @@ import calculations.Calculator;
 
 class CalculatorTest
 {
-
-  /**
-   * convertToComplexTest - test convertToComplex.
-   */
-  @Test
-  void convertToComplexTest()
-  {
-    String complexTest = "3+0i";
-    String nonComplexTest = "5";
-    String emptyTest = "   ";
-    String nullTest = null;
-
-    assertEquals("3+0i", Calculator.convertToComplex(complexTest));
-    assertEquals("5+0i", Calculator.convertToComplex(nonComplexTest));
-    assertThrows(IllegalArgumentException.class, () -> Calculator.convertToComplex(emptyTest));
-    assertThrows(IllegalArgumentException.class, () -> Calculator.convertToComplex(nullTest));
-
-  }
-
   /**
    * formatDisplayOperandTest - test formatDisplayOperand.
    */
