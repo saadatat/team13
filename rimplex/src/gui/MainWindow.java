@@ -882,7 +882,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog("Must exactly one of each parenthesis correctly.");
+        warningDialog.displayDialog("Complex numbers must have only one of each parenthesis in correct form.");
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
