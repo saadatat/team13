@@ -132,11 +132,8 @@ public class Operations
    *          The second complex number to parse, must not be in +- form.
    * @return returns the parsed strings as individual doubleegers in a 2D array.
    */
-  private static double[][] parseTodouble(String operandOneIn, String operandTwoIn)
-  { 
-    String operandOne = operandOneIn.replace("+-", "-");
-    String operandTwo = operandTwoIn.replace("+-", "-");
-    
+  private static double[][] parseTodouble(final String operandOneIn, final String operandTwoIn)
+  {     
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -147,9 +144,15 @@ public class Operations
     String[] op2;
     String[] temp;
     
+    // Formatting for adjacent symbols.
+    String operandOne = operandOneIn.replace("+-", "-");
+    String operandTwo = operandTwoIn.replace("+-", "-");
+    
+    // Pattern for matching an operand that is a single imaginary.
     Pattern oneImagPattern = Pattern.compile("^[0-9]*[i]$");
     Matcher m;
     
+    // Print to console for printing
     System.out.println(operandOneIn + "   " + operandTwoIn);
     
     // If this method is passed a single real number without an imaginary
@@ -163,6 +166,7 @@ public class Operations
       operandTwo += "+0i";
     }
     
+    // Convert to standard form if there is a single imaginary number.
     m = oneImagPattern.matcher(operandOne);
     if (m.matches()) {
       operandOne = "0+" + operandOne;
@@ -172,11 +176,13 @@ public class Operations
       operandTwo = "0+" + operandTwo;
     }
     
+    // Replace any lone imaginary symbols with 1 so they work with code below.
     operandOne = operandOne.replace("+i", "+1i");
     operandTwo = operandTwo.replace("+i", "+1i");
     operandOne = operandOne.replace("-i", "-1i");
     operandTwo = operandTwo.replace("-i", "-i1");
     
+    // Test console print
     System.out.println(operandOne + "   " + operandTwo);
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
@@ -255,73 +261,9 @@ public class Operations
     return returnString;
   }
   
-  // Formats fractions for all operators besides division.
-  public static String formatFractionDisplay(String incoming)
-  {
-   String splits[] = incoming.split("\\+|-|i");
-    String splits2[];
-    String splits3[];
-    int digits1;
-    int digits2;
-    int denominator1;
-    int denominator2;
-    int numerator1;
-    int numerator2;
-    int gcd1;
-    int gcd2;
-    double result1;
-    double result2;
-    String returnString = "";
-    String operator = "";
-    
-    if (incoming.contains("+")) {
-      operator = "+";
-    }else {
-      operator = "-";
-    }
-   
-    if (splits[0].contains(".")) {
-      splits2 = splits[0].split("\\.");
-      digits1 = splits2[1].length();
-      denominator1 = (int) Math.pow(10, digits1);
-      result1 = Double.parseDouble(splits[0]);
-      numerator1 = (int)(result1*denominator1);
-      gcd1 = getGCD(numerator1, denominator1);
-      returnString = numerator1 / gcd1 + "/" + denominator1 / gcd1;
-    }else {
-      returnString += splits[0];
-    }
-    if (splits[1].contains(".")) {
-      splits3 = splits[1].split("\\.");
-      digits2 = splits3[1].length();
-      denominator2 = (int) Math.pow(10, digits2);
-      result2 = Double.parseDouble(splits[0]);
-      numerator2 = (int)(result2*denominator2);
-      gcd2 = getGCD(numerator2, denominator2);
-      returnString += operator + numerator2 / gcd2 + "/" + denominator2 / gcd2;
-    }else {
-      if (splits.length > 2) {
-        if (splits[1] == "") {
-        returnString += operator  + splits[2] + "i"; 
-        }else {
-          returnString += operator + splits[1] + splits[2] + "i";
-        }
-      }else {
-        
-        if (splits[1].contains("/")) {
-          returnString += operator + splits[1].replace("/", "i/");
-        }else {
-          returnString += operator + splits[1] + "i";
-        }
-      
-      }
-    }   
-   return returnString;
-  }
-  
   /**
    * Takes in a double decimal and converts it to a mixed fraction as a string.
-   * If the fraction evaluates to zero is passes a blank string.
+   * Returns 0 if it evaluates to 0.
    * @param numberToConvert
    * @return Returns the formatted mixed number fraction. "1 1/2"
    */
@@ -350,13 +292,15 @@ public class Operations
     if (wholeNumber != 0)
     {
       rval += wholeNumber;
+    } else if (numerator == 0) {
+      rval += 0;
     }
     if (numerator != 0)
     {
       rval += String.format(" %d/%d", numerator, denominator);
     }
     
-    return rval;
+    return rval.trim();
   }
   
   private static int getGCD(int number1, int number2) {
