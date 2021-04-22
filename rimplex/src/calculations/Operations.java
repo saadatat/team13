@@ -2,6 +2,8 @@ package calculations;
 
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Operations
 {
@@ -134,6 +136,7 @@ public class Operations
   { 
     String operandOne = operandOneIn.replace("+-", "-");
     String operandTwo = operandTwoIn.replace("+-", "-");
+    
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -144,9 +147,12 @@ public class Operations
     String[] op2;
     String[] temp;
     
+    Pattern oneImagPattern = Pattern.compile("^[0-9]*[i]$");
+    Matcher m;
+    
     System.out.println(operandOneIn + "   " + operandTwoIn);
     
-    // If this method is passed a single real number without and imaginary
+    // If this method is passed a single real number without an imaginary
     // counterpart then convert it to standard form.
     if (!operandOne.contains("i"))
     {
@@ -157,15 +163,21 @@ public class Operations
       operandTwo += "+0i";
     }
     
-    // If this method is passed i convert it to 1i.
-    if(operandOne.equals("i"))
-    {
-      operandOne = "0+1i";
+    m = oneImagPattern.matcher(operandOne);
+    if (m.matches()) {
+      operandOne = "0+" + operandOne;
     }
-    if(operandTwo.equals("i"))
-    {
-      operandTwo = "0+1i";
+    m = oneImagPattern.matcher(operandTwo);
+    if (m.matches()) {
+      operandTwo = "0+" + operandTwo;
     }
+    
+    operandOne = operandOne.replace("+i", "+1i");
+    operandTwo = operandTwo.replace("+i", "+1i");
+    operandOne = operandOne.replace("-i", "-1i");
+    operandTwo = operandTwo.replace("-i", "-i1");
+    
+    System.out.println(operandOne + "   " + operandTwo);
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
     
@@ -318,7 +330,7 @@ public class Operations
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
     
-    String numberAsText = fmat.format(Double.toString(Math.abs(numberToConvert)));
+    String numberAsText = fmat.format(Math.abs(numberToConvert));
     int decimalPlaces = numberAsText.length() - numberAsText.indexOf('.') - 1;
     int decimalPlaceFactor = (int) Math.pow(10, decimalPlaces);
     
