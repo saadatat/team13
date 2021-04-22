@@ -873,7 +873,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        warningDialog.displayDialog("Paranthesis must be at beginning of input for complex calculations.");
+        warningDialog.displayDialog("Parenthesis must be at beginning of input for complex calculations.");
       }
     }
     
@@ -882,14 +882,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog("Must exactly one of each paranthesis correctly.");
+        warningDialog.displayDialog("Must exactly one of each parenthesis correctly.");
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
           || inputField.charAt(inputField.length() - 1) != 'i'
           || !(inputField.contains("+") || inputField.contains("-")))
       {
-        warningDialog.displayDialog("Please enter a complex number in standard form if using paranthesis.");
+        warningDialog.displayDialog("Please enter a complex number in standard form if using parenthesis.");
       }
       else
       {
