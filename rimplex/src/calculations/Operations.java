@@ -144,6 +144,8 @@ public class Operations
     String[] op2;
     String[] temp;
     
+    System.out.println(operandOneIn + "   " + operandTwoIn);
+    
     // If this method is passed a single real number without and imaginary
     // counterpart then convert it to standard form.
     if (!operandOne.contains("i"))
@@ -158,11 +160,11 @@ public class Operations
     // If this method is passed i convert it to 1i.
     if(operandOne.equals("i"))
     {
-      operandOne = "1i";
+      operandOne = "0+1i";
     }
     if(operandTwo.equals("i"))
     {
-      operandTwo = "1i";
+      operandTwo = "0+1i";
     }
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
@@ -219,10 +221,11 @@ public class Operations
    *          - the imaginary.
    * @return String - the formatted result.
    */
-  public static String formatResult(double real, char operator, double imaginary, boolean asFraction)
+  public static String formatResult(double real, double imaginary, boolean asFraction)
   {
     NumberFormat fmat = NumberFormat.getInstance();
     String returnString;
+    char operator = '+'; // This shouldn't be changed, as any formatting issues will be resolved.
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
     
@@ -233,7 +236,11 @@ public class Operations
       returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
     }
     returnString = returnString.replace(",", "");
-    return returnString.replace("+-", "-");
+    returnString = returnString.replace("+-", "-");
+    returnString = returnString.replace("+1i", "+i");
+    returnString = returnString.replace("-1i", "-i");
+    
+    return returnString;
   }
   
   // Formats fractions for all operators besides division.
