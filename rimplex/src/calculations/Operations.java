@@ -242,7 +242,7 @@ public class Operations
   public static String formatResult(double real, double imaginary, boolean asFraction)
   {
     NumberFormat fmat = NumberFormat.getInstance();
-    String returnString;
+    String returnString = "";
     String realString;
     String imagString;
     fmat.setMinimumFractionDigits(0);
@@ -257,7 +257,24 @@ public class Operations
       imagString = fmat.format(imaginary);
     }
     
-    returnString = String.format("%s+%si", realString, imagString);
+    // Add the first number if not zero, if it is zero it can only be added if the last value is too.
+    if (real != 0)
+    {
+      returnString += realString;
+      if (imaginary != 0) 
+      {
+        returnString += '+';
+      }
+    } else if (imaginary == 0)
+    {
+      returnString += 0;
+    }
+    
+    // If last isn't zero add it to the string.
+    if (imaginary != 0)
+    {
+      returnString += String.format("%si", imagString);
+    }
     
     returnString = returnString.replace(",", "");
     returnString = returnString.replace("+-", "-");
@@ -301,12 +318,17 @@ public class Operations
     
     // Code to append string, only appends if evaluated to other than zero.
     String rval = "";
+    
+    // Add the whole number if not zero, if it is zero it can only be added if the numerator is too.
     if (wholeNumber != 0)
     {
       rval += wholeNumber;
-    } else if (numerator == 0) {
+    } else if (numerator == 0)
+    {
       rval += 0;
     }
+    
+    // If numerator isn't zero add it to the string.
     if (numerator != 0)
     {
       rval += String.format(" %d/%d", numerator, denominator);
