@@ -159,23 +159,15 @@ public class Calculator
   {
     double real = resultDoubles[0];
     double imag = resultDoubles[1];
-    result = Operations.formatResult(real, '+', imag, false);
+    result = Operations.formatResult(real, imag, false);
     
     if (result == null)
     {
       return null;
     }
-    if (result.contains("+1i"))
-    {
-      setResult(result.replace("+1i", "+i"));
-    }
-    else if (result.contains("-1i"))
-    {
-      setResult(result.replace("-1i", "-i"));
-    }
     
     if (fractionDisplay) {
-      return Operations.formatFractionDisplay(result);
+      return Operations.formatResult(real, imag, true);
     }
     
     return result;
