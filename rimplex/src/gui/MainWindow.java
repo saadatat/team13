@@ -244,14 +244,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     about = new JMenuItem("About");
     fileSetting = new JMenuItem("Save Recorded Calculations");
     helpPage = new JMenuItem("Instructions");
-    recordButton = new JMenuItem("Toggle Record");
-    
+    recordButton = new JMenuItem("Toggle Record");  
     
     // Create menubar
     menuBar = new JMenuBar();
-    
-    
-    
   }
 
   /**

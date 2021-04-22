@@ -243,20 +243,28 @@ public class Operations
   {
     NumberFormat fmat = NumberFormat.getInstance();
     String returnString;
-    char operator = '+'; // This shouldn't be changed, as any formatting issues will be resolved.
+    String realString;
+    String imagString;
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
     
     if (asFraction)
     {
-      returnString = String.format("%s%c%si", toFraction(real), operator, toFraction(imaginary));
+      realString = toFraction(real);
+      imagString = toFraction(imaginary);
     } else {
-      returnString = String.format("%s%c%si", fmat.format(real), operator, fmat.format(imaginary));
+      realString = fmat.format(real);
+      imagString = fmat.format(imaginary);
     }
+    
+    returnString = String.format("%s+%si", realString, imagString);
+    
     returnString = returnString.replace(",", "");
     returnString = returnString.replace("+-", "-");
     returnString = returnString.replace("+1i", "+i");
     returnString = returnString.replace("-1i", "-i");
+    
+    // Code to remove any numbers that evaluate to zero.
     
     return returnString;
   }
@@ -269,14 +277,18 @@ public class Operations
    */
   private static String toFraction (double numberToConvert)
   {
+    // Decimal number formatting so fractions are based on decimals that are rounded.
     NumberFormat fmat = NumberFormat.getInstance();
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
     
+    // Get the number of decimal places.
     String numberAsText = fmat.format(Math.abs(numberToConvert));
     int decimalPlaces = numberAsText.length() - numberAsText.indexOf('.') - 1;
     int decimalPlaceFactor = (int) Math.pow(10, decimalPlaces);
     
+    // Rounds whole number, extracts decimal, and then multiplies decimal based on number of
+    // decimal places there are. Then it can be converted into a fraction.
     int wholeNumber = (int) numberToConvert ;
     double onlyDecimal = numberToConvert - wholeNumber;
     int numerator = (int) (onlyDecimal * decimalPlaceFactor);
@@ -300,9 +312,16 @@ public class Operations
       rval += String.format(" %d/%d", numerator, denominator);
     }
     
+    // Return trimmed value just in case.
     return rval.trim();
   }
   
+  /**
+   * Helper method to get the GCD.
+   * @param number1 First number
+   * @param number2 Second number
+   * @return The GCD.
+   */
   private static int getGCD(int number1, int number2) {
     if (number2 == 0) {
       return number1;
