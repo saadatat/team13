@@ -260,13 +260,10 @@ public class Operations
     // All results must be a complex number. Refer to the "FormOfResults" story. 
     returnString = realString + "+" + imagString + "i";
     
-    
     returnString = returnString.replace(",", "");
     returnString = returnString.replace("+-", "-");
     returnString = returnString.replace("+1i", "+i");
     returnString = returnString.replace("-1i", "-i");
-    
-    // Code to remove any numbers that evaluate to zero.
     
     return returnString;
   }
