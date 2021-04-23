@@ -1,7 +1,6 @@
 package calculations;
 
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,7 +95,6 @@ public class Operations
     double scale = Math.pow(10, 3);
     double quotient1;
     double quotient2;
-    char operator = '+';
 
     double[][] opdoubles = parseTodouble(operandOne, operandTwo);
 
@@ -142,7 +140,6 @@ public class Operations
     double[] op2double;
     String[] op1;
     String[] op2;
-    String[] temp;
     
     // Formatting for adjacent symbols.
     String operandOne = operandOneIn.replace("+-", "-");
@@ -151,7 +148,6 @@ public class Operations
     // Pattern for matching an operand that is a single imaginary.
     Pattern oneImagPattern = Pattern.compile("^[0-9]*[i]$");
     Matcher m;
-    
     
     // If this method is passed a single real number without an imaginary
     // counterpart then convert it to standard form.

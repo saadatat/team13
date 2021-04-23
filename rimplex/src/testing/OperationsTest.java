@@ -14,9 +14,9 @@ import calculations.Operations;
 class OperationsTest
 {
   NumberFormat fmat;
-  static final double PERM_STP = 0.5;
-  static final double PERM_STR = -1;
-  static final double PERM_END = 2;
+  static final double PERM_STP = 0.5; // Step for the permutations of numbers.
+  static final double PERM_STR = -1; // Number to start permutation.
+  static final double PERM_END = 2; // Number to end permutation.
 
   @Test
   void testConstructor()
@@ -114,6 +114,29 @@ class OperationsTest
     assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
     assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
   }
+  
+  /**
+   * Mainly used to test fraction display, as decimal display
+   * is already tested in the comprehensive methods.
+   */
+  @Test
+  void formatResultTest()
+  {
+    String actual;
+    String expected;
+    
+    actual = Operations.formatResult(0, 0, true);
+    expected = "0+0i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.formatResult(0, 0.5, true);
+    expected = "0+1/2i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.formatResult(0, 1, true);
+    expected = "0+i";
+    assertEquals(expected, actual);
+  }
 
   @ParameterizedTest
   @MethodSource("valueGenerator")
@@ -127,11 +150,15 @@ class OperationsTest
     fmat = NumberFormat.getInstance();
     fmat.setMinimumFractionDigits(0);
     fmat.setMaximumFractionDigits(3);
-
-    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+    
+    // Calculates formatted string for double
     String one = fmat.format(i + k);
     String two = fmat.format(j + l);
+    
+
+    // For inputs generated in standard form. (0+1i)
+    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");   
     String expected = String.format("%s+%si", one, two).replace("+-", "-");
     expected = expected.replace("-1i", "-i");
     expected = expected.replace("+1i", "+i");
