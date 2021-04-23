@@ -134,7 +134,7 @@ class OperationsTest
     assertEquals(expected, actual);
     
     actual = Operations.formatResult(Operations.subtraction("-30", "-i"), false);
-    expected = "-30-i";
+    expected = "-30+i";
     assertEquals(expected, actual);
   }
 
