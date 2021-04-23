@@ -6,6 +6,8 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.MenuBar;
@@ -142,7 +144,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(325, 425);
+    this.setSize(320, 440);
     this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
@@ -437,11 +439,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton.setPreferredSize(new Dimension(30, 30));
     signButton.setPreferredSize(new Dimension(30, 30));
 
-    JPanel test1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-    JPanel test2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-    JPanel test3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-    JPanel test4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-    JPanel test5 = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+    JPanel test1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 17, 10));
+    JPanel test2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 17, 10));
+    JPanel test3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 17, 10));
+    JPanel test4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 17, 10));
+    JPanel test5 = new JPanel(new FlowLayout(FlowLayout.CENTER, 17, 10));
     test1.add(signButton);
     test1.add(clearButton);
     test1.add(backspace);
@@ -479,20 +481,21 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     
     // testing
-    JPanel mainSouthPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-    mainSouthPanel.add(southPanel);
-    mainSouthPanel.add(resultButton);
-    mainSouthPanel.setBackground(gray);
+    JPanel mainPanel = new JPanel(new BorderLayout());
+    
     backspace.setPreferredSize(new Dimension(30, 30));
     decimal.setPreferredSize(new Dimension(30, 30));
-
+    mainPanel.add(displayPanel, BorderLayout.CENTER);
+    mainPanel.add(southPanel, BorderLayout.SOUTH);
+    mainPanel.setBackground(gray);
     leftParenthesisButton.setPreferredSize(new Dimension(30, 30));
     rightParenthesisButton.setPreferredSize(new Dimension(30, 30));
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
     southPanel.setPreferredSize(new Dimension(275, 250));
-    displayPanel.setPreferredSize(new Dimension(50, 50));
+    displayPanel.setPreferredSize(new Dimension(200, 50));
+    
     
     // Set borders
     inputTextField.setBorder(null);
@@ -521,8 +524,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
-    testPanel.add(displayPanel, BorderLayout.CENTER);
-    testPanel.add(mainSouthPanel, BorderLayout.SOUTH);
+    testPanel.add(mainPanel, BorderLayout.CENTER);
+    testPanel.add(resultButton, BorderLayout.EAST);
     this.add(testPanel, BorderLayout.CENTER);
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
