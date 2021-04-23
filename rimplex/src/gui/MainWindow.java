@@ -193,7 +193,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultPanel = new JPanel(new BorderLayout());
 
     resultPanel.setVisible(false);
-
+    
     displayLabel = new JLabel(" ");
 
     resultDisplayArea = new JTextPane();
@@ -297,7 +297,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(imaginaryButton);
     southPanel.add(equalsButton);
     southPanel.add(decimal);
-    southPanel.add(resultButton);
+   
 
     resultButton.setBorder(null);
     hideResultButton.setBorderPainted(false);
@@ -809,6 +809,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       size = 0;
       resultPanel.setVisible(true);
       resultButton.setVisible(false);
+      hideResultButton.setVisible(false);
       testPanel.add(resultPanel, BorderLayout.EAST);
       timer = new Timer(1, new ActionListener()
       {
@@ -826,6 +827,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
           if (size >= 240)
           {
             timer.stop();
+            hideResultButton.setVisible(true);
           }
         }
       });
@@ -835,8 +837,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // Collapse history
     if (command.equals("<"))
     {
+      hideResultButton.setVisible(false);
       size = 240;
-
       timer = new Timer(1, new ActionListener()
       {
         @Override
@@ -855,6 +857,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
             resultButton.setVisible(true);
             resultPanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
+            resultButton.setLocation(5,5);
           }
         }
       });
