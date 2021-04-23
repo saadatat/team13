@@ -14,6 +14,8 @@ import java.awt.MenuBar;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -65,7 +67,7 @@ import calculations.Calculator;
  * @author Dylan Moreno, Kory Erdmann, Arman Saadat, Max Berger
  * @version Rimplex 1.0
  */
-public class MainWindow extends JFrame implements ActionListener, KeyListener
+public class MainWindow extends JFrame implements ActionListener, KeyListener, ComponentListener
 {
   Timer timer;
   int size = 0;
@@ -162,7 +164,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
-
+    
   }
 
   /**
@@ -265,6 +267,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
    */
   private void setComponents()
   {
+    
     // Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204, 204, 204, 255);
@@ -530,7 +533,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         e1.printStackTrace();
       }
     }
-
+   
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
@@ -640,6 +643,9 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     about.addActionListener(this);
     fileSetting.addActionListener(this);
     helpPage.addActionListener(this);
+    
+    
+    this.addComponentListener(this);
   }
 
   /**
@@ -813,24 +819,26 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Expand history
     if (command.equals(">"))
     {
+      
       Color lightBlue = new Color(210, 237, 255, 255);
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
-      newFramePanel = new JPanel();
+      newFramePanel = new JPanel(new BorderLayout());
       frame = new JFrame("JFrame");
-     frame.setAlwaysOnTop (true);
-    
+      frame.setAlwaysOnTop (true);
       newFramePanel.setBackground(lightBlue);
-      newFramePanel.add(resultPanel);
+      newFramePanel.add(resultPanel, BorderLayout.NORTH);
       newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
+      resultDisplayArea.setBorder(new EmptyBorder(10,10,10,10));
       frame.add(newFramePanel);
       frame.setLocation(x+275, y-260);
       frame.setUndecorated(true);
-      frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+     
       frame.pack();
       frame.setVisible(true);
       size = 0;
       resultPanel.setVisible(true);
+      
       //resultButton.setVisible(false);
       resultButton.setText("   ");
       hideResultButton.setVisible(false);
@@ -1428,5 +1436,36 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       recordButton.setText("Переключить запись");
       fileTab.setText("Файл");
     }
+  }
+ 
+  public void componentMoved(ComponentEvent e) {
+    
+    if (frame != null) {
+      int x = this.getLocation().x;
+      int y = this.getLocation().y + this.getHeight();
+      newFramePanel = new JPanel(new BorderLayout());
+      frame.setLocation(x+275, y-260);
+    }
+}
+
+  @Override
+  public void componentResized(ComponentEvent e)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void componentShown(ComponentEvent e)
+  {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void componentHidden(ComponentEvent e)
+  {
+    // TODO Auto-generated method stub
+    
   }
 }
