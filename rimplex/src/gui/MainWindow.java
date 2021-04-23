@@ -841,8 +841,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       size = 0;
       resultPanel.setVisible(true);
       
-      //resultButton.setVisible(false);
-      resultButton.setText("   ");
+      resultButton.setEnabled(false);
+      
       hideResultButton.setVisible(false);
       
       timer = new Timer(1, new ActionListener()
@@ -896,7 +896,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
             frame.setVisible(false);
             newFramePanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
-            resultButton.setText(">");
+            resultButton.setEnabled(true);
+            
           }
         }
       });
