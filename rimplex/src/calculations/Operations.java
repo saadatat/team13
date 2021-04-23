@@ -227,6 +227,14 @@ public class Operations
 
     return new double[][] {op1double, op2double};
   }
+  
+  /**
+   * Overloaded function for formatResult
+   */
+  public static String formatResult(double[] resultDoubles, boolean asFraction)
+  {
+    return formatResult(resultDoubles[0], resultDoubles[1], asFraction);
+  }
 
   /**
    * Formats the result. Removes unnecessary 0's.
