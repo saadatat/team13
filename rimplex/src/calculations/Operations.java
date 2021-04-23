@@ -23,7 +23,6 @@ public class Operations
     double realSum = (opdoubles[0][0] + opdoubles[1][0]);
     double imagSum = (opdoubles[0][1] + opdoubles[1][1]);
 
-    
     returnDoubles = new double[2];
     returnDoubles[0] = realSum;
     returnDoubles[1] = imagSum;  
@@ -322,6 +321,7 @@ public class Operations
     return rval.trim();
   }
   
+
   /**
    * Allows the division result to be properly simplified for inputs such as "6/9". Do not delete if you don't have another solution yet... 
    * @param operandOne
