@@ -25,6 +25,8 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -44,6 +46,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.BadLocationException;
@@ -62,11 +65,14 @@ import calculations.Calculator;
  */
 public class MainWindow extends JFrame implements ActionListener, KeyListener
 {
+  Timer timer;
+  int size = 0;
+  int size2 = 0;
   private static final long serialVersionUID = 2740437090361841747L;
-  
+
   // Calculator Reference
   private Calculator calculator;
-  
+
   // Calculator Buttons
   private JButton addButton;
   private JButton imaginaryButton;
@@ -93,20 +99,20 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JButton seven;
   private JButton eight;
   private JButton nine;
-  
+
   // Calculator Display/Input Fields
   private JLabel displayLabel;
   private JTextField inputTextField;
   private JTextPane resultDisplayArea;
-  
+
   // Panels and Panes
   private JButton hideResultButton;
   private JPanel displayPanel;
   private JPanel southPanel;
   private JPanel resultPanel;
- private  JPanel resultDisplayPanel;
+  private JPanel resultDisplayPanel;
   private JPanel testPanel;
-  
+
   // Menu Items
   private JMenuBar menuBar;
   private JMenu fileTab;
@@ -120,14 +126,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JMenuItem recordButton;
   private JMenuItem english;
   private JMenuItem spanish;
-  private JMenuItem french; 
+  private JMenuItem french;
   private JMenuItem portugese;
   private JMenuItem japanese;
   private JMenuItem russian;
-  
+
   // Dialogs and Prompts
   private AboutDialog aboutDialog;
-  
+
   // Values
   private boolean recordingEnabled = false;
   private String resultHistory;
@@ -152,8 +158,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
-   
-    
+
   }
 
   /**
@@ -188,12 +193,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultPanel = new JPanel(new BorderLayout());
 
     resultPanel.setVisible(false);
-     
+
     displayLabel = new JLabel(" ");
 
     resultDisplayArea = new JTextPane();
-
-
 
     inputTextField = new JTextField("");
 
@@ -228,7 +231,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
     rightParenthesisButton = new JButton(")");
-    
+
     // Languages Menu Items
     languages = new JMenu("Languages");
     english = new JMenuItem("English");
@@ -237,7 +240,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     portugese = new JMenuItem("Portugese");
     japanese = new JMenuItem("Japanese");
     russian = new JMenuItem("Russian");
-    
+
     // Menu items
     print = new JMenuItem("Print");
     settings = new JMenu("Settings");
@@ -246,8 +249,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     about = new JMenuItem("About");
     fileSetting = new JMenuItem("Save Recorded Calculations");
     helpPage = new JMenuItem("Instructions");
-    recordButton = new JMenuItem("Toggle Record");  
-    
+    recordButton = new JMenuItem("Toggle Record");
+
     // Create menubar
     menuBar = new JMenuBar();
   }
@@ -263,7 +266,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     Color yellow = new Color(131, 139, 82, 255);
     Color green = new Color(99, 164, 157, 255);
     BufferedImage rimplexLogo = null;
-    
+
     // Layout
     displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
 
@@ -300,18 +303,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
     resultPanel.setBackground(lightBlue);
-     resultDisplayPanel = new JPanel(new BorderLayout());
+    resultDisplayPanel = new JPanel(new BorderLayout());
     resultDisplayPanel.setBackground(lightBlue);
     resultDisplayPanel.add(hideResultButton, BorderLayout.LINE_END);
     resultDisplayPanel.add(resultDisplayArea, BorderLayout.CENTER);
-    resultDisplayPanel.setPreferredSize(new Dimension(225,225));
-    JPanel test = new JPanel();
-    test.setBackground(gray);
-    test.setPreferredSize(new Dimension(100,100));
-    resultPanel.add(test, BorderLayout.CENTER);
+    resultDisplayPanel.setPreferredSize(new Dimension(1, 1));
+
+    resultDisplayPanel.setMaximumSize(new Dimension(250, 250));
+
     resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
     resultDisplayArea.setEditable(false);
-   
 
     // Set content area false
     resultButton.setContentAreaFilled(false);
@@ -343,7 +344,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
 
-  
     zero.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     one.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     two.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -369,9 +369,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-    //Fonts
-    resultButton.setFont(new Font("Dialog",  Font.BOLD, 16));
-    hideResultButton.setFont(new Font("Dialog",  Font.BOLD, 16));
+    // Fonts
+    resultButton.setFont(new Font("Dialog", Font.BOLD, 16));
+    hideResultButton.setFont(new Font("Dialog", Font.BOLD, 16));
     Font timesFont = new Font("Times New Roman", Font.BOLD, 16);
     Font dialogFont = new Font("Dialog", Font.BOLD, 16);
     Font dialogFont2 = new Font("Dialog", 0, 16);
@@ -399,7 +399,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     backspace.setFont(timesFont);
     imaginaryButton.setFont(dialogFont);
     signButton.setFont(dialogFont2);
-    
+
     // Set backroung/foreground
     resultDisplayArea.setBackground(lightBlue);
     displayPanel.setBackground(lightBlue);
@@ -424,7 +424,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     decimal.setForeground(green);
 
     // Sizes
-   
+
     zero.setPreferredSize(new Dimension(75, 30));
     one.setPreferredSize(new Dimension(30, 30));
     two.setPreferredSize(new Dimension(30, 30));
@@ -486,10 +486,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     test5.setBackground(gray);
     southPanel.add(test5);
 
-    
     // testing
     JPanel mainPanel = new JPanel(new BorderLayout());
-    
+
     backspace.setPreferredSize(new Dimension(30, 30));
     decimal.setPreferredSize(new Dimension(30, 30));
     mainPanel.add(displayPanel, BorderLayout.CENTER);
@@ -502,8 +501,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     southPanel.setPreferredSize(new Dimension(275, 250));
     displayPanel.setPreferredSize(new Dimension(200, 50));
-    
-    
+
     // Set borders
     inputTextField.setBorder(null);
     resultPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -535,21 +533,21 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(resultButton, BorderLayout.EAST);
     this.add(testPanel, BorderLayout.CENTER);
-  
+
     pack();
     setLocationRelativeTo(null);
-  
+
     help.add(about);
     help.add(helpPage);
-    
+
     languages.add(english);
 
     languages.add(spanish);
-    languages.add(french);  
+    languages.add(french);
     languages.add(portugese);
     languages.add(japanese);
     languages.add(russian);
-    
+
     fileTab.add(fileSetting);
     settings.add(languages);
     fileTab.add(recordButton);
@@ -557,8 +555,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     menuBar.add(fileTab);
     menuBar.add(settings);
     menuBar.add(help);
-    menuBar.setPreferredSize(new Dimension(100,25));
-    this.add(menuBar, BorderLayout.NORTH);  
+    menuBar.setPreferredSize(new Dimension(100, 25));
+    this.add(menuBar, BorderLayout.NORTH);
   }
 
   /**
@@ -619,16 +617,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     eight.addKeyListener(this);
     nine.addActionListener(this);
     nine.addKeyListener(this);
-    
+
     // Language Option Listeners
     english.addActionListener(this);
     spanish.addActionListener(this);
 
-    french.addActionListener(this);  
+    french.addActionListener(this);
     portugese.addActionListener(this);
     japanese.addActionListener(this);
     russian.addActionListener(this);
-    
+
     // Menu Item Listeners
     print.addActionListener(this);
     recordButton.addActionListener(this);
@@ -644,7 +642,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   {
     // Call helper method to notify application of a change in language if there is one.
     changeLanguage(e);
-    
+
     // Toggle recording, toggles boolean value and highlighting is handled here.
     if (e.getSource() == recordButton)
     {
@@ -659,7 +657,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         recordButton.setForeground(UIManager.getColor("TextField.foreground"));
       }
     }
-    
+
     // Open systems print dialog if selected
     if (e.getSource() == print)
     {
@@ -672,20 +670,23 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         e1.printStackTrace();
       }
     }
-    
+
     // Open about dialog if selected
-    if (e.getSource() == about) {
+    if (e.getSource() == about)
+    {
       aboutDialog = AboutDialog.getInstance();
       aboutDialog.display();
     }
-    
+
     // Open save dialog
-    if (e.getSource() == fileSetting) {
-       FileDialog.saveCalcs(recordHistory);
+    if (e.getSource() == fileSetting)
+    {
+      FileDialog.saveCalcs(recordHistory);
     }
-    
+
     // Open help webpage in default browser
-    if (e.getSource() == helpPage) {
+    if (e.getSource() == helpPage)
+    {
       try
       {
         Desktop.getDesktop().open(new File("webpages/helpPage.html"));
@@ -696,9 +697,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         e1.printStackTrace();
       }
     }
-    
+
     boolean par = false;
-    String command = e.getActionCommand(); 
+    String command = e.getActionCommand();
     String inputField = inputTextField.getText().trim();
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
@@ -707,7 +708,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       inputField = inputField.replace(")", "");
       inputField = inputField.replace("(", "");
     }
-    
+
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
     inputField = inputField.replace("𝑖", "i");
@@ -754,7 +755,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
       }
     }
-    
+
     // Equals button
     else if (command.equals("="))
     {
@@ -773,9 +774,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       this.clear();
       calculator.clear();
     }
-
-
-    
 
     // Sign switch button
     if (command.equals("±") && !inputField.equals(""))
@@ -808,21 +806,65 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // Expand history
     if (command.equals(">"))
     {
-      resultButton.setVisible(false);
+      size = 0;
       resultPanel.setVisible(true);
+      resultButton.setVisible(false);
       testPanel.add(resultPanel, BorderLayout.EAST);
-      pack();
+      timer = new Timer(1, new ActionListener()
+      {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+
+          size += 2;
+
+          resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
+          resultPanel.setPreferredSize(new Dimension(size, 240));
+          revalidate();
+          repaint();
+          pack();
+
+          if (size >= 240)
+          {
+            timer.stop();
+          }
+        }
+      });
+      timer.start();
     }
 
     // Collapse history
     if (command.equals("<"))
     {
-      resultButton.setVisible(true);
-      resultPanel.setVisible(false);
-      testPanel.add(resultButton, BorderLayout.EAST);
-      pack();
-      
-      resultButton.setText(">");
+      size = 240;
+
+      timer = new Timer(1, new ActionListener()
+      {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+          size -= 2;
+          resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
+          resultPanel.setPreferredSize(new Dimension(size, 240));
+          revalidate();
+          repaint();
+          pack();
+
+          if (size == 0)
+          {
+            timer.stop();
+          }
+          
+          if (size == 0)
+          {
+            resultButton.setVisible(true);
+            resultPanel.setVisible(false);
+            testPanel.add(resultButton, BorderLayout.EAST);
+          }
+        }
+      });
+
+      timer.start();
     }
 
     // When enabling fraction display.
@@ -834,7 +876,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fractionDisplayButton.setBackground(new Color(210, 237, 255, 255));
     }
 
-
     // When disabling fraction display.
 
     if (command.equals("F"))
@@ -843,7 +884,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       calculator.setFractionDisplay(false);
       fractionDisplayButton.setContentAreaFilled(false);
     }
-    
+
     // If command is a number append it.
     if (command.matches("[0-9]"))
     {
@@ -881,7 +922,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         inputTextField.setText(inputField += "𝑖");
       }
     }
-    
+
     // When left paranthesis is pressed.
     if (command.equals("("))
     {
@@ -891,23 +932,26 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       }
       else
       {
-        warningDialog.displayDialog("Parenthesis must be at beginning of input for complex calculations.");
+        warningDialog
+            .displayDialog("Parenthesis must be at beginning of input for complex calculations.");
       }
     }
-    
+
     // When right paranthesis is pressed.
     if (command.equals(")"))
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog("Complex numbers must have only one of each parenthesis in correct form.");
+        warningDialog.displayDialog(
+            "Complex numbers must have only one of each parenthesis in correct form.");
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
           || inputField.charAt(inputField.length() - 1) != 'i'
           || !(inputField.contains("+") || inputField.contains("-")))
       {
-        warningDialog.displayDialog("Please enter a complex number in standard form if using parenthesis.");
+        warningDialog
+            .displayDialog("Please enter a complex number in standard form if using parenthesis.");
       }
       else
       {
@@ -931,7 +975,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         warningDialog.displayDialog();
       }
     }
-    
+
     if (command.equals("←") && inputField.length() > 0)
     {
       inputTextField.setText(inputField.substring(0, inputField.length() - 1));
@@ -971,13 +1015,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
             .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
         inputTextField.setText("");
         resultHistory += displayLabel.getText() + "\n";
-        
+
         // If recording is enabled append calculations
         if (recordingEnabled)
         {
           recordHistory += displayLabel.getText() + "\n";
         }
-        
+
         resultDisplayArea.setText(resultHistory);
       }
       else
@@ -994,7 +1038,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     inputField = inputField.replace(")", "");
     inputField = inputField.replace("(", "");
-    
 
     String result = calculator.getResult();
 
@@ -1063,32 +1106,33 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     }
     inputTextField.setText("");
   }
-  
+
   /**
    * When called it reformats all text fields that display i to be italisized.
-   * @throws BadLocationException 
+   * 
+   * @throws BadLocationException
    */
   public void formatImaginarySymbol() throws BadLocationException
-  { 
+  {
     // Set textpane and set up default styles
     JTextPane textPane = new JTextPane();
-    
+
     // Create attribute set for imaginary number font
     SimpleAttributeSet imagNumAttributes = new SimpleAttributeSet();
     StyleConstants.setItalic(imagNumAttributes, true);
     StyleConstants.setFontFamily(imagNumAttributes, "Times New Roman");
     StyleConstants.setFontSize(imagNumAttributes, textPane.getFont().getSize() + 4);
-    
+
     StyledDocument doc = textPane.getStyledDocument();
     Style style = textPane.addStyle("", null);
-    
+
     style.addAttributes(imagNumAttributes);
     doc.insertString(doc.getLength(), "i", style);
   }
 
   /**
-   * keyTyped method inherited from JFrame.
-   * This method essentially maps physical keys to the GUI buttons.
+   * keyTyped method inherited from JFrame. This method essentially maps physical keys to the GUI
+   * buttons.
    */
   @Override
   public void keyTyped(KeyEvent e)
@@ -1101,7 +1145,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     // For numbers
     if (e.getKeyChar() > 47 && e.getKeyChar() < 58)
     {
-      switch(e.getKeyChar()) {
+      switch (e.getKeyChar())
+      {
         case KeyEvent.VK_0:
           zero.doClick();
           break;
@@ -1174,13 +1219,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       rightParenthesisButton.doClick();
     }
-    
+
     if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE)
     {
       backspace.doClick();
     }
   }
-  
+
   public boolean hasDecimal()
   {
     String[] test = inputTextField.getText().split("\\+|-");
@@ -1223,7 +1268,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   public void keyReleased(KeyEvent e)
   {
   }
-  
+
   /**
    * Clear text fields.
    */
@@ -1232,14 +1277,16 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     inputTextField.setText("");
     displayLabel.setText("");
   }
-  
+
   /**
    * Helper method to change languages depending on user input.
-   * @param e Action event passed from ActionPerformed.
+   * 
+   * @param e
+   *          Action event passed from ActionPerformed.
    */
   private void changeLanguage(ActionEvent e)
   {
-  /// Language Listeners
+    /// Language Listeners
     if (e.getSource() == english)
     {
       settings.setText("Settings");
@@ -1257,9 +1304,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       fileSetting.setText("Save Recorded Calculations");
       recordButton.setText("Toggle Recording");
       fileTab.setText("File");
-      
+
     }
-   
+
     if (e.getSource() == spanish)
     {
       settings.setText("Ajustes");
@@ -1267,8 +1314,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       languages.setText("Idiomas");
       english.setText("Inglés");
       spanish.setText("Español");
-     
-      french.setText("Francés");  
+
+      french.setText("Francés");
       portugese.setText("Portugués");
       japanese.setText("Japonés");
       russian.setText("Ruso");
@@ -1279,7 +1326,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       recordButton.setText("Alternar grabación");
       fileTab.setText("Archivo");
     }
-   
+
     if (e.getSource() == french)
     {
       settings.setText("Les paramètres");
@@ -1287,8 +1334,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
       languages.setText("Les langues");
       english.setText("Anglais");
       spanish.setText("Espanol");
-     
-      french.setText("Français"); 
+
+      french.setText("Français");
       portugese.setText("Portugais");
       japanese.setText("Japonais");
       russian.setText("Russe");
