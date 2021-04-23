@@ -817,7 +817,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
         {
 
           size += 2;
-
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
           revalidate();
@@ -853,10 +852,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
           if (size == 0)
           {
             timer.stop();
-          }
-          
-          if (size == 0)
-          {
             resultButton.setVisible(true);
             resultPanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
