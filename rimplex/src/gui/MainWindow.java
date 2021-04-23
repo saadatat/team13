@@ -849,7 +849,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         public void actionPerformed(ActionEvent e)
         {
 
-          size += 2;
+          size += 16;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
           newFramePanel.setPreferredSize(new Dimension(size, 240));
@@ -878,7 +878,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         @Override
         public void actionPerformed(ActionEvent e)
         {
-          size -= 2;
+          size -= 16;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
           newFramePanel.setPreferredSize(new Dimension(size, 240));
