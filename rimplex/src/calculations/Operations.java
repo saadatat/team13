@@ -143,7 +143,7 @@ public class Operations
     String[] op2;
     
     // Pattern for matching an operand that is a single imaginary.
-    Pattern oneImagPattern = Pattern.compile("^[-]*[0-9]*[i]$");
+    Pattern oneImagPattern = Pattern.compile("^[-]*[0-9]*[.]*[0-9]+[i]$");
     Matcher m;
     
     // If this method is passed a single real number without an imaginary
