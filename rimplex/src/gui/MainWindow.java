@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.MenuBar;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -98,7 +99,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   
   // Panels and Panes
   private JButton hideResultButton;
-  private JPanel mainPanel;
+  private JPanel displayPanel;
   private JPanel southPanel;
   private JPanel resultPanel;
   private JScrollPane scroll;
@@ -141,7 +142,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     setComponents(); // modify/add/format the components
     setListeners(); // set listeners for components
     setResizable(false);
-    this.setSize(350, 425);
+    this.setSize(325, 425);
     this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
@@ -180,7 +181,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private void createComponents()
   {
     testPanel = new JPanel(new BorderLayout());
-    mainPanel = new JPanel();
+    displayPanel = new JPanel();
     southPanel = new JPanel(new GridLayout(5, 0));
     resultPanel = new JPanel(new BorderLayout());
 
@@ -263,11 +264,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     BufferedImage rimplexLogo = null;
     
     // Layout
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
 
     // Add buttons
-    mainPanel.add(displayLabel);
-    mainPanel.add(inputTextField);
+    displayPanel.add(displayLabel);
+    displayPanel.add(inputTextField);
     southPanel.add(signButton);
     southPanel.add(clearButton);
     southPanel.add(backspace);
@@ -294,8 +295,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     southPanel.add(decimal);
     southPanel.add(resultButton);
 
-    resultButton.setBorderPainted(false);
-    resultButton.setContentAreaFilled(false);
+    resultButton.setBorder(null);
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
     resultPanel.add(hideResultButton, BorderLayout.LINE_END);
@@ -331,11 +331,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     rightParenthesisButton.setContentAreaFilled(false);
     fractionDisplayButton.setContentAreaFilled(false);
     signButton.setContentAreaFilled(false);
-    resultButton.setContentAreaFilled(false);
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
 
-    resultButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+  
     zero.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     one.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     two.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -362,6 +361,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
     //Fonts
+    resultButton.setFont(new Font("Dialog",  Font.BOLD, 16));
+    hideResultButton.setFont(new Font("Dialog",  Font.BOLD, 16));
     Font timesFont = new Font("Times New Roman", Font.BOLD, 16);
     Font dialogFont = new Font("Dialog", Font.BOLD, 16);
     Font dialogFont2 = new Font("Dialog", 0, 16);
@@ -392,7 +393,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     
     // Set backroung/foreground
     resultDisplayArea.setBackground(lightBlue);
-    mainPanel.setBackground(lightBlue);
+    displayPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
     testPanel.setBackground(gray);
     southPanel.setBackground(gray);
@@ -414,7 +415,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     decimal.setForeground(green);
 
     // Sizes
-    resultButton.setPreferredSize(new Dimension(30, 30));
+   
     zero.setPreferredSize(new Dimension(75, 30));
     one.setPreferredSize(new Dimension(30, 30));
     two.setPreferredSize(new Dimension(30, 30));
@@ -476,6 +477,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     test5.setBackground(gray);
     southPanel.add(test5);
 
+    
+    // testing
+    JPanel mainSouthPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+    mainSouthPanel.add(southPanel);
+    mainSouthPanel.add(resultButton);
+    mainSouthPanel.setBackground(gray);
     backspace.setPreferredSize(new Dimension(30, 30));
     decimal.setPreferredSize(new Dimension(30, 30));
 
@@ -484,14 +491,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     leftParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     rightParenthesisButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-    southPanel.setPreferredSize(new Dimension(300, 250));
-    mainPanel.setPreferredSize(new Dimension(50, 50));
+    southPanel.setPreferredSize(new Dimension(275, 250));
+    displayPanel.setPreferredSize(new Dimension(50, 50));
     
     // Set borders
     inputTextField.setBorder(null);
     resultPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     testPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-    southPanel.setBorder(new EmptyBorder(10, 10, 10, 30));
+    southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
     // set image
     try
@@ -514,9 +521,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
     testPanel.add(rimplexHolder, BorderLayout.NORTH);
-    testPanel.add(mainPanel, BorderLayout.CENTER);
-    testPanel.add(southPanel, BorderLayout.SOUTH);
-    testPanel.add(resultButton, BorderLayout.EAST);
+    testPanel.add(displayPanel, BorderLayout.CENTER);
+    testPanel.add(mainSouthPanel, BorderLayout.SOUTH);
     this.add(testPanel, BorderLayout.CENTER);
     this.add(resultPanel, BorderLayout.LINE_END);
     pack();
