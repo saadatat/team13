@@ -104,7 +104,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   private JPanel displayPanel;
   private JPanel southPanel;
   private JPanel resultPanel;
-  private JScrollPane scroll;
+ private  JPanel resultDisplayPanel;
   private JPanel testPanel;
   
   // Menu Items
@@ -188,13 +188,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultPanel = new JPanel(new BorderLayout());
 
     resultPanel.setVisible(false);
-
+     
     displayLabel = new JLabel(" ");
 
     resultDisplayArea = new JTextPane();
 
-    scroll = new JScrollPane(resultDisplayArea);
-    scroll.setPreferredSize(new Dimension(300, 200));
+
 
     inputTextField = new JTextField("");
 
@@ -300,11 +299,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultButton.setBorder(null);
     hideResultButton.setBorderPainted(false);
     hideResultButton.setContentAreaFilled(false);
-    resultPanel.add(hideResultButton, BorderLayout.LINE_END);
-
+    resultPanel.setBackground(lightBlue);
+     resultDisplayPanel = new JPanel(new BorderLayout());
+    resultDisplayPanel.setBackground(lightBlue);
+    resultDisplayPanel.add(hideResultButton, BorderLayout.LINE_END);
+    resultDisplayPanel.add(resultDisplayArea, BorderLayout.CENTER);
+    resultDisplayPanel.setPreferredSize(new Dimension(225,225));
+    JPanel test = new JPanel();
+    test.setBackground(gray);
+    test.setPreferredSize(new Dimension(100,100));
+    resultPanel.add(test, BorderLayout.CENTER);
+    resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
     resultDisplayArea.setEditable(false);
-    scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    resultPanel.add(scroll);
+   
 
     // Set content area false
     resultButton.setContentAreaFilled(false);
@@ -523,11 +530,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
-    testPanel.add(rimplexHolder, BorderLayout.NORTH);
+    mainPanel.add(rimplexHolder, BorderLayout.NORTH);
+
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(resultButton, BorderLayout.EAST);
     this.add(testPanel, BorderLayout.CENTER);
-    this.add(resultPanel, BorderLayout.LINE_END);
+  
     pack();
     setLocationRelativeTo(null);
   
@@ -802,8 +810,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       resultButton.setVisible(false);
       resultPanel.setVisible(true);
+      testPanel.add(resultPanel, BorderLayout.EAST);
       pack();
-      setLocationRelativeTo(null);
     }
 
     // Collapse history
@@ -811,8 +819,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     {
       resultButton.setVisible(true);
       resultPanel.setVisible(false);
+      testPanel.add(resultButton, BorderLayout.EAST);
       pack();
-      setLocationRelativeTo(null);
+      
       resultButton.setText(">");
     }
 
