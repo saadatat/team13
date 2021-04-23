@@ -152,8 +152,6 @@ public class Operations
     Pattern oneImagPattern = Pattern.compile("^[0-9]*[i]$");
     Matcher m;
     
-    // Print to console for printing
-    System.out.println(operandOneIn + "   " + operandTwoIn);
     
     // If this method is passed a single real number without an imaginary
     // counterpart then convert it to standard form.
@@ -182,8 +180,6 @@ public class Operations
     operandOne = operandOne.replace("-i", "-1i");
     operandTwo = operandTwo.replace("-i", "-i1");
     
-    // Test console print
-    System.out.println(operandOne + "   " + operandTwo);
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
     

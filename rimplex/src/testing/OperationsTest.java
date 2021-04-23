@@ -3,13 +3,21 @@ package testing;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import calculations.Operations;
 
-class OperationsTest 
+class OperationsTest
 {
   NumberFormat fmat;
-  
+  static final double PERM_STP = 0.5;
+  static final double PERM_STR = -1;
+  static final double PERM_END = 2;
+
   @Test
   void testConstructor()
   {
@@ -43,35 +51,7 @@ class OperationsTest
       }
     }
   }
-
-  @Test
-  void additionTestComprehensive()
-  {
-    for (double i = -2; i <= 2; i += 0.25)
-    {
-      for (double j = -2; j <= 2; j += 0.25)
-      {
-        for (double k = -2; k <= 2; k += 0.25)
-        {
-          for (double l = -2; l <= 2; l += 0.25)
-          {
-            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
-            fmat = NumberFormat.getInstance();
-            fmat.setMinimumFractionDigits(0);
-            fmat.setMaximumFractionDigits(3);
-
-            String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-            String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
-            String one = fmat.format(i + k);
-            String two = fmat.format(j + l);
-            String expected = String.format("%s+%si", one, two).replace("+-", "-");
-            assertEquals(expected, Operations.addition(firstOp, secondOp));
-          }
-        }
-      }
-    }
-  }
-
+  
   @Test
   void subtractionTest()
   {
@@ -90,40 +70,12 @@ class OperationsTest
       }
     }
   }
-
-  @Test
-  void subtractionTestComprehensive()
-  {
-    for (double i = -2; i <= 2; i += 0.25)
-    {
-      for (double j = -2; j <= 2; j += 0.25)
-      {
-        for (double k = -2; k <= 2; k += 0.25)
-        {
-          for (double l = -2; l <= 2; l += 0.25)
-          {
-            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
-            fmat = NumberFormat.getInstance();
-            fmat.setMinimumFractionDigits(0);
-            fmat.setMaximumFractionDigits(3);
-
-            String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-            String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
-            String one = fmat.format(i - k);
-            String two = fmat.format(j - l);
-            String expected = String.format("%s+%si", one, two).replace("+-", "-");
-            assertEquals(expected, Operations.subtraction(firstOp, secondOp));
-          }
-        }
-      }
-    }
-  }
-
+  
   /**
    * divideTest - test divide method.
    */
   @Test
-  void divideTest()
+  void divisionTest()
   {
     String termPositive1 = "2+5i";
     String termPositive2 = "4+3i";
@@ -140,54 +92,11 @@ class OperationsTest
     assertEquals("-0.92-0.56i", Operations.divide(termPositive1, termNegative2));
   }
   
-  @Test
-  void divisionTestComprehensive()
-  {
-    for (double i = -2; i <= 2; i += 0.25)
-    {
-      for (double j = -2; j <= 2; j += 0.25)
-      {
-        for (double k = -2; k <= 2; k += 0.25)
-        {
-          for (double l = -2; l <= 2; l += 0.25)
-          {
-            // Instantiate NumberFormat, MUST BE IN FOR LOOP FOR THREADING!
-            fmat = NumberFormat.getInstance();
-            fmat.setMinimumFractionDigits(0);
-            fmat.setMaximumFractionDigits(3);
-            
-            double scale = Math.pow(10, 3);
-            double quotient1;
-            double quotient2;
-            double ac = i * k;
-            double bd = j * l;
-            double ad = i * l;
-            double bc = j * k;
-            double top1 = ac + bd;
-            double top2 = bc - ad;
-            double cSquare = (double) Math.pow(k, 2);
-            double dSquare = (double) Math.pow(l, 2);
-            double denominator = cSquare + dSquare;
-            quotient1 = Math.round((top1 / denominator) * scale ) / scale;
-            quotient2 = Math.round((top2 / denominator) * scale ) / scale;
-            
-            String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
-            String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
-            String one = fmat.format(quotient1);
-            String two = fmat.format(quotient2);
-            String expected = String.format("%s+%si", one, two).replace("+-", "-");
-            assertEquals(expected, Operations.divide(firstOp, secondOp));
-          }
-        }
-      }
-    }
-  }
-
   /*
    * multiplyTest - test multiply method.
    */
   @Test
-  void multiplyTest()
+  void multiplicationTest(String firstOp, String secondOp)
   {
     String validNum1 = "6+1i";
     String validNum2 = "4+2i";
@@ -205,9 +114,140 @@ class OperationsTest
     assertEquals("33-13i", Operations.multiply(validNum1, minusImag));
     assertEquals("-23+27i", Operations.multiply(minusReal, validNum1));
   }
-  
-  /*
-   * 
-   */
 
+  @ParameterizedTest
+  @MethodSource("valueGenerator")
+  void additionTestComprehensive(double[] permutation)
+  {
+    double i = permutation[0];
+    double j = permutation[1];
+    double k = permutation[2];
+    double l = permutation[3];
+
+    fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+
+    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+    String one = fmat.format(i + k);
+    String two = fmat.format(j + l);
+    String expected = String.format("%s+%si", one, two).replace("+-", "-");
+    expected = expected.replace("-1i", "-i");
+    expected = expected.replace("+1i", "+i");
+    assertEquals(expected, Operations.formatResult(Operations.addition(firstOp, secondOp), false));
+  }
+
+  @ParameterizedTest
+  @MethodSource("valueGenerator")
+  void subtractionTestComprehensive(double[] permutation)
+  {
+    double i = permutation[0];
+    double j = permutation[1];
+    double k = permutation[2];
+    double l = permutation[3];
+
+    fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+
+    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+    String one = fmat.format(i - k);
+    String two = fmat.format(j - l);
+    String expected = String.format("%s+%si", one, two).replace("+-", "-");
+    expected = expected.replace("-1i", "-i");
+    expected = expected.replace("+1i", "+i");
+    assertEquals(expected, Operations.formatResult(Operations.subtraction(firstOp, secondOp), false));
+
+  }
+
+  @ParameterizedTest
+  @MethodSource("valueGenerator")
+  void divisionTestComprehensive(double[] permutation)
+  {
+    double i = permutation[0];
+    double j = permutation[1];
+    double k = permutation[2];
+    double l = permutation[3];
+
+    fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+
+    double scale = Math.pow(10, 3);
+    double quotient1;
+    double quotient2;
+    double ac = i * k;
+    double bd = j * l;
+    double ad = i * l;
+    double bc = j * k;
+    double top1 = ac + bd;
+    double top2 = bc - ad;
+    double cSquare = (double) Math.pow(k, 2);
+    double dSquare = (double) Math.pow(l, 2);
+    double denominator = cSquare + dSquare;
+    quotient1 = Math.round((top1 / denominator) * scale) / scale;
+    quotient2 = Math.round((top2 / denominator) * scale) / scale;
+
+    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+    String one = fmat.format(quotient1);
+    String two = fmat.format(quotient2);
+    String expected = String.format("%s+%si", one, two).replace("+-", "-");
+    expected = expected.replace("-1i", "-i");
+    expected = expected.replace("+1i", "+i");
+    assertEquals(expected, Operations.formatResult(Operations.divide(firstOp, secondOp), false));
+  }
+  
+  @ParameterizedTest
+  @MethodSource("valueGenerator")
+  void multiplicationTestComprehensive(double[] permutation)
+  {
+    double i = permutation[0];
+    double j = permutation[1];
+    double k = permutation[2];
+    double l = permutation[3];
+
+    fmat = NumberFormat.getInstance();
+    fmat.setMinimumFractionDigits(0);
+    fmat.setMaximumFractionDigits(3);
+    
+    double ac = i * k;
+    double bd = j * l;
+    double ad = i * l;
+    double bc = j * k;
+
+    double realProduct = ac - bd;
+    double imagProduct = ad + bc;
+    
+    String firstOp = String.format("%.2f+%.2fi", i, j).replace("+-", "-");
+    String secondOp = String.format("%.2f+%.2fi", k, l).replace("+-", "-");
+    String one = fmat.format(realProduct);
+    String two = fmat.format(imagProduct);
+    String expected = String.format("%s+%si", one, two).replace("+-", "-");
+    expected = expected.replace("-1i", "-i");
+    expected = expected.replace("+1i", "+i");
+    assertEquals(expected, Operations.formatResult(Operations.multiply(firstOp, secondOp), false));
+  }
+  
+  private static ArrayList<double[]> valueGenerator()
+  {
+    ArrayList<double[]> values = new ArrayList<double[]>();
+    for (double i = PERM_STR; i <= PERM_END; i += PERM_STP)
+    {
+      for (double j = PERM_STR; j <= PERM_END; j += PERM_STP)
+      {
+        for (double k = PERM_STR; k <= PERM_END; k += PERM_STP)
+        {
+          for (double l = PERM_STR; l <= PERM_END; l += PERM_STP)
+          {
+            double[] gen = {i, j, k, l};
+            values.add(gen);
+          }
+        }
+      }
+    }
+    return values;
+  }
 }
