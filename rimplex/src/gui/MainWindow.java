@@ -41,6 +41,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -135,6 +136,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   // Dialogs and Prompts
   private AboutDialog aboutDialog;
 
+  private  JFrame frame;
+  private JPanel newFramePanel;
   // Values
   private boolean recordingEnabled = false;
   private String resultHistory;
@@ -402,6 +405,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     signButton.setFont(dialogFont2);
 
     // Set backroung/foreground
+    
     resultDisplayArea.setBackground(lightBlue);
     displayPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
@@ -808,11 +812,27 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Expand history
     if (command.equals(">"))
     {
+      Color lightBlue = new Color(210, 237, 255, 255);
+      int x = this.getLocation().x;
+      int y = this.getLocation().y + this.getHeight();
+     frame = new JFrame("JFrame");
+     frame.setAlwaysOnTop (true);
+     
+      newFramePanel = new JPanel();
+      newFramePanel.setBackground(lightBlue);
+      newFramePanel.add(resultPanel);
+      newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
+      frame.add(newFramePanel);
+      frame.setLocation(x+275, y-260);
+      frame.setUndecorated(true);
+      frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+      frame.pack();
+      frame.setVisible(true);
       size = 0;
       resultPanel.setVisible(true);
       resultButton.setVisible(false);
       hideResultButton.setVisible(false);
-      testPanel.add(resultPanel, BorderLayout.EAST);
+      
       timer = new Timer(1, new ActionListener()
       {
         @Override
@@ -822,6 +842,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           size += 2;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
+          newFramePanel.setPreferredSize(new Dimension(size, 240));
+          frame.setSize(new Dimension(size, 240));
           revalidate();
           repaint();
           pack();
@@ -849,6 +871,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           size -= 2;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
+          newFramePanel.setPreferredSize(new Dimension(size, 240));
+          frame.setSize(new Dimension(size, 240));
           revalidate();
           repaint();
           pack();
