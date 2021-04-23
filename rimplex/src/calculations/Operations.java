@@ -131,7 +131,9 @@ public class Operations
    * @return returns the parsed strings as individual doubleegers in a 2D array.
    */
   private static double[][] parseTodouble(final String operandOneIn, final String operandTwoIn)
-  {     
+  { 
+    String operandOne = operandOneIn;
+    String operandTwo = operandTwoIn;
     double negModifier1A = 1;
     double negModifier1B = 1;
     double negModifier2A = 1;
@@ -141,12 +143,8 @@ public class Operations
     String[] op1;
     String[] op2;
     
-    // Formatting for adjacent symbols.
-    String operandOne = operandOneIn.replace("+-", "-");
-    String operandTwo = operandTwoIn.replace("+-", "-");
-    
     // Pattern for matching an operand that is a single imaginary.
-    Pattern oneImagPattern = Pattern.compile("^[0-9]*[i]$");
+    Pattern oneImagPattern = Pattern.compile("^[-]*[0-9]*[i]$");
     Matcher m;
     
     // If this method is passed a single real number without an imaginary
@@ -170,11 +168,15 @@ public class Operations
       operandTwo = "0+" + operandTwo;
     }
     
+    // Formatting for adjacent symbols.
+    operandOne = operandOne.replace("+-", "-");
+    operandTwo = operandTwo.replace("+-", "-");
+    
     // Replace any lone imaginary symbols with 1 so they work with code below.
     operandOne = operandOne.replace("+i", "+1i");
     operandTwo = operandTwo.replace("+i", "+1i");
     operandOne = operandOne.replace("-i", "-1i");
-    operandTwo = operandTwo.replace("-i", "-i1");
+    operandTwo = operandTwo.replace("-i", "-1i");
     
     
     // Split the strings double two doubles, the one before '+'/'-' and one before 'i'
