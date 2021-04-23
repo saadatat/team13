@@ -39,6 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -103,15 +104,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
   // Calculator Display/Input Fields
   private JLabel displayLabel;
   private JTextField inputTextField;
-  private JTextPane resultDisplayArea;
+  private JTextPane resultDisplayArea; //History
 
   // Panels and Panes
   private JButton hideResultButton;
   private JPanel displayPanel;
   private JPanel southPanel;
-  private JPanel resultPanel;
+  private JPanel resultPanel; // History
   private JPanel resultDisplayPanel;
-  private JPanel testPanel;
+  private JPanel testPanel; // 
 
   // Menu Items
   private JMenuBar menuBar;
@@ -486,7 +487,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     test5.setBackground(gray);
     southPanel.add(test5);
 
-    // testing
+    // Main Panel
     JPanel mainPanel = new JPanel(new BorderLayout());
 
     backspace.setPreferredSize(new Dimension(30, 30));
