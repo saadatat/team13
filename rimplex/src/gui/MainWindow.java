@@ -254,9 +254,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     fileSetting = new JMenuItem("Save Recorded Calculations");
     helpPage = new JMenuItem("Instructions");
     recordButton = new JMenuItem("Toggle Record");
-
+    
     // Create menubar
     menuBar = new JMenuBar();
+    
   }
 
   /**
@@ -815,10 +816,10 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       Color lightBlue = new Color(210, 237, 255, 255);
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
-     frame = new JFrame("JFrame");
-     frame.setAlwaysOnTop (true);
-     
       newFramePanel = new JPanel();
+      frame = new JFrame("JFrame");
+     frame.setAlwaysOnTop (true);
+    
       newFramePanel.setBackground(lightBlue);
       newFramePanel.add(resultPanel);
       newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
@@ -830,7 +831,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       frame.setVisible(true);
       size = 0;
       resultPanel.setVisible(true);
-      resultButton.setVisible(false);
+      //resultButton.setVisible(false);
+      resultButton.setText("   ");
       hideResultButton.setVisible(false);
       
       timer = new Timer(1, new ActionListener()
@@ -880,10 +882,11 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           if (size == 0)
           {
             timer.stop();
-            resultButton.setVisible(true);
             resultPanel.setVisible(false);
+            frame.setVisible(false);
+            newFramePanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
-           
+            resultButton.setText(">");
           }
         }
       });
