@@ -136,6 +136,10 @@ class OperationsTest
     actual = Operations.formatResult(Operations.subtraction("-30", "-i"), false);
     expected = "-30+i";
     assertEquals(expected, actual);
+    
+    actual = Operations.formatResult(Operations.divide("6", "9"), true);
+    expected = "2/3+0i";
+    assertEquals(expected, actual);
   }
 
   @ParameterizedTest
