@@ -310,7 +310,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
     resultDisplayPanel.setPreferredSize(new Dimension(1, 1));
 
     resultDisplayPanel.setMaximumSize(new Dimension(250, 250));
-
+hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
     resultDisplayArea.setEditable(false);
 
@@ -504,8 +504,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     // Set borders
     inputTextField.setBorder(null);
-    resultPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-    testPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+    resultPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+    testPanel.setBorder(new EmptyBorder(10, 10, 10, 0));
     southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
     // set image
@@ -532,6 +532,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
 
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(resultButton, BorderLayout.EAST);
+    resultButton.setBorder(new EmptyBorder(50,0,0,5));
     this.add(testPanel, BorderLayout.CENTER);
 
     pack();
@@ -857,7 +858,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener
             resultButton.setVisible(true);
             resultPanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
-            resultButton.setLocation(5,5);
+           
           }
         }
       });
