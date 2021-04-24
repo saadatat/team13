@@ -6,12 +6,9 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.MenuBar;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -21,35 +18,21 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -138,7 +121,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   // Dialogs and Prompts
   private AboutDialog aboutDialog;
 
-  private  JFrame frame;
+  private  Window frame;
   private JPanel newFramePanel;
   // Values
   private boolean recordingEnabled = false;
@@ -826,16 +809,14 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
       newFramePanel = new JPanel(new BorderLayout());
-      frame = new JFrame("JFrame");
-      frame.setAlwaysOnTop (true);
+      frame = new Window(this);
+      frame.setBackground(lightBlue);
       newFramePanel.setBackground(lightBlue);
       newFramePanel.add(resultPanel, BorderLayout.NORTH);
       newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
       resultDisplayArea.setBorder(new EmptyBorder(10,10,10,10));
       frame.add(newFramePanel);
       frame.setLocation(x+275, y-260);
-      frame.setUndecorated(true);
-     
       frame.pack();
       frame.setVisible(true);
       size = 0;
@@ -1471,4 +1452,6 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // TODO Auto-generated method stub
     
   }
+
+
 }
