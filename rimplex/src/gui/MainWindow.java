@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
-
+import static javax.swing.ScrollPaneConstants.*;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,6 +31,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.Timer;
@@ -90,7 +92,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   // Calculator Display/Input Fields
   private JLabel displayLabel;
   private JTextField inputTextField;
-  private JTextPane resultDisplayArea; //History
+  private JTextArea resultDisplayArea; // History
 
   // Panels and Panes
   private JButton hideResultButton;
@@ -98,7 +100,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private JPanel southPanel;
   private JPanel resultPanel; // History
   private JPanel resultDisplayPanel;
-  private JPanel testPanel; // 
+  private JPanel testPanel; //
 
   // Menu Items
   private JMenuBar menuBar;
@@ -121,8 +123,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   // Dialogs and Prompts
   private AboutDialog aboutDialog;
 
-  private  Window frame;
+  private Window frame;
   private JPanel newFramePanel;
+  private JScrollPane scroll;
   // Values
   private boolean recordingEnabled = false;
   private String resultHistory;
@@ -149,7 +152,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
-    
+
   }
 
   /**
@@ -184,11 +187,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     resultPanel = new JPanel(new BorderLayout());
 
     resultPanel.setVisible(false);
-    
+
     displayLabel = new JLabel(" ");
 
-    resultDisplayArea = new JTextPane();
-
+    resultDisplayArea = new JTextArea();
+    scroll = new JScrollPane(resultDisplayArea);
     inputTextField = new JTextField("");
 
     // Configurations
@@ -241,10 +244,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     fileSetting = new JMenuItem("Save Recorded Calculations");
     helpPage = new JMenuItem("Instructions");
     recordButton = new JMenuItem("Toggle Record");
-    
+
     // Create menubar
     menuBar = new JMenuBar();
-    
+
+    scroll.setVisible(false);
+
   }
 
   /**
@@ -252,7 +257,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
    */
   private void setComponents()
   {
-    
+
     // Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204, 204, 204, 255);
@@ -290,7 +295,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     southPanel.add(imaginaryButton);
     southPanel.add(equalsButton);
     southPanel.add(decimal);
-   
 
     resultButton.setBorder(null);
     hideResultButton.setBorderPainted(false);
@@ -299,13 +303,22 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     resultDisplayPanel = new JPanel(new BorderLayout());
     resultDisplayPanel.setBackground(lightBlue);
     resultDisplayPanel.add(hideResultButton, BorderLayout.LINE_END);
-    resultDisplayPanel.add(resultDisplayArea, BorderLayout.CENTER);
+    resultDisplayPanel.add(scroll);
     resultDisplayPanel.setPreferredSize(new Dimension(1, 1));
-
+    scroll.setBorder(null);
+    scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+    scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+    
     resultDisplayPanel.setMaximumSize(new Dimension(250, 250));
-hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
+    hideResultButton.setBorder(new EmptyBorder(0, 0, 40, 5));
     resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
+
+    scroll.getVerticalScrollBar().setVisible(false);
     resultDisplayArea.setEditable(false);
+    resultDisplayArea.setVisible(false);
+    resultDisplayArea.setLineWrap(true);
+    resultDisplayArea.setWrapStyleWord(false);
+    
 
     // Set content area false
     resultButton.setContentAreaFilled(false);
@@ -394,9 +407,10 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     signButton.setFont(dialogFont2);
 
     // Set backroung/foreground
-    
+
     resultDisplayArea.setBackground(lightBlue);
     displayPanel.setBackground(lightBlue);
+    resultDisplayPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
     testPanel.setBackground(gray);
     southPanel.setBackground(gray);
@@ -502,6 +516,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     testPanel.setBorder(new EmptyBorder(10, 10, 10, 0));
     southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
+   
     // set image
     try
     {
@@ -518,7 +533,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         e1.printStackTrace();
       }
     }
-   
+
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
@@ -526,7 +541,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
 
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(resultButton, BorderLayout.EAST);
-    resultButton.setBorder(new EmptyBorder(50,0,0,5));
+    resultButton.setBorder(new EmptyBorder(50, 0, 0, 5));
     this.add(testPanel, BorderLayout.CENTER);
 
     pack();
@@ -628,8 +643,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     about.addActionListener(this);
     fileSetting.addActionListener(this);
     helpPage.addActionListener(this);
-    
-    
+
     this.addComponentListener(this);
   }
 
@@ -804,7 +818,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Expand history
     if (command.equals(">"))
     {
-      
+
       Color lightBlue = new Color(210, 237, 255, 255);
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
@@ -813,19 +827,20 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       frame.setBackground(lightBlue);
       newFramePanel.setBackground(lightBlue);
       newFramePanel.add(resultPanel, BorderLayout.NORTH);
-      newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
-      resultDisplayArea.setBorder(new EmptyBorder(10,10,10,10));
+      newFramePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+      resultDisplayArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+      
       frame.add(newFramePanel);
-      frame.setLocation(x+275, y-260);
+      frame.setLocation(x + 275, y - 260);
       frame.pack();
       frame.setVisible(true);
       size = 0;
       resultPanel.setVisible(true);
-      
+
       resultButton.setEnabled(false);
-      
+
       hideResultButton.setVisible(false);
-      
+
       timer = new Timer(1, new ActionListener()
       {
         @Override
@@ -844,7 +859,10 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           if (size >= 240)
           {
             timer.stop();
+            resultDisplayArea.setVisible(true);
             hideResultButton.setVisible(true);
+            scroll.setVisible(true);
+
           }
         }
       });
@@ -854,6 +872,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Collapse history
     if (command.equals("<"))
     {
+      scroll.setVisible(false);
+      resultDisplayArea.setVisible(false);
       hideResultButton.setVisible(false);
       size = 240;
       timer = new Timer(1, new ActionListener()
@@ -878,7 +898,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
             newFramePanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
             resultButton.setEnabled(true);
-            
+
           }
         }
       });
@@ -1421,37 +1441,38 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       fileTab.setText("Файл");
     }
   }
- 
-  public void componentMoved(ComponentEvent e) {
-    
-    if (frame != null) {
+
+  public void componentMoved(ComponentEvent e)
+  {
+
+    if (frame != null)
+    {
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
       newFramePanel = new JPanel(new BorderLayout());
-      frame.setLocation(x+275, y-260);
+      frame.setLocation(x + 275, y - 260);
     }
-}
+  }
 
   @Override
   public void componentResized(ComponentEvent e)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void componentShown(ComponentEvent e)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void componentHidden(ComponentEvent e)
   {
     // TODO Auto-generated method stub
-    
-  }
 
+  }
 
 }
