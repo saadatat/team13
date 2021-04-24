@@ -375,7 +375,7 @@ public class Operations
     }
 
 
-  return quotient1 + operator + quotient2;
+  return quotient1 + operator + quotient2 + "i";
   }
   
   /**
