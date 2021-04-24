@@ -1053,7 +1053,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         displayLabel
             .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
         inputTextField.setText("");
-        resultHistory += displayLabel.getText() + "\n";
+        resultHistory += displayLabel.getText() + "\n\n";
 
         // If recording is enabled append calculations
         if (recordingEnabled)
@@ -1132,7 +1132,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
           calculator.setOperator(command);
           calculator.setLeftOperand(calculator.getResult());
           displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
-          resultHistory += resultString + "\n";
+          resultHistory += resultString + "\n\n";
           resultDisplayArea.setText(resultHistory);
         }
         else
