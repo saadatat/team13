@@ -153,6 +153,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
+    language = "English";
 
   }
 
