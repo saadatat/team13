@@ -130,6 +130,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private boolean recordingEnabled = false;
   private String resultHistory;
   private String recordHistory;
+  private String language;
 
   /**
    * Default Constructor.
@@ -308,7 +309,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     scroll.setBorder(null);
     scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
     scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-    
+
     resultDisplayPanel.setMaximumSize(new Dimension(250, 250));
     hideResultButton.setBorder(new EmptyBorder(0, 0, 40, 5));
     resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
@@ -318,7 +319,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     resultDisplayArea.setVisible(false);
     resultDisplayArea.setLineWrap(true);
     resultDisplayArea.setWrapStyleWord(false);
-    
 
     // Set content area false
     resultButton.setContentAreaFilled(false);
@@ -516,7 +516,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     testPanel.setBorder(new EmptyBorder(10, 10, 10, 0));
     southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-   
     // set image
     try
     {
@@ -687,12 +686,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     if (e.getSource() == about)
     {
       aboutDialog = AboutDialog.getInstance();
+      aboutDialog.setLanguage(language);
       aboutDialog.display();
     }
 
     // Open save dialog
     if (e.getSource() == fileSetting)
     {
+      FileDialog.setLanguage(language);
       FileDialog.saveCalcs(recordHistory);
     }
 
@@ -829,7 +830,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       newFramePanel.add(resultPanel, BorderLayout.NORTH);
       newFramePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
       resultDisplayArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-      
+
       frame.add(newFramePanel);
       frame.setLocation(x + 275, y - 260);
       frame.pack();
@@ -1343,6 +1344,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("Save Recorded Calculations");
       recordButton.setText("Toggle Recording");
       fileTab.setText("File");
+      language = "English";
 
     }
 
@@ -1364,6 +1366,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("Guardar cálculos registrados");
       recordButton.setText("Alternar grabación");
       fileTab.setText("Archivo");
+      language = "Spanish";
     }
 
     if (e.getSource() == french)
@@ -1384,6 +1387,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("Enregistrer les calculs enregistrés");
       recordButton.setText("Basculer l'enregistrement");
       fileTab.setText("Déposer");
+      language = "French";
     }
 
     if (e.getSource() == portugese)
@@ -1403,6 +1407,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("Salvar cálculos registrados");
       recordButton.setText("Alternar gravação");
       fileTab.setText("Arquivo");
+      language = "Portugese";
     }
     if (e.getSource() == japanese)
     {
@@ -1421,6 +1426,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("記録された計算を保存する");
       recordButton.setText("録音の切り替え");
       fileTab.setText("ファイル");
+      language = "Japanese";
     }
     if (e.getSource() == russian)
     {
@@ -1439,6 +1445,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       fileSetting.setText("Сохранить записанные расчеты");
       recordButton.setText("Переключить запись");
       fileTab.setText("Файл");
+      language = "Russian";
     }
   }
 
