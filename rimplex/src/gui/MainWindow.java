@@ -1313,47 +1313,46 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     if (e.getSource() == english)
     {
       Locale.setDefault(new Locale("en", "US"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
 
     if (e.getSource() == spanish)
     {
       Locale.setDefault(new Locale("es", "ES"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
 
     if (e.getSource() == french)
     {
       Locale.setDefault(new Locale("fr", "FR"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
 
     if (e.getSource() == portugese)
     {
       Locale.setDefault(new Locale("pt", "BR"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
     if (e.getSource() == japanese)
     {
       Locale.setDefault(new Locale("ja", "JP"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
     if (e.getSource() == russian)
     {
       Locale.setDefault(new Locale("ru", "RU"));
-      bundle = ResourceBundle.getBundle("Strings");
+      bundle = ResourceBundle.getBundle("languages/Strings");
       changeButtonLanguage();
     }
   }
 
   public void componentMoved(ComponentEvent e)
   {
-
     if (frame != null)
     {
       int x = this.getLocation().x;
