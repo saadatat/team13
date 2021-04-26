@@ -16,7 +16,7 @@ import javax.swing.JFileChooser;
 public abstract class FileDialog
 {
   
-  private static ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+  
   
   /**
    * Utility method, saves file.
@@ -26,6 +26,7 @@ public abstract class FileDialog
    */
   public static void saveCalcs(String saveText)
   {
+     ResourceBundle bundle = ResourceBundle.getBundle("Strings");
     JFileChooser fileChooser = new JFileChooser();
     
      fileChooser.setDialogTitle(bundle.getString("FileDialog"));

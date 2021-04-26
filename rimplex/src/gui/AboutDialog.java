@@ -13,7 +13,7 @@ public class AboutDialog extends JOptionPane
   private static final long serialVersionUID = 6150280268225452704L;
   
   private static AboutDialog instance = new AboutDialog();
-  private ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+  
   /**
    * Empty Constructor. Necessary for Singleton.
    */
@@ -35,7 +35,7 @@ public class AboutDialog extends JOptionPane
    */
   public void display()
   {
-
+    ResourceBundle bundle = ResourceBundle.getBundle("Strings");
     showMessageDialog(null, bundle.getString("AboutDialog"), bundle.getString("AboutDialogHeader"), JOptionPane.PLAIN_MESSAGE);
     
   }
