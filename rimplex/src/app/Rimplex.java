@@ -1,6 +1,9 @@
 package app;
 
 import gui.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.*;
 import javax.swing.*;
 
@@ -12,6 +15,7 @@ import javax.swing.*;
  */
 public class Rimplex implements Runnable
 {
+  public static final String CURRENT_PATH = System.getProperty("user.dir");
   /**
    * The entry point of the application.
    * 

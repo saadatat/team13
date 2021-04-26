@@ -134,7 +134,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private String resultHistory;
   private String recordHistory;
   private String language;
-  private ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+  private ResourceBundle bundle = ResourceBundle.getBundle("languages/Strings");
   /**
    * Default Constructor.
    */
