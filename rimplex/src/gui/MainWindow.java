@@ -1159,7 +1159,18 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
     inputTextField.setText("");
   }
-
+  
+  /**
+   * Another method for isValidInput, trims parantheses.
+   * @param input
+   * @param inputIsComplete
+   * @return
+   */
+  public boolean isValidInputTrim(String input, boolean inputIsComplete)
+  {
+    return isValidInput(input.replace("(", "").replace(")",""), inputIsComplete);
+  }
+  
   /**
    * Checks valid inputs against regex patterns, does NOT account for parantheses.
    * If you experience bugs please let me know.
