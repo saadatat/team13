@@ -35,7 +35,7 @@ public class AboutDialog extends JOptionPane
    */
   public void display()
   {
-    ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+    ResourceBundle bundle = ResourceBundle.getBundle("languages/Strings");
     showMessageDialog(null, bundle.getString("AboutDialog"), bundle.getString("AboutDialogHeader"), JOptionPane.PLAIN_MESSAGE);
     
   }

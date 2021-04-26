@@ -26,7 +26,7 @@ public abstract class FileDialog
    */
   public static void saveCalcs(String saveText)
   {
-     ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+     ResourceBundle bundle = ResourceBundle.getBundle("languages/Strings");
     JFileChooser fileChooser = new JFileChooser();
     
      fileChooser.setDialogTitle(bundle.getString("FileDialog"));
