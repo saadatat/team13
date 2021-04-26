@@ -19,6 +19,11 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static javax.swing.ScrollPaneConstants.*;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -131,7 +136,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private String resultHistory;
   private String recordHistory;
   private String language;
-
+  private ResourceBundle bundle = ResourceBundle.getBundle("languages/Strings");
   /**
    * Default Constructor.
    */
@@ -154,7 +159,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
     language = "English";
-
+    
   }
 
   /**
@@ -229,23 +234,23 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     rightParenthesisButton = new JButton(")");
 
     // Languages Menu Items
-    languages = new JMenu("Languages");
-    english = new JMenuItem("English");
-    spanish = new JMenuItem("Spanish");
-    french = new JMenuItem("French");
-    portugese = new JMenuItem("Portugese");
-    japanese = new JMenuItem("Japanese");
-    russian = new JMenuItem("Russian");
+    languages = new JMenu(bundle.getString("Languages"));
+    english = new JMenuItem(bundle.getString("English"));
+    spanish = new JMenuItem(bundle.getString("Spanish"));
+    french = new JMenuItem(bundle.getString("French"));
+    portugese = new JMenuItem(bundle.getString("Portuguese"));
+    japanese = new JMenuItem(bundle.getString("Japanese"));
+    russian = new JMenuItem(bundle.getString("Russian"));
 
     // Menu items
-    print = new JMenuItem("Print");
-    settings = new JMenu("Settings");
-    help = new JMenu("Help");
-    fileTab = new JMenu("File");
-    about = new JMenuItem("About");
-    fileSetting = new JMenuItem("Save Recorded Calculations");
-    helpPage = new JMenuItem("Instructions");
-    recordButton = new JMenuItem("Toggle Record");
+    print = new JMenuItem(bundle.getString("Print"));
+    settings = new JMenu(bundle.getString("Settings"));
+    help = new JMenu(bundle.getString("Help"));
+    fileTab = new JMenu(bundle.getString("File"));
+    about = new JMenuItem(bundle.getString("About"));
+    fileSetting = new JMenuItem(bundle.getString("Save"));
+    helpPage = new JMenuItem(bundle.getString("Instructions"));
+    recordButton = new JMenuItem(bundle.getString("Toggle"));
 
     // Create menubar
     menuBar = new JMenuBar();
@@ -687,14 +692,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     if (e.getSource() == about)
     {
       aboutDialog = AboutDialog.getInstance();
-      aboutDialog.setLanguage(language);
       aboutDialog.display();
     }
 
     // Open save dialog
     if (e.getSource() == fileSetting)
     {
-      FileDialog.setLanguage(language);
       FileDialog.saveCalcs(recordHistory);
     }
 
@@ -713,8 +716,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     boolean par = false;
-    String command = e.getActionCommand();
-    String inputField = inputTextField.getText().trim();
+    String command = e.getActionCommand(); // String representation of command
+    String inputField = inputTextField.getText().trim(); // String representation of what is input
+    
+    
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
     {
@@ -729,6 +734,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String operators = "+-÷×";
     String result = calculator.getResult();
 
+    // Display warning if an operator/equals is selected when no valid characters are being used.
     if (!(inputField.matches("^[0-9i+-.]*$")) && inputField.charAt(0) != '(')
     {
       if (!inputField.trim().equals("") && (operators.contains(command) || command.equals("=")))
@@ -736,6 +742,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         warningDialog.displayDialog();
       }
     }
+    // If not above then continue
     else if (operators.contains(command))
     {
       if (par)
@@ -776,22 +783,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       equalsEvent();
     }
 
-    // Clear button
-    if (command.equals("C"))
-    {
-      inputTextField.setText("");
-    }
-
-    // Reset button
-    if (command.equals("R"))
-    {
-      this.clear();
-      calculator.clear();
-    }
-
     // Sign switch button
     if (command.equals("±") && !inputField.equals(""))
-
     {
       if (inputField.contains("("))
       {
@@ -817,6 +810,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
           inputTextField.setText(inputField.substring(1, inputField.length()));
         }
     }
+    
+    
     // Expand history
     if (command.equals(">"))
     {
@@ -907,6 +902,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
       timer.start();
     }
+    
+    // Clear button
+    if (command.equals("C"))
+    {
+      inputTextField.setText("");
+    }
+
+    // Reset button
+    if (command.equals("R"))
+    {
+      this.clear();
+      calculator.clear();
+    }
 
     // When enabling fraction display.
     if (command.equals("D"))
@@ -918,7 +926,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     // When disabling fraction display.
-
     if (command.equals("F"))
     {
       fractionDisplayButton.setText("D");
@@ -929,6 +936,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // If command is a number append it.
     if (command.matches("[0-9]"))
     {
+      // Only appends a number if an imaginary isn't included.
       if (!hasImaginary())
       {
         inputTextField.setText(inputField += command);
@@ -1033,8 +1041,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
+    
+    // Execute as long as there is a valid left operand
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
+      // There isn't a right operand then set the right operand to 0+0i.
       if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
       {
         if (inputField.trim().equals(""))
@@ -1046,6 +1057,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
           calculator.setRightOperand(inputField);
         }
       }
+      
       displayLabel.setText(
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
@@ -1149,28 +1161,33 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   }
 
   /**
-   * When called it reformats all text fields that display i to be italisized.
-   * 
-   * @throws BadLocationException
+   * Checks valid inputs against regex patterns, does NOT account for parantheses.
+   * If you experience bugs please let me know.
+   * @param input The input to check
+   * @param isInputComplete True if the input is being checked right before hitting the equals button
+   *        or any sort of similar action that would require the program parse the value.
+   *        Set this to false if you just want to check if what the user is typing at the moment is valid.
+   * @return Returns True if the input matches the regex pattern.
    */
-  public void formatImaginarySymbol() throws BadLocationException
+  public boolean isValidInput(String input, boolean inputIsComplete)
   {
-    // Set textpane and set up default styles
-    JTextPane textPane = new JTextPane();
-
-    // Create attribute set for imaginary number font
-    SimpleAttributeSet imagNumAttributes = new SimpleAttributeSet();
-    StyleConstants.setItalic(imagNumAttributes, true);
-    StyleConstants.setFontFamily(imagNumAttributes, "Times New Roman");
-    StyleConstants.setFontSize(imagNumAttributes, textPane.getFont().getSize() + 4);
-
-    StyledDocument doc = textPane.getStyledDocument();
-    Style style = textPane.addStyle("", null);
-
-    style.addAttributes(imagNumAttributes);
-    doc.insertString(doc.getLength(), "i", style);
+    Matcher matcher;
+    Pattern patternTyping =
+        Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
+    Pattern patternParsing =
+        Pattern.compile("^(-?([0-9]+(\\.[0-9]+)?))?(i(?![+-]))?([+-]([0-9]+(\\.[0-9]+)?)?i)?$");
+    
+    if (inputIsComplete)
+    {
+      matcher = patternParsing.matcher(input);
+    } else
+    {
+      matcher = patternTyping.matcher(input);
+    }
+    
+    return matcher.matches();
   }
-
+  
   /**
    * keyTyped method inherited from JFrame. This method essentially maps physical keys to the GUI
    * buttons.
@@ -1330,129 +1347,47 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     /// Language Listeners
     if (e.getSource() == english)
     {
-      settings.setText("Settings");
-      print.setText("Print");
-      languages.setText("Languages");
-      english.setText("English");
-      spanish.setText("Spanish");
-      french.setText("French");
-      portugese.setText("Portugese");
-      japanese.setText("Japanese");
-      russian.setText("Russian");
-      help.setText("Help");
-      about.setText("About");
-      helpPage.setText("Instructions");
-      fileSetting.setText("Save Recorded Calculations");
-      recordButton.setText("Toggle Recording");
-      fileTab.setText("File");
-      language = "English";
-
+      Locale.setDefault(new Locale("en", "US"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == spanish)
     {
-      settings.setText("Ajustes");
-      print.setText("Impresión");
-      languages.setText("Idiomas");
-      english.setText("Inglés");
-      spanish.setText("Español");
-
-      french.setText("Francés");
-      portugese.setText("Portugués");
-      japanese.setText("Japonés");
-      russian.setText("Ruso");
-      help.setText("Ayudar");
-      about.setText("Acerca de");
-      helpPage.setText("Instrucciones");
-      fileSetting.setText("Guardar cálculos registrados");
-      recordButton.setText("Alternar grabación");
-      fileTab.setText("Archivo");
-      language = "Spanish";
+      Locale.setDefault(new Locale("es", "ES"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == french)
     {
-      settings.setText("Les paramètres");
-      print.setText("Imprimer");
-      languages.setText("Les langues");
-      english.setText("Anglais");
-      spanish.setText("Espanol");
-
-      french.setText("Français");
-      portugese.setText("Portugais");
-      japanese.setText("Japonais");
-      russian.setText("Russe");
-      help.setText("Aider");
-      about.setText("À propos");
-      helpPage.setText("Instructions");
-      fileSetting.setText("Enregistrer les calculs enregistrés");
-      recordButton.setText("Basculer l'enregistrement");
-      fileTab.setText("Déposer");
-      language = "French";
+      Locale.setDefault(new Locale("fr", "FR"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == portugese)
     {
-      settings.setText("Definições");
-      print.setText("Impressão");
-      languages.setText("Línguas");
-      english.setText("Inglês");
-      spanish.setText("Espanhol");
-      french.setText("Francês");
-      portugese.setText("Português");
-      japanese.setText("Japonês");
-      russian.setText("Russo");
-      help.setText("Ajuda");
-      about.setText("Cerca de");
-      helpPage.setText("Instruções");
-      fileSetting.setText("Salvar cálculos registrados");
-      recordButton.setText("Alternar gravação");
-      fileTab.setText("Arquivo");
-      language = "Portugese";
+      Locale.setDefault(new Locale("pt", "BR"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
     if (e.getSource() == japanese)
     {
-      settings.setText("設定");
-      print.setText("印刷");
-      languages.setText("言語");
-      english.setText("英語");
-      spanish.setText("スペイン語");
-      french.setText("フランス語");
-      portugese.setText("ポルトガル語");
-      japanese.setText("日本語");
-      russian.setText("ロシア");
-      help.setText("助けて");
-      about.setText("約");
-      helpPage.setText("指示");
-      fileSetting.setText("記録された計算を保存する");
-      recordButton.setText("録音の切り替え");
-      fileTab.setText("ファイル");
-      language = "Japanese";
+      Locale.setDefault(new Locale("ja", "JP"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
     if (e.getSource() == russian)
     {
-      settings.setText("Настройки");
-      print.setText("Распечатать");
-      languages.setText("Языки");
-      english.setText("английский");
-      spanish.setText("испанский");
-      french.setText("Французский");
-      portugese.setText("Португальский");
-      japanese.setText("Японский");
-      russian.setText("русский");
-      help.setText("Помощь");
-      about.setText("О");
-      helpPage.setText("инструкции");
-      fileSetting.setText("Сохранить записанные расчеты");
-      recordButton.setText("Переключить запись");
-      fileTab.setText("Файл");
-      language = "Russian";
+      Locale.setDefault(new Locale("ru", "RU"));
+      bundle = ResourceBundle.getBundle("languages/Strings");
+      changeButtonLanguage();
     }
   }
 
   public void componentMoved(ComponentEvent e)
   {
-
     if (frame != null)
     {
       int x = this.getLocation().x;
@@ -1483,4 +1418,24 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
   }
 
+  public void changeButtonLanguage() {
+   
+    languages.setText((bundle.getString("Languages")));
+    english.setText(bundle.getString("English"));
+    spanish.setText(bundle.getString("Spanish"));
+    french.setText(bundle.getString("French"));
+    portugese.setText(bundle.getString("Portuguese"));
+    japanese.setText(bundle.getString("Japanese"));
+    russian.setText(bundle.getString("Russian"));
+
+    
+    print.setText(bundle.getString("Print"));
+    settings.setText(bundle.getString("Settings"));
+    help.setText(bundle.getString("Help"));
+    fileTab.setText(bundle.getString("File"));
+    about.setText(bundle.getString("About"));
+    fileSetting.setText(bundle.getString("Save"));
+    helpPage.setText(bundle.getString("Instructions"));
+    recordButton.setText(bundle.getString("Toggle"));
+  }
 }

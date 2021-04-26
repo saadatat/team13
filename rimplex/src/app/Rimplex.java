@@ -1,6 +1,9 @@
 package app;
 
 import gui.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.*;
 import javax.swing.*;
 
@@ -12,25 +15,22 @@ import javax.swing.*;
  */
 public class Rimplex implements Runnable
 {
+  public static final String CURRENT_PATH = System.getProperty("user.dir");
   /**
    * The entry point of the application.
    * 
    * @param args
    *          The command line arguments (which are ignored)
+   * @throws InterruptedException 
+   * @throws InvocationTargetException 
    */
-  public static void main(final String[] args)
+  public static void main(final String[] args) throws InvocationTargetException, InterruptedException
   {
     System.setProperty("apple.laf.useScreenMenuBar", "true");
     System.setProperty("apple.awt.application.name", "rimpleX");
-    try
-    {
+   
       SwingUtilities.invokeAndWait(new Rimplex());
-    }
-    catch (InterruptedException | InvocationTargetException e)
-    {
-      System.out.println("Unable to start the GUI.");
-      System.out.println(e);
-    }
+    
   }
 
   /**
