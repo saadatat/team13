@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JFileChooser;
 
@@ -61,13 +62,17 @@ public abstract class FileDialog
 
       try
       {
-        PrintWriter outFile = new PrintWriter(fileToSave);
+        PrintWriter outFile = new PrintWriter(fileToSave,"UTF-8");
         outFile.print(saveText);
         outFile.close();
       }
       catch (FileNotFoundException e1)
       {
         e1.printStackTrace();
+      }
+      catch (UnsupportedEncodingException e)
+      {
+        //Hi max
       }
     }
   }
