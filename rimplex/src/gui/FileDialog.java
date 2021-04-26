@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
 
@@ -14,8 +15,9 @@ import javax.swing.JFileChooser;
  */
 public abstract class FileDialog
 {
-  private static String language = "English";
-
+  
+  private static ResourceBundle bundle = ResourceBundle.getBundle("Strings");
+  
   /**
    * Utility method, saves file.
    * 
@@ -25,33 +27,9 @@ public abstract class FileDialog
   public static void saveCalcs(String saveText)
   {
     JFileChooser fileChooser = new JFileChooser();
-    if (language.equals("English"))
-    {
-      fileChooser.setDialogTitle("Specify a location to save calculations");
-    }
-
-    if (language.equals("Spanish"))
-    {
-      fileChooser.setDialogTitle("Especifique una ubicación para guardar los cálculos");
-    }
-
-    if (language.equals("French"))
-    {
-      fileChooser.setDialogTitle("Spécifiez un emplacement pour enregistrer les calculs");
-    }
-    if (language.equals("Portugese"))
-    {
-      fileChooser.setDialogTitle("Especifique um local para salvar os cálculos");
-    }
-    if (language.equals("Japanese"))
-    {
-      fileChooser.setDialogTitle("計算を保存する場所を指定します");
-    }
-    if (language.equals("Russian"))
-    {
-      fileChooser.setDialogTitle("Укажите место для сохранения расчетов");
-    }
-
+    
+     fileChooser.setDialogTitle(bundle.getString("FileDialog"));
+    
     int userSelection = fileChooser.showSaveDialog(null);
 
     if (userSelection == JFileChooser.APPROVE_OPTION)
@@ -72,9 +50,5 @@ public abstract class FileDialog
     }
   }
 
-  public static void setLanguage(String incoming)
-  {
-    language = incoming;
-  }
 
 }
