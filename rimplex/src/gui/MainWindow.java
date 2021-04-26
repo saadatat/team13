@@ -1027,8 +1027,11 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
+    
+    // Execute as long as there is a valid left operand
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
+      // There isn't a right operand then set the right operand to 0+0i.
       if (calculator.getRightOperand() == null || calculator.getRightOperand().trim().equals(""))
       {
         if (inputField.trim().equals(""))
@@ -1040,6 +1043,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           calculator.setRightOperand(inputField);
         }
       }
+      
       displayLabel.setText(
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
@@ -1140,29 +1144,6 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
       }
     }
     inputTextField.setText("");
-  }
-
-  /**
-   * When called it reformats all text fields that display i to be italisized.
-   * 
-   * @throws BadLocationException
-   */
-  public void formatImaginarySymbol() throws BadLocationException
-  {
-    // Set textpane and set up default styles
-    JTextPane textPane = new JTextPane();
-
-    // Create attribute set for imaginary number font
-    SimpleAttributeSet imagNumAttributes = new SimpleAttributeSet();
-    StyleConstants.setItalic(imagNumAttributes, true);
-    StyleConstants.setFontFamily(imagNumAttributes, "Times New Roman");
-    StyleConstants.setFontSize(imagNumAttributes, textPane.getFont().getSize() + 4);
-
-    StyledDocument doc = textPane.getStyledDocument();
-    Style style = textPane.addStyle("", null);
-
-    style.addAttributes(imagNumAttributes);
-    doc.insertString(doc.getLength(), "i", style);
   }
 
   /**
