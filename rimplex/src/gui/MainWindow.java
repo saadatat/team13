@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static javax.swing.ScrollPaneConstants.*;
 import javax.imageio.ImageIO;
@@ -714,8 +716,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     boolean par = false;
-    String command = e.getActionCommand();
-    String inputField = inputTextField.getText().trim();
+    String command = e.getActionCommand(); // String representation of command
+    String inputField = inputTextField.getText().trim(); // String representation of what is input
+    
+    
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
     {
@@ -730,6 +734,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String operators = "+-÷×";
     String result = calculator.getResult();
 
+    // Display warning if an operator/equals is selected when no valid characters are being used.
     if (!(inputField.matches("^[0-9i+-.]*$")) && inputField.charAt(0) != '(')
     {
       if (!inputField.trim().equals("") && (operators.contains(command) || command.equals("=")))
@@ -737,6 +742,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         warningDialog.displayDialog();
       }
     }
+    // If not above then continue
     else if (operators.contains(command))
     {
       if (par)
@@ -777,22 +783,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       equalsEvent();
     }
 
-    // Clear button
-    if (command.equals("C"))
-    {
-      inputTextField.setText("");
-    }
-
-    // Reset button
-    if (command.equals("R"))
-    {
-      this.clear();
-      calculator.clear();
-    }
-
     // Sign switch button
     if (command.equals("±") && !inputField.equals(""))
-
     {
       if (inputField.contains("("))
       {
@@ -818,6 +810,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
           inputTextField.setText(inputField.substring(1, inputField.length()));
         }
     }
+    
+    
     // Expand history
     if (command.equals(">"))
     {
@@ -908,6 +902,19 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
       timer.start();
     }
+    
+    // Clear button
+    if (command.equals("C"))
+    {
+      inputTextField.setText("");
+    }
+
+    // Reset button
+    if (command.equals("R"))
+    {
+      this.clear();
+      calculator.clear();
+    }
 
     // When enabling fraction display.
     if (command.equals("D"))
@@ -919,7 +926,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     // When disabling fraction display.
-
     if (command.equals("F"))
     {
       fractionDisplayButton.setText("D");
@@ -930,6 +936,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // If command is a number append it.
     if (command.matches("[0-9]"))
     {
+      // Only appends a number if an imaginary isn't included.
       if (!hasImaginary())
       {
         inputTextField.setText(inputField += command);
@@ -1153,6 +1160,34 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputTextField.setText("");
   }
 
+  /**
+   * Checks valid inputs against regex patterns, does NOT account for parantheses.
+   * If you experience bugs please let me know.
+   * @param input The input to check
+   * @param isInputComplete True if the input is being checked right before hitting the equals button
+   *        or any sort of similar action that would require the program parse the value.
+   *        Set this to false if you just want to check if what the user is typing at the moment is valid.
+   * @return Returns True if the input matches the regex pattern.
+   */
+  public boolean isValidInput(String input, boolean inputIsComplete)
+  {
+    Matcher matcher;
+    Pattern patternTyping =
+        Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
+    Pattern patternParsing =
+        Pattern.compile("^(-?([0-9]+(\\.[0-9]+)?))?(i(?![+-]))?([+-]([0-9]+(\\.[0-9]+)?)?i)?$");
+    
+    if (inputIsComplete)
+    {
+      matcher = patternParsing.matcher(input);
+    } else
+    {
+      matcher = patternTyping.matcher(input);
+    }
+    
+    return matcher.matches();
+  }
+  
   /**
    * keyTyped method inherited from JFrame. This method essentially maps physical keys to the GUI
    * buttons.
