@@ -1044,6 +1044,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
     
+    // regex checking
+    isValidInput(inputField, true);
+    
     // Execute as long as there is a valid left operand
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
