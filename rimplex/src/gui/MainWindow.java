@@ -1044,9 +1044,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
     
-    // regex checking
-    isValidInput(inputField, true);
-    
     // Execute as long as there is a valid left operand
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
@@ -1101,6 +1098,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
     inputField = inputField.replace("𝑖", "i");
 
+    // regex checking
+    isValidInput(inputField, true);
+    
     if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
     {
       if (!inputField.equals(""))
