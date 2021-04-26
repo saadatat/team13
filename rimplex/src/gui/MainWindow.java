@@ -6,12 +6,9 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.MenuBar;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -21,35 +18,26 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
-import java.util.concurrent.TimeUnit;
-
+import static javax.swing.ScrollPaneConstants.*;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -107,7 +95,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   // Calculator Display/Input Fields
   private JLabel displayLabel;
   private JTextField inputTextField;
-  private JTextPane resultDisplayArea; //History
+  private JTextArea resultDisplayArea; // History
 
   // Panels and Panes
   private JButton hideResultButton;
@@ -115,7 +103,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private JPanel southPanel;
   private JPanel resultPanel; // History
   private JPanel resultDisplayPanel;
-  private JPanel testPanel; // 
+  private JPanel testPanel; //
 
   // Menu Items
   private JMenuBar menuBar;
@@ -138,13 +126,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   // Dialogs and Prompts
   private AboutDialog aboutDialog;
 
-  private  JFrame frame;
+  private Window frame;
   private JPanel newFramePanel;
+  private JScrollPane scroll;
   // Values
   private boolean recordingEnabled = false;
   private String resultHistory;
   private String recordHistory;
-
+  private String language;
+  private ResourceBundle bundle = ResourceBundle.getBundle("Strings");
   /**
    * Default Constructor.
    */
@@ -157,6 +147,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     setListeners(); // set listeners for components
     setResizable(false);
     this.setSize(320, 440);
+    this.setMinimumSize(new Dimension(320, 440));
+    this.setMaximumSize(new Dimension(320, 440));
     this.setTitle("rimpleX");
     this.setVisible(true);
     resultHistory = "";
@@ -164,6 +156,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     centerForm(); // center the window on the screen
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
+    language = "English";
     
   }
 
@@ -199,11 +192,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     resultPanel = new JPanel(new BorderLayout());
 
     resultPanel.setVisible(false);
-    
+
     displayLabel = new JLabel(" ");
 
-    resultDisplayArea = new JTextPane();
-
+    resultDisplayArea = new JTextArea();
+    scroll = new JScrollPane(resultDisplayArea);
     inputTextField = new JTextField("");
 
     // Configurations
@@ -239,27 +232,29 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     rightParenthesisButton = new JButton(")");
 
     // Languages Menu Items
-    languages = new JMenu("Languages");
-    english = new JMenuItem("English");
-    spanish = new JMenuItem("Spanish");
-    french = new JMenuItem("French");
-    portugese = new JMenuItem("Portugese");
-    japanese = new JMenuItem("Japanese");
-    russian = new JMenuItem("Russian");
+    languages = new JMenu(bundle.getString("Languages"));
+    english = new JMenuItem(bundle.getString("English"));
+    spanish = new JMenuItem(bundle.getString("Spanish"));
+    french = new JMenuItem(bundle.getString("French"));
+    portugese = new JMenuItem(bundle.getString("Portuguese"));
+    japanese = new JMenuItem(bundle.getString("Japanese"));
+    russian = new JMenuItem(bundle.getString("Russian"));
 
     // Menu items
-    print = new JMenuItem("Print");
-    settings = new JMenu("Settings");
-    help = new JMenu("Help");
-    fileTab = new JMenu("File");
-    about = new JMenuItem("About");
-    fileSetting = new JMenuItem("Save Recorded Calculations");
-    helpPage = new JMenuItem("Instructions");
-    recordButton = new JMenuItem("Toggle Record");
-    
+    print = new JMenuItem(bundle.getString("Print"));
+    settings = new JMenu(bundle.getString("Settings"));
+    help = new JMenu(bundle.getString("Help"));
+    fileTab = new JMenu(bundle.getString("File"));
+    about = new JMenuItem(bundle.getString("About"));
+    fileSetting = new JMenuItem(bundle.getString("Save"));
+    helpPage = new JMenuItem(bundle.getString("Instructions"));
+    recordButton = new JMenuItem(bundle.getString("Toggle"));
+
     // Create menubar
     menuBar = new JMenuBar();
-    
+
+    scroll.setVisible(false);
+
   }
 
   /**
@@ -267,7 +262,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
    */
   private void setComponents()
   {
-    
+
     // Configure colors
     Color lightBlue = new Color(210, 237, 255, 255);
     Color gray = new Color(204, 204, 204, 255);
@@ -305,7 +300,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     southPanel.add(imaginaryButton);
     southPanel.add(equalsButton);
     southPanel.add(decimal);
-   
 
     resultButton.setBorder(null);
     hideResultButton.setBorderPainted(false);
@@ -314,13 +308,21 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     resultDisplayPanel = new JPanel(new BorderLayout());
     resultDisplayPanel.setBackground(lightBlue);
     resultDisplayPanel.add(hideResultButton, BorderLayout.LINE_END);
-    resultDisplayPanel.add(resultDisplayArea, BorderLayout.CENTER);
+    resultDisplayPanel.add(scroll);
     resultDisplayPanel.setPreferredSize(new Dimension(1, 1));
+    scroll.setBorder(null);
+    scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+    scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
 
     resultDisplayPanel.setMaximumSize(new Dimension(250, 250));
-hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
+    hideResultButton.setBorder(new EmptyBorder(0, 0, 40, 5));
     resultPanel.add(resultDisplayPanel, BorderLayout.SOUTH);
+
+    scroll.getVerticalScrollBar().setVisible(false);
     resultDisplayArea.setEditable(false);
+    resultDisplayArea.setVisible(false);
+    resultDisplayArea.setLineWrap(true);
+    resultDisplayArea.setWrapStyleWord(false);
 
     // Set content area false
     resultButton.setContentAreaFilled(false);
@@ -409,9 +411,10 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     signButton.setFont(dialogFont2);
 
     // Set backroung/foreground
-    
+
     resultDisplayArea.setBackground(lightBlue);
     displayPanel.setBackground(lightBlue);
+    resultDisplayPanel.setBackground(lightBlue);
     inputTextField.setBackground(lightBlue);
     testPanel.setBackground(gray);
     southPanel.setBackground(gray);
@@ -533,7 +536,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         e1.printStackTrace();
       }
     }
-   
+
     JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
@@ -541,7 +544,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
 
     testPanel.add(mainPanel, BorderLayout.CENTER);
     testPanel.add(resultButton, BorderLayout.EAST);
-    resultButton.setBorder(new EmptyBorder(50,0,0,5));
+    resultButton.setBorder(new EmptyBorder(50, 0, 0, 5));
     this.add(testPanel, BorderLayout.CENTER);
 
     pack();
@@ -643,8 +646,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     about.addActionListener(this);
     fileSetting.addActionListener(this);
     helpPage.addActionListener(this);
-    
-    
+
     this.addComponentListener(this);
   }
 
@@ -819,37 +821,36 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Expand history
     if (command.equals(">"))
     {
-      
+
       Color lightBlue = new Color(210, 237, 255, 255);
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
       newFramePanel = new JPanel(new BorderLayout());
-      frame = new JFrame("JFrame");
-      frame.setAlwaysOnTop (true);
+      frame = new Window(this);
+      frame.setBackground(lightBlue);
       newFramePanel.setBackground(lightBlue);
       newFramePanel.add(resultPanel, BorderLayout.NORTH);
-      newFramePanel.setBorder(new EmptyBorder(10,10,10,10));
-      resultDisplayArea.setBorder(new EmptyBorder(10,10,10,10));
+      newFramePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+      resultDisplayArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+
       frame.add(newFramePanel);
-      frame.setLocation(x+275, y-260);
-      frame.setUndecorated(true);
-     
+      frame.setLocation(x + 275, y - 260);
       frame.pack();
       frame.setVisible(true);
       size = 0;
       resultPanel.setVisible(true);
-      
-      //resultButton.setVisible(false);
-      resultButton.setText("   ");
+
+      resultButton.setEnabled(false);
+
       hideResultButton.setVisible(false);
-      
+
       timer = new Timer(1, new ActionListener()
       {
         @Override
         public void actionPerformed(ActionEvent e)
         {
 
-          size += 2;
+          size += 16;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
           newFramePanel.setPreferredSize(new Dimension(size, 240));
@@ -861,7 +862,10 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           if (size >= 240)
           {
             timer.stop();
+            resultDisplayArea.setVisible(true);
             hideResultButton.setVisible(true);
+            scroll.setVisible(true);
+
           }
         }
       });
@@ -871,6 +875,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     // Collapse history
     if (command.equals("<"))
     {
+      scroll.setVisible(false);
+      resultDisplayArea.setVisible(false);
       hideResultButton.setVisible(false);
       size = 240;
       timer = new Timer(1, new ActionListener()
@@ -878,7 +884,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         @Override
         public void actionPerformed(ActionEvent e)
         {
-          size -= 2;
+          size -= 16;
           resultDisplayPanel.setPreferredSize(new Dimension(size, 240));
           resultPanel.setPreferredSize(new Dimension(size, 240));
           newFramePanel.setPreferredSize(new Dimension(size, 240));
@@ -894,7 +900,8 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
             frame.setVisible(false);
             newFramePanel.setVisible(false);
             testPanel.add(resultButton, BorderLayout.EAST);
-            resultButton.setText(">");
+            resultButton.setEnabled(true);
+
           }
         }
       });
@@ -1053,7 +1060,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
         displayLabel
             .setText(displayLabel.getText() + Calculator.formatItalic(calculator.getResult()));
         inputTextField.setText("");
-        resultHistory += displayLabel.getText() + "\n";
+        resultHistory += displayLabel.getText() + "\n\n";
 
         // If recording is enabled append calculations
         if (recordingEnabled)
@@ -1132,7 +1139,7 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
           calculator.setOperator(command);
           calculator.setLeftOperand(calculator.getResult());
           displayLabel.setText(calculator.formatDisplayOperand(calculator.getResult()) + command);
-          resultHistory += resultString + "\n";
+          resultHistory += resultString + "\n\n";
           resultDisplayArea.setText(resultHistory);
         }
         else
@@ -1305,148 +1312,96 @@ hideResultButton.setBorder(new EmptyBorder(0,0,40,5));
     /// Language Listeners
     if (e.getSource() == english)
     {
-      settings.setText("Settings");
-      print.setText("Print");
-      languages.setText("Languages");
-      english.setText("English");
-      spanish.setText("Spanish");
-      french.setText("French");
-      portugese.setText("Portugese");
-      japanese.setText("Japanese");
-      russian.setText("Russian");
-      help.setText("Help");
-      about.setText("About");
-      helpPage.setText("Instructions");
-      fileSetting.setText("Save Recorded Calculations");
-      recordButton.setText("Toggle Recording");
-      fileTab.setText("File");
-
+      Locale.setDefault(new Locale("en", "US"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == spanish)
     {
-      settings.setText("Ajustes");
-      print.setText("Impresión");
-      languages.setText("Idiomas");
-      english.setText("Inglés");
-      spanish.setText("Español");
-
-      french.setText("Francés");
-      portugese.setText("Portugués");
-      japanese.setText("Japonés");
-      russian.setText("Ruso");
-      help.setText("Ayudar");
-      about.setText("Acerca de");
-      helpPage.setText("Instrucciones");
-      fileSetting.setText("Guardar cálculos registrados");
-      recordButton.setText("Alternar grabación");
-      fileTab.setText("Archivo");
+      Locale.setDefault(new Locale("es", "ES"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == french)
     {
-      settings.setText("Les paramètres");
-      print.setText("Imprimer");
-      languages.setText("Les langues");
-      english.setText("Anglais");
-      spanish.setText("Espanol");
-
-      french.setText("Français");
-      portugese.setText("Portugais");
-      japanese.setText("Japonais");
-      russian.setText("Russe");
-      help.setText("Aider");
-      about.setText("À propos");
-      helpPage.setText("Instructions");
-      fileSetting.setText("Enregistrer les calculs enregistrés");
-      recordButton.setText("Basculer l'enregistrement");
-      fileTab.setText("Déposer");
+      Locale.setDefault(new Locale("fr", "FR"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
 
     if (e.getSource() == portugese)
     {
-      settings.setText("Definições");
-      print.setText("Impressão");
-      languages.setText("Línguas");
-      english.setText("Inglês");
-      spanish.setText("Espanhol");
-      french.setText("Francês");
-      portugese.setText("Português");
-      japanese.setText("Japonês");
-      russian.setText("Russo");
-      help.setText("Ajuda");
-      about.setText("Cerca de");
-      helpPage.setText("Instruções");
-      fileSetting.setText("Salvar cálculos registrados");
-      recordButton.setText("Alternar gravação");
-      fileTab.setText("Arquivo");
+      Locale.setDefault(new Locale("pt", "BR"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
     if (e.getSource() == japanese)
     {
-      settings.setText("設定");
-      print.setText("印刷");
-      languages.setText("言語");
-      english.setText("英語");
-      spanish.setText("スペイン語");
-      french.setText("フランス語");
-      portugese.setText("ポルトガル語");
-      japanese.setText("日本語");
-      russian.setText("ロシア");
-      help.setText("助けて");
-      about.setText("約");
-      helpPage.setText("指示");
-      fileSetting.setText("記録された計算を保存する");
-      recordButton.setText("録音の切り替え");
-      fileTab.setText("ファイル");
+      Locale.setDefault(new Locale("ja", "JP"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
     if (e.getSource() == russian)
     {
-      settings.setText("Настройки");
-      print.setText("Распечатать");
-      languages.setText("Языки");
-      english.setText("английский");
-      spanish.setText("испанский");
-      french.setText("Французский");
-      portugese.setText("Португальский");
-      japanese.setText("Японский");
-      russian.setText("русский");
-      help.setText("Помощь");
-      about.setText("О");
-      helpPage.setText("инструкции");
-      fileSetting.setText("Сохранить записанные расчеты");
-      recordButton.setText("Переключить запись");
-      fileTab.setText("Файл");
+      Locale.setDefault(new Locale("ru", "RU"));
+      bundle = ResourceBundle.getBundle("Strings");
+      changeButtonLanguage();
     }
   }
- 
-  public void componentMoved(ComponentEvent e) {
-    
-    if (frame != null) {
+
+  public void componentMoved(ComponentEvent e)
+  {
+
+    if (frame != null)
+    {
       int x = this.getLocation().x;
       int y = this.getLocation().y + this.getHeight();
       newFramePanel = new JPanel(new BorderLayout());
-      frame.setLocation(x+275, y-260);
+      frame.setLocation(x + 275, y - 260);
     }
-}
+  }
 
   @Override
   public void componentResized(ComponentEvent e)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void componentShown(ComponentEvent e)
   {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void componentHidden(ComponentEvent e)
   {
     // TODO Auto-generated method stub
+
+  }
+
+  public void changeButtonLanguage() {
+   
+    languages.setText((bundle.getString("Languages")));
+    english.setText(bundle.getString("English"));
+    spanish.setText(bundle.getString("Spanish"));
+    french.setText(bundle.getString("French"));
+    portugese.setText(bundle.getString("Portuguese"));
+    japanese.setText(bundle.getString("Japanese"));
+    russian.setText(bundle.getString("Russian"));
+
     
+    print.setText(bundle.getString("Print"));
+    settings.setText(bundle.getString("Settings"));
+    help.setText(bundle.getString("Help"));
+    fileTab.setText(bundle.getString("File"));
+    about.setText(bundle.getString("About"));
+    fileSetting.setText(bundle.getString("Save"));
+    helpPage.setText(bundle.getString("Instructions"));
+    recordButton.setText(bundle.getString("Toggle"));
   }
 }

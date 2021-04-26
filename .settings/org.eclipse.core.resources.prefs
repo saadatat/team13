@@ -1,4 +1,11 @@
 eclipse.preferences.version=1
+encoding//Strings/Strings_es_ES.properties=UTF-8
+encoding//Strings/Strings_fr_FR.properties=UTF-8
+encoding//Strings/Strings_ja_JP.properties=UTF-8
+encoding//Strings/Strings_ru_RU.properties=UTF-8
 encoding//rimplex/src/app/Rimplex.java=UTF-8
 encoding//rimplex/src/calculations/Calculator.java=UTF-8
+encoding//rimplex/src/gui/AboutDialog.java=UTF-8
+encoding//rimplex/src/gui/FileDialog.java=UTF-8
 encoding//rimplex/src/gui/MainWindow.java=UTF-8
+encoding/Strings=UTF-8

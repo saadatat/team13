@@ -17,20 +17,16 @@ public class Rimplex implements Runnable
    * 
    * @param args
    *          The command line arguments (which are ignored)
+   * @throws InterruptedException 
+   * @throws InvocationTargetException 
    */
-  public static void main(final String[] args)
+  public static void main(final String[] args) throws InvocationTargetException, InterruptedException
   {
     System.setProperty("apple.laf.useScreenMenuBar", "true");
     System.setProperty("apple.awt.application.name", "rimpleX");
-    try
-    {
+   
       SwingUtilities.invokeAndWait(new Rimplex());
-    }
-    catch (InterruptedException | InvocationTargetException e)
-    {
-      System.out.println("Unable to start the GUI.");
-      System.out.println(e);
-    }
+    
   }
 
   /**
