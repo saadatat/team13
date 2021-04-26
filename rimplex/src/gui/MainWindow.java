@@ -719,6 +719,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String command = e.getActionCommand(); // String representation of command
     String inputField = inputTextField.getText().trim(); // String representation of what is input
     
+    //Check against regex as user is typing in.
+    System.out.println(isValidInput(inputField, false));
     
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
@@ -1182,6 +1184,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
    */
   public boolean isValidInput(String input, boolean inputIsComplete)
   {
+    input = input.replace("𝑖", "i");
     Matcher matcher;
     Pattern patternTyping =
         Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
