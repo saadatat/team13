@@ -1196,10 +1196,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     
     if (inputIsComplete)
     {
-      matcher = patternParsing.matcher(input);
+      matcher = patternTyping.matcher(input);
     } else
     {
-      matcher = patternTyping.matcher(input);
+      matcher = patternParsing.matcher(input);
     }
     
     return matcher.matches();
