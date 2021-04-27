@@ -306,22 +306,14 @@ public class Operations
    */
   private static String toFraction (double numberToConvert)
   {
-    // Decimal number formatting so fractions are based on decimals that are rounded.
-    NumberFormat fmat = NumberFormat.getInstance();
-    fmat.setMinimumFractionDigits(0);
-    fmat.setMaximumFractionDigits(3);
-    
-    // Get the number of decimal places.
-    String numberAsText = fmat.format(Math.abs(numberToConvert));
-    int decimalPlaces = numberAsText.length() - numberAsText.indexOf('.') - 1;
-    int decimalPlaceFactor = (int) Math.pow(10, decimalPlaces);
+ 
     
     // Rounds whole number, extracts decimal, and then multiplies decimal based on number of
     // decimal places there are. Then it can be converted into a fraction.
-    int wholeNumber = (int) numberToConvert ;
+    int wholeNumber = (int) numberToConvert;
     double onlyDecimal = numberToConvert - wholeNumber;
-    int numerator = (int) (onlyDecimal * decimalPlaceFactor);
-    int denominator = decimalPlaceFactor;
+    int numerator = (int) (onlyDecimal * 100);
+    int denominator = 100;
     
     // Simplify the fraction part
     int gcd = Operations.getGCD(numerator, denominator);
