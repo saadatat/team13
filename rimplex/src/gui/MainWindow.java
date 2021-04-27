@@ -1453,31 +1453,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       // Get the location of the helpPage within the program
       URL url = MainWindow.class.getResource("/webpages/helpPage.html");
       Path path = Paths.get(url.toURI());
-      URL img1 = MainWindow.class.getResource("/images/logoRimplex.png");
-      Path imgPath1 = Paths.get(url.toURI());
-      URL img2 = MainWindow.class.getResource("/images/logoSagaciousMedia.gif");
-      Path imgPath2 = Paths.get(url.toURI());
-      
-      // Create new temporary directory for webpage and images
-      Path tempDir = Files.createTempDirectory("rimplextemp");
       
       // Create temporary file in the above directory
-      File temp = File.createTempFile("rimplex", ".html", tempDir.toFile());
+      File temp = File.createTempFile("rimplex", ".html");
       temp.deleteOnExit();
-      
-      // Add temporary images to directory
-      File tempImage1 = File.createTempFile("rimplex", ".html");
-      tempImage1.deleteOnExit();
-      File tempImage2 = File.createTempFile("rimplex", ".html");
-      tempImage2.deleteOnExit();
       
       // Copy local file to temp file
       OutputStream os = new FileOutputStream(temp);
       Files.copy(path, os);
-      os = new FileOutputStream(tempImage1);
-      Files.copy(imgPath1, os);
-      os = new FileOutputStream(tempImage2);
-      Files.copy(imgPath2, os);
       
       // Opens in default application
       Desktop.getDesktop().open(temp);
