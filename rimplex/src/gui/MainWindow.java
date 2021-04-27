@@ -1405,8 +1405,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   {
     try
     {
+      // Get language specific instructions.
+      String helpFile = bundle.getString("helpWebPage");
       // Get the location of the helpPage within the program
-      InputStream helpPageStream = MainWindow.class.getResourceAsStream("/webpages/helpPage.html");
+      InputStream helpPageStream = MainWindow.class.getResourceAsStream("/webpages/" + helpFile);
       
       // Create temporary file in the above directory
       File temp = File.createTempFile("rimplex", ".html");
