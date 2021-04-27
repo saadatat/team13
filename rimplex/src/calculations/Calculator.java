@@ -133,15 +133,17 @@ public class Calculator
    */
   public String getResult()
   {
+    
+    if (result == null)
+    {
+      return null;
+    }
+    
     if (divisionFormatResult == false) {
       double real = resultDoubles[0];
       double imag = resultDoubles[1];
       result = Operations.formatResult(real, imag, false);
       
-      if (result == null)
-      {
-        return null;
-      }
       
       if (fractionDisplay) {
         return Operations.formatResult(real, imag, true);
@@ -220,6 +222,7 @@ public class Calculator
    */
   public void setResult(String incomingResult)
   {
+  
     result = incomingResult;
   }
 
@@ -339,5 +342,18 @@ public class Calculator
   
   public boolean getFractionDisplay() {
     return fractionDisplay;
+  }
+  
+//**Methods to help increase coverage for testing**//
+  public void setDivisionFormatResult(boolean incoming) {
+    divisionFormatResult = incoming;
+  }
+  
+  public String setLeftOperandString() {
+    return leftOperand;
+  }
+  
+  public String setRightOperandString() {
+    return rightOperand;
   }
 }
