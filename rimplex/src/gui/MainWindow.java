@@ -775,29 +775,33 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Sign switch button
     if (command.equals("±") && !inputField.equals(""))
     {
-      if (inputField.contains("("))
+      String inputField2 = inputTextField.getText().trim();
+      if (inputField2.contains("("))
       {
-        if (inputField.charAt(1) != '-')
+        if (inputField2.contains(")")) {
+          warningDialog.displayDialog();
+        }
+        else if (inputField2.charAt(1) != '-')
         {
-          inputTextField.setText("(-" + inputField.substring(1, inputField.length()));
+          inputTextField.setText("(-" + inputField2.substring(1, inputField2.length()));
         }
         else
         {
-          StringBuffer newString = new StringBuffer(inputField);
+          StringBuffer newString = new StringBuffer(inputField2);
           newString.deleteCharAt(1);
           inputTextField.setText(newString.toString());
         }
 
-      }
-      if (!inputField.contains("("))
-        if (inputField.charAt(0) != '-')
+      }else if (!inputField2.contains("(")) {
+        if (inputField2.charAt(0) != '-')
         {
-          inputTextField.setText("-" + inputField);
+          inputTextField.setText("-" + inputField2);
         }
         else
         {
-          inputTextField.setText(inputField.substring(1, inputField.length()));
+          inputTextField.setText(inputField2.substring(1, inputField2.length()));
         }
+      }
     }
     
     
