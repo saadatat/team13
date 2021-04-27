@@ -134,16 +134,16 @@ public class Calculator
   public String getResult()
   {
     
-    if (result == null)
-    {
-      return null;
-    }
+   
     
     if (divisionFormatResult == false) {
       double real = resultDoubles[0];
       double imag = resultDoubles[1];
       result = Operations.formatResult(real, imag, false);
-      
+      if (result == null)
+      {
+        return null;
+      }
       
       if (fractionDisplay) {
         return Operations.formatResult(real, imag, true);
@@ -349,11 +349,11 @@ public class Calculator
     divisionFormatResult = incoming;
   }
   
-  public String setLeftOperandString() {
+  public String getLeftOperandString() {
     return leftOperand;
   }
   
-  public String setRightOperandString() {
+  public String getRightOperandString() {
     return rightOperand;
   }
 }
