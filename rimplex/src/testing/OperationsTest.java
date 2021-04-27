@@ -137,14 +137,10 @@ class OperationsTest
     expected = "-30+i";
     assertEquals(expected, actual);
     
-    // These two below use the toFraction method to format decimals to fractions.
-    actual = Operations.formatResult(Operations.divide("10", "24"), true);
-    expected = "5/12+0i";
+    actual = Operations.formatResult(Operations.subtraction("-i", "30"), false);
+    expected = "-30-i";
     assertEquals(expected, actual);
     
-    actual = Operations.formatResult(Operations.divide("6", "9"), true);
-    expected = "2/3+0i";
-    assertEquals(expected, actual);
   }
   
   @Test
@@ -159,6 +155,14 @@ class OperationsTest
     
     actual = Operations.fractionFormat("6", "9");
     expected = "2/3+0i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.fractionFormat("0", "0");
+    expected = "0+0i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.fractionFormat("0", "1i");
+    expected = "0+0i";
     assertEquals(expected, actual);
   }
 

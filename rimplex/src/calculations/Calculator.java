@@ -16,6 +16,7 @@ public class Calculator
   private String operator;
   private boolean fractionDisplay;
   private boolean divisionFormatResult;
+  private String fractionResult;
 
   /**
    * Default constructor.
@@ -26,9 +27,11 @@ public class Calculator
     operator = null;
     rightOperand = null;
     result = null;
+    fractionResult = null;
     fractionDisplay = false;
     resultDoubles = new double[2];
     divisionFormatResult = false;
+    
   }
 
   /**
@@ -133,11 +136,16 @@ public class Calculator
    */
   public String getResult()
   {
+
     if (divisionFormatResult == false) {
+      
+      if (resultDoubles == null) {
+        return "0+0i";
+      }
+      
       double real = resultDoubles[0];
       double imag = resultDoubles[1];
       result = Operations.formatResult(real, imag, false);
-      
       if (result == null)
       {
         return null;
@@ -220,6 +228,7 @@ public class Calculator
    */
   public void setResult(String incomingResult)
   {
+  
     result = incomingResult;
   }
 
@@ -331,6 +340,7 @@ public class Calculator
     leftOperand = null;
     rightOperand = null;
     operator = null;
+    resultDoubles = null;
   }
   
   public void setFractionDisplay(boolean incoming) {
@@ -339,5 +349,18 @@ public class Calculator
   
   public boolean getFractionDisplay() {
     return fractionDisplay;
+  }
+  
+//**Methods to help increase coverage for testing**//
+  public void setDivisionFormatResult(boolean incoming) {
+    divisionFormatResult = incoming;
+  }
+  
+  public String getLeftOperandString() {
+    return leftOperand;
+  }
+  
+  public String getRightOperandString() {
+    return rightOperand;
   }
 }
