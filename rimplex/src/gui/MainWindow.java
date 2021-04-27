@@ -706,8 +706,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String command = e.getActionCommand(); // String representation of command
     String inputField = inputTextField.getText().trim(); // String representation of what is input
     
-    //Check against regex as user is typing in.
-    System.out.println(isValidInput(inputField, false));
     
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
@@ -775,46 +773,29 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Sign switch button
     if (command.equals("±") && !inputField.equals(""))
     {
-      String inputField2 = inputTextField.getText().trim();
-      if (inputField2.contains("("))
+      if (inputField.contains("("))
       {
-        
-        if (inputField2.contains(")")) {
-          String temp = inputField2.substring(2, inputField2.length());
-          String temp2 = inputField2.substring(0, 2);
-          if (temp.contains("+")) {
-            temp = temp.replace("+", "-");
-          }else {
-            temp = temp.replace("-", "+");
-          }
-          if (temp2.charAt(1) == '-') {
-            temp2 = temp2.replace("-", "");
-          }else {
-            temp2 = "(-" + temp2.charAt(1);
-          }
-          inputTextField.setText(temp2 + temp);
-        }
-        else if (inputField2.charAt(1) != '-')
+        if (inputField.charAt(1) != '-')
         {
-          inputTextField.setText("(-" + inputField2.substring(1, inputField2.length()));
+          inputTextField.setText("(-" + inputField.substring(1, inputField.length()));
         }
         else
         {
-          StringBuffer newString = new StringBuffer(inputField2);
+          StringBuffer newString = new StringBuffer(inputField);
           newString.deleteCharAt(1);
           inputTextField.setText(newString.toString());
         }
 
-      }else if (!inputField2.contains("(")) {
-        if (inputField2.charAt(0) != '-')
+      }
+      if (!inputField.contains("("))
+        if (inputField.charAt(0) != '-')
         {
-          inputTextField.setText("-" + inputField2);
+          inputTextField.setText("-" + inputField);
         }
         else
         {
-          inputTextField.setText(inputField2.substring(1, inputField2.length()));
+          inputTextField.setText(inputField.substring(1, inputField.length()));
         }
-      }
     }
     
     
@@ -987,8 +968,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
       else
       {
-        warningDialog
-            .displayDialog("Parenthesis must be at beginning of input for complex calculations.");
+        warningDialog.displayDialog();
       }
     }
 
@@ -997,16 +977,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog(
-            "Complex numbers must have only one of each parenthesis in correct form.");
+        warningDialog.displayDialog();
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
           || inputField.charAt(inputField.length() - 1) != 'i'
           || !(inputField.contains("+") || inputField.contains("-")))
       {
-        warningDialog
-            .displayDialog("Please enter a complex number in standard form if using parenthesis.");
+        warningDialog.displayDialog();
       }
       else
       {
@@ -1170,46 +1148,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
     }
     inputTextField.setText("");
-  }
-  
-  /**
-   * Another method for isValidInput set's to default regex.
-   * @param input
-   * @param inputIsComplete
-   * @return
-   */
-  public boolean isValidInput(String input)
-  {
-    return isValidInput(input, true);
-  }
-  
-  /**
-   * Checks valid inputs against regex patterns, does NOT account for parantheses.
-   * If you experience bugs please let me know.
-   * @param input The input to check
-   * @param isInputComplete True if the input is being checked right before hitting the equals button
-   *        or any sort of similar action that would require the program parse the value.
-   *        Set this to false if you just want to check if what the user is typing at the moment is valid.
-   * @return Returns True if the input matches the regex pattern.
-   */
-  public boolean isValidInput(String input, boolean inputIsComplete)
-  {
-    input = input.replace("𝑖", "i");
-    Matcher matcher;
-    Pattern patternTyping =
-        Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
-    Pattern patternParsing =
-        Pattern.compile("^(\\((?=.+\\)))?(-?([0-9]+(\\.[0-9]+)?))?(([-]|(?<=[0-9])[+])(?=.*i))?((?<=[+-])([0-9]+(\\.[0-9]+)?))?i?((?<=\\(.+)\\))?$");
-    
-    if (inputIsComplete)
-    {
-      matcher = patternTyping.matcher(input);
-    } else
-    {
-      matcher = patternParsing.matcher(input);
-    }
-    
-    return matcher.matches();
   }
   
   /**
@@ -1467,9 +1405,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   {
     try
     {
+      // Get language specific instructions.
+      String helpFile = bundle.getString("helpWebPage");
       // Get the location of the helpPage within the program
-      URL url = MainWindow.class.getResource("/webpages/helpPage.html");
-      Path path = Paths.get(url.toURI());
+      InputStream helpPageStream = MainWindow.class.getResourceAsStream("/webpages/" + helpFile);
       
       // Create temporary file in the above directory
       File temp = File.createTempFile("rimplex", ".html");
@@ -1477,12 +1416,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       
       // Copy local file to temp file
       OutputStream os = new FileOutputStream(temp);
-      Files.copy(path, os);
+      os.write(helpPageStream.readAllBytes());
       
       // Opens in default application
       Desktop.getDesktop().open(temp);
     }
-    catch (IOException | URISyntaxException e)
+    catch (IOException e)
     {
       System.out.println("Unable to open webpage. May be incorrect directory.");
       e.printStackTrace();
