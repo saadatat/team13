@@ -699,7 +699,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Open help webpage in default browser
     if (e.getSource() == helpPage)
     {
-      openHelpPage();
+      //openHelpPage();
     }
 
     boolean par = false;
@@ -1451,8 +1451,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     try
     {
       // Get the location of the helpPage within the program
-      URL url = MainWindow.class.getResource("/webpages/helpPage.html");
-      Path path = Paths.get(url.toURI());
+      InputStream helpPageStream = MainWindow.class.getResourceAsStream("/webpages/helpPage.html");
+      Path path;
       
       // Create temporary file in the above directory
       File temp = File.createTempFile("rimplex", ".html");
