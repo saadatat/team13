@@ -18,7 +18,16 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -522,24 +531,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     testPanel.setBorder(new EmptyBorder(10, 10, 10, 0));
     southPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
-    // set image
-    try
-    {
-      rimplexLogo = ImageIO.read(new File("rimplex/images/logoRimplex.png"));
-    }
-    catch (IOException e)
-    {
-      try
-      {
-        rimplexLogo = ImageIO.read(new File("images/logoRimplex.png"));
-      }
-      catch (IOException e1)
-      {
-        e1.printStackTrace();
-      }
-    }
+    ImageIcon rimplexIcon = null;
+    rimplexIcon = new ImageIcon(MainWindow.class.getResource("/images/logoRimplex.png"));
 
-    JLabel rimplexHolder = new JLabel(new ImageIcon(rimplexLogo));
+    JLabel rimplexHolder = new JLabel(rimplexIcon);
     rimplexHolder.setPreferredSize(new Dimension(50, 50));
 
     mainPanel.add(rimplexHolder, BorderLayout.NORTH);
@@ -704,15 +699,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Open help webpage in default browser
     if (e.getSource() == helpPage)
     {
-      try
-      {
-        Desktop.getDesktop().open(new File("webpages/helpPage.html"));
-      }
-      catch (IOException e1)
-      {
-        System.out.println("Unable to open webpage. May be incorrect directory.");
-        e1.printStackTrace();
-      }
+      openHelpPage();
     }
 
     boolean par = false;
@@ -1089,20 +1076,20 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
   public void operationEvent(String command)
   {
+    // Create inputField string and format it for reading.
     String inputField = inputTextField.getText().trim();
-
     inputField = inputField.replace(")", "");
     inputField = inputField.replace("(", "");
-
-    String result = calculator.getResult();
-
     inputField = inputField.replace("𝑖", "i");
-
-    // regex checking
-    isValidInput(inputField, true);
     
+    // Get string of result from calculator, used for running totals.
+    String result = calculator.getResult();
+    
+    // If the calculator currently doesn't have a left operand
     if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
     {
+      // If the user input isn't blank then assign the command input to the left operand of the calculator.
+      // Also display the input on the GUI.
       if (!inputField.equals(""))
       {
         calculator.setLeftOperand(inputField);
@@ -1110,6 +1097,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
             + calculator.getOperator());
       }
+      // Since the calculator does not have a left operand, if there isn't a previous result for running totals
+      // then set the left operand to zero values. This also will display on the GUI.
       else if (result == null || result.trim().equals(""))
       {
         calculator.setLeftOperand("0+0i");
@@ -1117,6 +1106,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
             + calculator.getOperator());
       }
+      // Retrieve the previous result, but only if not a fraction.
       else
       {
         if (result.contains("/"))
@@ -1166,14 +1156,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   }
   
   /**
-   * Another method for isValidInput, trims parantheses.
+   * Another method for isValidInput set's to default regex.
    * @param input
    * @param inputIsComplete
    * @return
    */
-  public boolean isValidInputTrim(String input, boolean inputIsComplete)
+  public boolean isValidInput(String input)
   {
-    return isValidInput(input.replace("(", "").replace(")",""), inputIsComplete);
+    return isValidInput(input, true);
   }
   
   /**
@@ -1192,7 +1182,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     Pattern patternTyping =
         Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
     Pattern patternParsing =
-        Pattern.compile("^(-?([0-9]+(\\.[0-9]+)?))?(i(?![+-]))?([+-]([0-9]+(\\.[0-9]+)?)?i)?$");
+        Pattern.compile("^(\\((?=.+\\)))?(-?([0-9]+(\\.[0-9]+)?))?(([-]|(?<=[0-9])[+])(?=.*i))?((?<=[+-])([0-9]+(\\.[0-9]+)?))?i?((?<=\\(.+)\\))?$");
     
     if (inputIsComplete)
     {
@@ -1454,5 +1444,48 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     fileSetting.setText(bundle.getString("Save"));
     helpPage.setText(bundle.getString("Instructions"));
     recordButton.setText(bundle.getString("Toggle"));
+  }
+  
+  private void openHelpPage()
+  {
+    try
+    {
+      // Get the location of the helpPage within the program
+      URL url = MainWindow.class.getResource("/webpages/helpPage.html");
+      Path path = Paths.get(url.toURI());
+      URL img1 = MainWindow.class.getResource("/images/logoRimplex.png");
+      Path imgPath1 = Paths.get(url.toURI());
+      URL img2 = MainWindow.class.getResource("/images/logoSagaciousMedia.gif");
+      Path imgPath2 = Paths.get(url.toURI());
+      
+      // Create new temporary directory for webpage and images
+      Path tempDir = Files.createTempDirectory("rimplextemp");
+      
+      // Create temporary file in the above directory
+      File temp = File.createTempFile("rimplex", ".html", tempDir.toFile());
+      temp.deleteOnExit();
+      
+      // Add temporary images to directory
+      File tempImage1 = File.createTempFile("rimplex", ".html");
+      tempImage1.deleteOnExit();
+      File tempImage2 = File.createTempFile("rimplex", ".html");
+      tempImage2.deleteOnExit();
+      
+      // Copy local file to temp file
+      OutputStream os = new FileOutputStream(temp);
+      Files.copy(path, os);
+      os = new FileOutputStream(tempImage1);
+      Files.copy(imgPath1, os);
+      os = new FileOutputStream(tempImage2);
+      Files.copy(imgPath2, os);
+      
+      // Opens in default application
+      Desktop.getDesktop().open(temp);
+    }
+    catch (IOException | URISyntaxException e)
+    {
+      System.out.println("Unable to open webpage. May be incorrect directory.");
+      e.printStackTrace();
+    }
   }
 }
