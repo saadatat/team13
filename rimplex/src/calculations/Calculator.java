@@ -266,6 +266,7 @@ public class Calculator
   {
     if (fractionDisplay) {
       result = Operations.fractionFormat(leftOperand, rightOperand);
+      resultDoubles = Operations.divide(leftOperand, rightOperand);
       divisionFormatResult = true;
     }else {
     resultDoubles = Operations.divide(leftOperand, rightOperand);
@@ -362,5 +363,9 @@ public class Calculator
   
   public String getRightOperandString() {
     return rightOperand;
+  }
+  
+  public double[] getDoubles() {
+    return resultDoubles;
   }
 }

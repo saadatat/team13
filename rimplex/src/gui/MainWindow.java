@@ -59,6 +59,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import calculations.Calculator;
+import calculations.Operations;
 
 /**
  * The main window for the Rimplex GUI.
@@ -1106,9 +1107,11 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       {
         if (result.contains("/"))
         {
-          WarningDialog warningDialog = WarningDialog.getInstance();
-          warningDialog.displayDialog();
-          clear();
+          double[] result2 = calculator.getDoubles();
+          calculator.setLeftOperand(Operations.formatResult(result2[0], result2[1], false));
+          calculator.setOperator(command);
+          displayLabel
+              .setText(calculator.formatDisplayOperand(calculator.getLeftOperand()) + command);
         }
         else
         {
