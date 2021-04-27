@@ -699,15 +699,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Open help webpage in default browser
     if (e.getSource() == helpPage)
     {
-      //openHelpPage();
+      openHelpPage();
     }
 
     boolean par = false;
     String command = e.getActionCommand(); // String representation of command
     String inputField = inputTextField.getText().trim(); // String representation of what is input
     
-    //Check against regex as user is typing in.
-    System.out.println(isValidInput(inputField, false));
     
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
@@ -1153,46 +1151,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   }
   
   /**
-   * Another method for isValidInput set's to default regex.
-   * @param input
-   * @param inputIsComplete
-   * @return
-   */
-  public boolean isValidInput(String input)
-  {
-    return isValidInput(input, true);
-  }
-  
-  /**
-   * Checks valid inputs against regex patterns, does NOT account for parantheses.
-   * If you experience bugs please let me know.
-   * @param input The input to check
-   * @param isInputComplete True if the input is being checked right before hitting the equals button
-   *        or any sort of similar action that would require the program parse the value.
-   *        Set this to false if you just want to check if what the user is typing at the moment is valid.
-   * @return Returns True if the input matches the regex pattern.
-   */
-  public boolean isValidInput(String input, boolean inputIsComplete)
-  {
-    input = input.replace("𝑖", "i");
-    Matcher matcher;
-    Pattern patternTyping =
-        Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
-    Pattern patternParsing =
-        Pattern.compile("^(\\((?=.+\\)))?(-?([0-9]+(\\.[0-9]+)?))?(([-]|(?<=[0-9])[+])(?=.*i))?((?<=[+-])([0-9]+(\\.[0-9]+)?))?i?((?<=\\(.+)\\))?$");
-    
-    if (inputIsComplete)
-    {
-      matcher = patternTyping.matcher(input);
-    } else
-    {
-      matcher = patternParsing.matcher(input);
-    }
-    
-    return matcher.matches();
-  }
-  
-  /**
    * keyTyped method inherited from JFrame. This method essentially maps physical keys to the GUI
    * buttons.
    */
@@ -1449,7 +1407,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     {
       // Get the location of the helpPage within the program
       InputStream helpPageStream = MainWindow.class.getResourceAsStream("/webpages/helpPage.html");
-      Path path;
       
       // Create temporary file in the above directory
       File temp = File.createTempFile("rimplex", ".html");
@@ -1457,12 +1414,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       
       // Copy local file to temp file
       OutputStream os = new FileOutputStream(temp);
-      Files.copy(path, os);
+      os.write(helpPageStream.readAllBytes());
       
       // Opens in default application
       Desktop.getDesktop().open(temp);
     }
-    catch (IOException | URISyntaxException e)
+    catch (IOException e)
     {
       System.out.println("Unable to open webpage. May be incorrect directory.");
       e.printStackTrace();
