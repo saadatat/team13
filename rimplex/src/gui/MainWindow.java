@@ -146,6 +146,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   private String recordHistory;
   private String language;
   private ResourceBundle bundle = ResourceBundle.getBundle("languages/Strings");
+
   /**
    * Default Constructor.
    */
@@ -168,7 +169,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     calculator.setFractionDisplay(false);
     this.setFocusable(true);
     language = "English";
-    
+
   }
 
   /**
@@ -705,10 +706,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     boolean par = false;
     String command = e.getActionCommand(); // String representation of command
     String inputField = inputTextField.getText().trim(); // String representation of what is input
-    
-    //Check against regex as user is typing in.
+
+    // Check against regex as user is typing in.
     System.out.println(isValidInput(inputField, false));
-    
+
     if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
         || !inputTextField.getText().contains("("))
     {
@@ -778,34 +779,66 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       String inputField2 = inputTextField.getText().trim();
       if (inputField2.contains("("))
       {
-        
-        if (inputField2.contains(")")) {
+
+        if (inputField2.contains(")"))
+        {
           String temp = inputField2.substring(2, inputField2.length());
           String temp2 = inputField2.substring(0, 2);
-          if (temp.contains("+")) {
+          if (temp.contains("+"))
+          {
             temp = temp.replace("+", "-");
-          }else {
+          }
+          else
+          {
             temp = temp.replace("-", "+");
           }
-          if (temp2.charAt(1) == '-') {
+          if (temp2.charAt(1) == '-')
+          {
             temp2 = temp2.replace("-", "");
-          }else {
+          }
+          else
+          {
             temp2 = "(-" + temp2.charAt(1);
           }
           inputTextField.setText(temp2 + temp);
         }
-        else if (inputField2.charAt(1) != '-')
-        {
-          inputTextField.setText("(-" + inputField2.substring(1, inputField2.length()));
-        }
         else
         {
-          StringBuffer newString = new StringBuffer(inputField2);
-          newString.deleteCharAt(1);
-          inputTextField.setText(newString.toString());
+          String[] checker = inputField.split("\\-|\\+");
+          System.out.println(checker.length);
+          if (checker.length > 1 && inputField.charAt(1) != '-')
+          {
+            String temp = inputField2.substring(2, inputField2.length());
+            String temp2 = inputField2.substring(0, 2);
+            if (temp.contains("+"))
+            {
+              temp = temp.replace("+", "-");
+            }
+            else
+            {
+              temp = temp.replace("-", "+");
+            }
+            inputTextField.setText(temp2 + temp);
+          }
+          else
+          {
+            if (inputField2.charAt(1) != '-')
+            {
+              inputTextField.setText("(-" + inputField2.substring(1, inputField2.length()));
+            }
+            else
+            {
+              StringBuffer newString = new StringBuffer(inputField2);
+              newString.deleteCharAt(1);
+              inputTextField.setText(newString.toString());
+            }
+          }
+
         }
 
-      }else if (!inputField2.contains("(")) {
+      }
+      else if (!inputField2.contains("("))
+      {
         if (inputField2.charAt(0) != '-')
         {
           inputTextField.setText("-" + inputField2);
@@ -816,8 +849,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         }
       }
     }
-    
-    
+
     // Expand history
     if (command.equals(">"))
     {
@@ -908,7 +940,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
       timer.start();
     }
-    
+
     // Clear button
     if (command.equals("C"))
     {
@@ -949,7 +981,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
       else
       {
-        warningDialog.displayDialog("Please enter a complex number in standard form.");
+        warningDialog.displayDialog();
       }
     }
 
@@ -987,8 +1019,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
       else
       {
-        warningDialog
-            .displayDialog("Parenthesis must be at beginning of input for complex calculations.");
+        warningDialog.displayDialog();
       }
     }
 
@@ -997,16 +1028,14 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     {
       if (!inputField.contains("(") || inputField.contains(")"))
       {
-        warningDialog.displayDialog(
-            "Complex numbers must have only one of each parenthesis in correct form.");
+        warningDialog.displayDialog();
       }
       else if (inputField.charAt(inputField.length() - 1) == '-'
           || inputField.charAt(inputField.length() - 1) == '+'
           || inputField.charAt(inputField.length() - 1) != 'i'
           || !(inputField.contains("+") || inputField.contains("-")))
       {
-        warningDialog
-            .displayDialog("Please enter a complex number in standard form if using parenthesis.");
+        warningDialog.displayDialog();
       }
       else
       {
@@ -1047,7 +1076,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
-    
+
     // Execute as long as there is a valid left operand
     if (calculator.getLeftOperand() != null && !calculator.getLeftOperand().equals(""))
     {
@@ -1063,7 +1092,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
           calculator.setRightOperand(inputField);
         }
       }
-      
+
       displayLabel.setText(
           calculator.formatDisplayOperand(calculator.getLeftOperand()) + calculator.getOperator()
               + calculator.formatDisplayOperand(calculator.getRightOperand()) + "=");
@@ -1098,14 +1127,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     inputField = inputField.replace(")", "");
     inputField = inputField.replace("(", "");
     inputField = inputField.replace("𝑖", "i");
-    
+
     // Get string of result from calculator, used for running totals.
     String result = calculator.getResult();
-    
+
     // If the calculator currently doesn't have a left operand
     if (calculator.getLeftOperand() == null || calculator.getLeftOperand().trim().equals(""))
     {
-      // If the user input isn't blank then assign the command input to the left operand of the calculator.
+      // If the user input isn't blank then assign the command input to the left operand of the
+      // calculator.
       // Also display the input on the GUI.
       if (!inputField.equals(""))
       {
@@ -1114,7 +1144,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         displayLabel.setText(calculator.formatDisplayOperand(calculator.getLeftOperand())
             + calculator.getOperator());
       }
-      // Since the calculator does not have a left operand, if there isn't a previous result for running totals
+      // Since the calculator does not have a left operand, if there isn't a previous result for
+      // running totals
       // then set the left operand to zero values. This also will display on the GUI.
       else if (result == null || result.trim().equals(""))
       {
@@ -1171,9 +1202,10 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
     inputTextField.setText("");
   }
-  
+
   /**
    * Another method for isValidInput set's to default regex.
+   * 
    * @param input
    * @param inputIsComplete
    * @return
@@ -1182,36 +1214,40 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   {
     return isValidInput(input, true);
   }
-  
+
   /**
-   * Checks valid inputs against regex patterns, does NOT account for parantheses.
-   * If you experience bugs please let me know.
-   * @param input The input to check
-   * @param isInputComplete True if the input is being checked right before hitting the equals button
-   *        or any sort of similar action that would require the program parse the value.
-   *        Set this to false if you just want to check if what the user is typing at the moment is valid.
+   * Checks valid inputs against regex patterns, does NOT account for parantheses. If you experience
+   * bugs please let me know.
+   * 
+   * @param input
+   *          The input to check
+   * @param isInputComplete
+   *          True if the input is being checked right before hitting the equals button or any sort
+   *          of similar action that would require the program parse the value. Set this to false if
+   *          you just want to check if what the user is typing at the moment is valid.
    * @return Returns True if the input matches the regex pattern.
    */
   public boolean isValidInput(String input, boolean inputIsComplete)
   {
     input = input.replace("𝑖", "i");
     Matcher matcher;
-    Pattern patternTyping =
-        Pattern.compile("^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
-    Pattern patternParsing =
-        Pattern.compile("^(\\((?=.+\\)))?(-?([0-9]+(\\.[0-9]+)?))?(([-]|(?<=[0-9])[+])(?=.*i))?((?<=[+-])([0-9]+(\\.[0-9]+)?))?i?((?<=\\(.+)\\))?$");
-    
+    Pattern patternTyping = Pattern.compile(
+        "^[-]?[0-9]*[\\.]?[0-9]*((?<=[0-9])[+-])?[0-9]*((?<=[+-][0-9]+)[\\.])?[0-9]*[i]?$");
+    Pattern patternParsing = Pattern.compile(
+        "^(\\((?=.+\\)))?(-?([0-9]+(\\.[0-9]+)?))?(([-]|(?<=[0-9])[+])(?=.*i))?((?<=[+-])([0-9]+(\\.[0-9]+)?))?i?((?<=\\(.+)\\))?$");
+
     if (inputIsComplete)
     {
       matcher = patternTyping.matcher(input);
-    } else
+    }
+    else
     {
       matcher = patternParsing.matcher(input);
     }
-    
+
     return matcher.matches();
   }
-  
+
   /**
    * keyTyped method inherited from JFrame. This method essentially maps physical keys to the GUI
    * buttons.
@@ -1442,8 +1478,9 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
   }
 
-  public void changeButtonLanguage() {
-   
+  public void changeButtonLanguage()
+  {
+
     languages.setText((bundle.getString("Languages")));
     english.setText(bundle.getString("English"));
     spanish.setText(bundle.getString("Spanish"));
@@ -1452,7 +1489,6 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     japanese.setText(bundle.getString("Japanese"));
     russian.setText(bundle.getString("Russian"));
 
-    
     print.setText(bundle.getString("Print"));
     settings.setText(bundle.getString("Settings"));
     help.setText(bundle.getString("Help"));
@@ -1462,7 +1498,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     helpPage.setText(bundle.getString("Instructions"));
     recordButton.setText(bundle.getString("Toggle"));
   }
-  
+
   private void openHelpPage()
   {
     try
@@ -1470,15 +1506,15 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       // Get the location of the helpPage within the program
       URL url = MainWindow.class.getResource("/webpages/helpPage.html");
       Path path = Paths.get(url.toURI());
-      
+
       // Create temporary file in the above directory
       File temp = File.createTempFile("rimplex", ".html");
       temp.deleteOnExit();
-      
+
       // Copy local file to temp file
       OutputStream os = new FileOutputStream(temp);
       Files.copy(path, os);
-      
+
       // Opens in default application
       Desktop.getDesktop().open(temp);
     }
