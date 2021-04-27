@@ -276,7 +276,7 @@ public class Operations
     String realString;
     String imagString;
     fmat.setMinimumFractionDigits(0);
-    fmat.setMaximumFractionDigits(3);
+    fmat.setMaximumFractionDigits(3s);
     
     if (asFraction)
     {
@@ -312,8 +312,8 @@ public class Operations
     // decimal places there are. Then it can be converted into a fraction.
     int wholeNumber = (int) numberToConvert;
     double onlyDecimal = numberToConvert - wholeNumber;
-    int numerator = (int) (onlyDecimal * 100);
-    int denominator = 100;
+    int numerator = (int) (onlyDecimal * 10000);
+    int denominator = 10000;
     
     // Simplify the fraction part
     int gcd = Operations.getGCD(numerator, denominator);
