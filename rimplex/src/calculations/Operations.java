@@ -157,6 +157,20 @@ public class Operations
       operandTwo += "+0i";
     }
     
+    //Singular i fix op1
+    if(operandOne.equals("i"))
+    {
+     
+     operandOne = "1i";
+    }
+    
+    //Singular i fix op2
+    if(operandTwo.equals("i"))
+    {
+      operandTwo = "1i";
+     
+    }
+    
     // Convert to standard form if there is a single imaginary number.
     m = oneImagPattern.matcher(operandOne);
     if (m.matches()) {
