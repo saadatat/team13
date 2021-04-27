@@ -135,7 +135,9 @@ public class Calculator
   {
     
    
-    
+    if (resultDoubles == null) {
+      return "0+0i";
+    }
     if (divisionFormatResult == false) {
       double real = resultDoubles[0];
       double imag = resultDoubles[1];
@@ -334,6 +336,7 @@ public class Calculator
     leftOperand = null;
     rightOperand = null;
     operator = null;
+    resultDoubles = null;
   }
   
   public void setFractionDisplay(boolean incoming) {
