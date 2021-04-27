@@ -778,8 +778,21 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       String inputField2 = inputTextField.getText().trim();
       if (inputField2.contains("("))
       {
+        
         if (inputField2.contains(")")) {
-          warningDialog.displayDialog();
+          String temp = inputField2.substring(2, inputField2.length());
+          String temp2 = inputField2.substring(0, 2);
+          if (temp.contains("+")) {
+            temp = temp.replace("+", "-");
+          }else {
+            temp = temp.replace("-", "+");
+          }
+          if (temp2.charAt(1) == '-') {
+            temp2 = temp2.replace("-", "");
+          }else {
+            temp2 = "(-" + temp2.charAt(1);
+          }
+          inputTextField.setText(temp2 + temp);
         }
         else if (inputField2.charAt(1) != '-')
         {
