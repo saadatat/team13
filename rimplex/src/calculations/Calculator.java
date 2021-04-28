@@ -294,11 +294,11 @@ public class Calculator
     {
       subtract();
     }
-    else if (operator.equals("×") && validOperands())
+    else if (operator.equals("\u00D7") && validOperands())
     {
       multiply();
     }
-    else if (operator.equals("÷") && validOperands())
+    else if (operator.equals("\u00F7") && validOperands())
     {
       String[] test = rightOperand.split("\\+|-");
       
