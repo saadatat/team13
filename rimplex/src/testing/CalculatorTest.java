@@ -60,7 +60,7 @@ class CalculatorTest
   {
     Calculator calculator = new Calculator();
     calculator.setResult(null);
-    assertEquals(null, calculator.getResult());
+    assertEquals("0+0i", calculator.getResult());
     calculator.setResult("test");
     assertEquals( "0+0i", calculator.getResult());
     
@@ -71,6 +71,21 @@ class CalculatorTest
     calculator.setDivisionFormatResult(true);
     calculator.setResult("2.2");
     assertEquals( "2.2", calculator.getResult());
+    
+    calculator.setDivisionFormatResult(false);
+    calculator.setFractionDisplay(true);
+    calculator.setResultDoubles(2.2, 0);
+    calculator.setResult("2.2+0i");
+    assertEquals( "2 1/5+0i", calculator.getResult());
+    
+    
+    calculator.clear();
+    
+    calculator.setDivisionFormatResult(false);
+    calculator.setResult("");
+    assertEquals( "0+0i", calculator.getResult());
+      
+    
   }
   
   /**
@@ -110,10 +125,10 @@ class CalculatorTest
     Calculator calculator = new Calculator();
     
     calculator.setLeftOperand("2+i");
-    assertEquals("2+1i", calculator.setLeftOperandString());
+    assertEquals("2+1i", calculator.getLeftOperandString());
     
     calculator.setLeftOperand("2-i");
-    assertEquals("2-1i", calculator.setLeftOperandString());
+    assertEquals("2-1i", calculator.getLeftOperandString());
    
   }
   
@@ -123,12 +138,129 @@ class CalculatorTest
     Calculator calculator = new Calculator();
     
     calculator.setRightOperand("2+i");
-    assertEquals("2+1i", calculator.setRightOperandString());
+    assertEquals("2+1i", calculator.getRightOperandString());
     
     calculator.setRightOperand("2-i");
-    assertEquals("2-1i", calculator.setRightOperandString());
+    assertEquals("2-1i", calculator.getRightOperandString());
    
   }
+  
+  @Test
+  void opsTest()
+  {
+    Calculator calculator = new Calculator();
+    
+    double[] sum = {3.0,0};
+    double[] quo = {0.5,0};
+    double[] dif = {-1.0,0};
+    double[] pro = {2.0,0};
+   
+    for(int i = 0; i < 1; i++)
+    {
+      calculator.setRightOperand("2");
+      calculator.setLeftOperand("1");
+      calculator.add();
+      assertTrue(sum[i] == calculator.getDoubles()[i]);
+      
+      calculator.setRightOperand("2");
+      calculator.setLeftOperand("1");
+      calculator.subtract();
+      assertTrue(dif[i] == calculator.getDoubles()[i]);
+      
+      calculator.setRightOperand("2");
+      calculator.setLeftOperand("1");
+      calculator.multiply();
+      assertTrue(pro[i] == calculator.getDoubles()[i]);
+      
+      calculator.setRightOperand("2");
+      calculator.setLeftOperand("1");
+      calculator.divide();
+      assertTrue(quo[i] == calculator.getDoubles()[i]);
+      
+      calculator.setFractionDisplay(true);
+      calculator.setRightOperand("2");
+      calculator.setLeftOperand("1");
+      calculator.divide();
+      assertTrue(quo[i] == calculator.getDoubles()[i]);
+     
+    }
+   
+  }
+  
+  @Test
+  void formResultTest()
+  {
+    Calculator calculator = new Calculator();
+    
+    calculator.setOperator("+");
+    assertTrue(calculator.formResult());
+    calculator.setOperator("-");
+    assertTrue(calculator.formResult());
+    calculator.setOperator("×");
+    assertTrue(calculator.formResult());
+    calculator.setOperator("÷");
+    assertTrue(calculator.formResult());
+    
+    calculator.setRightOperand("2+i");    
+    calculator.setLeftOperand("2-i");
+    calculator.setOperator("+");
+    assertTrue(calculator.formResult());
+    
+    calculator.setRightOperand("2+i");    
+    calculator.setLeftOperand("2-i");
+    calculator.setOperator("-");
+    assertTrue(calculator.formResult());
+    
+    calculator.setRightOperand("2+i");    
+    calculator.setLeftOperand("2-i");
+    calculator.setOperator("×");
+    assertTrue(calculator.formResult());
+    
+    calculator.setRightOperand("2+i");    
+    calculator.setLeftOperand("2-i");
+    calculator.setOperator("÷");
+    assertTrue(calculator.formResult());
+    
+    calculator.setRightOperand("0");    
+    calculator.setLeftOperand("2-i");
+    calculator.setOperator("÷");
+    assertFalse(calculator.formResult());
+   
+  }
+  
+  @Test
+  void validOperandsTest()
+  {
+    Calculator calculator = new Calculator();
+    
+    assertFalse(calculator.validOperands());
+    
+    calculator.setLeftOperand(" ");
+    assertFalse(calculator.validOperands());
+    
+    calculator.setLeftOperand("2+1i");
+    assertFalse(calculator.validOperands());
+    
+    calculator.setLeftOperand("2+1i");
+    calculator.setRightOperand(" ");
+    assertFalse(calculator.validOperands());
+   
+  }
+  
+  @Test
+  void getFractionDisplayTest()
+  {
+    Calculator calculator = new Calculator();
+    
+    calculator.setFractionDisplay(false);
+    assertFalse(calculator.getFractionDisplay());
+    
+    calculator.setFractionDisplay(true);
+    assertTrue(calculator.getFractionDisplay());
+   
+  }
+  
+
   
   
 

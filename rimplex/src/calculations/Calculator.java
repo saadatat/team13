@@ -146,10 +146,7 @@ public class Calculator
       double real = resultDoubles[0];
       double imag = resultDoubles[1];
       result = Operations.formatResult(real, imag, false);
-      if (result == null)
-      {
-        return null;
-      }
+     
       
       if (fractionDisplay) {
         return Operations.formatResult(real, imag, true);
@@ -305,7 +302,7 @@ public class Calculator
     {
       String[] test = rightOperand.split("\\+|-");
       
-      if (rightOperand == null || test[0].equals("0")) {
+      if (test[0].equals("0")) {
         clear();
         return false;
       }
@@ -368,4 +365,13 @@ public class Calculator
   public double[] getDoubles() {
     return resultDoubles;
   }
+  
+  public void setResultDoubles(double first, double second) {
+    resultDoubles[0] = first;
+    resultDoubles[1] = second;
+  }
+  
+
+  
+  
 }
