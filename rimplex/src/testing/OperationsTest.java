@@ -1,6 +1,3 @@
-/**
- * @author Max Berger
- */
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +11,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import calculations.Operations;
 
+/**
+ * Tests the operations.java class
+ * @author Arman Saadat and Max Berger
+ */
 class OperationsTest
 {
   NumberFormat fmat;
@@ -21,12 +22,18 @@ class OperationsTest
   static final double PERM_STR = -1; // Number to start permutation.
   static final double PERM_END = 2; // Number to end permutation.
 
+  /**
+   * Constructor coverage
+   */
   @Test
   void testConstructor()
   {
     new Operations();
   }
 
+  /**
+   * Tests additions
+   */
   @Test
   void additionTest()
   {
@@ -43,6 +50,9 @@ class OperationsTest
     assertEquals("0+0i", Operations.formatResult(Operations.addition("0+0i", "0+0i"), false));
   }
   
+  /**
+   * Tests subtraction
+   */
   @Test
   void subtractionTest()
   {
@@ -72,7 +82,7 @@ class OperationsTest
     assertEquals("-0.92-0.56i", Operations.formatResult(Operations.divide(termPositive1, termNegative2), false));
   }
   
-  /*
+  /**
    * multiplyTest - test multiply method.
    */
   @Test
@@ -118,6 +128,9 @@ class OperationsTest
     assertEquals(expected, actual);
   }
   
+  /**
+   * Tests parsingSingleNumber method.
+   */
   @Test
   void parsingSingleNumberTests()
   {
@@ -146,6 +159,9 @@ class OperationsTest
     
   }
   
+  /**
+   * Tests fractionFormat method.
+   */
   @Test
   void testFractionFormat()
   {
@@ -183,6 +199,10 @@ class OperationsTest
 
   @ParameterizedTest
   @MethodSource("valueGenerator")
+  /**
+   * Assists additionTest
+   * @param permutation the permutation
+   */
   void additionTestComprehensive(double[] permutation)
   {
     double i = permutation[0];
@@ -213,6 +233,10 @@ class OperationsTest
 
   @ParameterizedTest
   @MethodSource("valueGenerator")
+  /**
+   * Assists subtractionTest
+   * @param permutation the permutation
+   */
   void subtractionTestComprehensive(double[] permutation)
   {
     double i = permutation[0];
@@ -237,6 +261,10 @@ class OperationsTest
 
   @ParameterizedTest
   @MethodSource("valueGenerator")
+  /**
+   * Assists divisionTest
+   * @param permutation the permutation
+   */
   void divisionTestComprehensive(double[] permutation)
   {
     double i = permutation[0];
@@ -275,6 +303,10 @@ class OperationsTest
   
   @ParameterizedTest
   @MethodSource("valueGenerator")
+  /**
+   * Assists multiplicationTest
+   * @param permutation the permutation
+   */
   void multiplicationTestComprehensive(double[] permutation)
   {
     double i = permutation[0];

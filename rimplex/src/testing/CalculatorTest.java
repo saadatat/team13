@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import calculations.Operations;
 import calculations.Calculator;
-
-
+/**
+ * Tests calculator.java
+ * @author Arman Saadat and Max Berger
+ *
+ */
 class CalculatorTest
 {
   /**
@@ -28,6 +31,9 @@ class CalculatorTest
 
   }
 
+  /**
+   * getLeftOperandTest - Tests get left operand method.
+   */
   @Test
   void getLeftOperandTest()
   {
@@ -42,6 +48,9 @@ class CalculatorTest
     
   }
 
+  /**
+   * Tests getRightOperand method
+   */
   @Test
   void getRightOperandTest()
   {
@@ -55,6 +64,9 @@ class CalculatorTest
     assertEquals(calculator.getRightOperand(), "2-i");
   }
 
+  /**
+   * Tests getResult method
+   */
   @Test
   void getResultTest()
   {
@@ -101,6 +113,9 @@ class CalculatorTest
 
   }
   
+  /**
+   * Tests setOperator
+   */
   @Test
   void setOperatorTest()
   {
@@ -119,6 +134,9 @@ class CalculatorTest
     assertEquals("/", calculator.getOperator());
   }
   
+  /**
+   * Testst setLeftOperand
+   */
   @Test
   void setLeftOperandTest()
   {
@@ -132,6 +150,9 @@ class CalculatorTest
    
   }
   
+  /**
+   * Tests setRightOperand
+   */
   @Test
   void setRightOperandTest()
   {
@@ -145,6 +166,9 @@ class CalculatorTest
    
   }
   
+  /**
+   * Tests operations
+   */
   @Test
   void opsTest()
   {
@@ -187,6 +211,9 @@ class CalculatorTest
    
   }
   
+  /**
+   * Tests formResult method.
+   */
   @Test
   void formResultTest()
   {
@@ -228,6 +255,9 @@ class CalculatorTest
    
   }
   
+  /**
+   * Tests validOperands
+   */
   @Test
   void validOperandsTest()
   {
@@ -247,6 +277,9 @@ class CalculatorTest
    
   }
   
+  /**
+   * Tests getFractionDisplay
+   */
   @Test
   void getFractionDisplayTest()
   {
