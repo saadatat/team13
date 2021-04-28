@@ -285,7 +285,6 @@ public class Calculator
    * calls the appropriate calculation method.
    * 
    * @return true if it could operate correctly.
-   * @return false if it divides by 0
    */
   public boolean formResult()
   {
