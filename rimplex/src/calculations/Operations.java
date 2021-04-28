@@ -306,12 +306,9 @@ public class Operations
    */
   private static String toFraction (double numberToConvert)
   {
- 
-    
     // Rounds whole number, extracts decimal, and then multiplies decimal based on number of
     // decimal places there are. Then it can be converted into a fraction.
-    long wholeNumber = (long) numberToConvert;
-    double onlyDecimal = numberToConvert - wholeNumber;
+    double onlyDecimal = numberToConvert;
     long numerator = (long) (onlyDecimal * 10000);
     long denominator = 10000;
     
@@ -323,19 +320,16 @@ public class Operations
     // Code to append string, only appends if evaluated to other than zero.
     String rval = "";
     
-    // Add the whole number if not zero, if it is zero it can only be added if the numerator is too.
-    if (wholeNumber != 0)
-    {
-      rval += wholeNumber;
-    } else if (numerator == 0)
-    {
-      rval += 0;
-    }
-    
     // If numerator isn't zero add it to the string.
-    if (numerator != 0)
+    if (numerator == 0)
     {
-      rval += String.format(" %d/%d", numerator, denominator);
+      return "0";
+    } else if (denominator == 1)
+    {
+      return String.format("%d", numerator);
+    } else
+    {
+      rval += String.format("%d/%d", numerator, denominator);
     }
     
     // Return trimmed value just in case.
