@@ -1,3 +1,6 @@
+/**
+ * @author Max Berger
+ */
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -163,6 +166,18 @@ class OperationsTest
     
     actual = Operations.fractionFormat("0", "1i");
     expected = "0+0i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.fractionFormat("5", "1");
+    expected = "5+0i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.fractionFormat("5+i", "2-2i");
+    expected = "1+3/2i";
+    assertEquals(expected, actual);
+    
+    actual = Operations.fractionFormat("1i", "1");
+    expected = "0+1i";
     assertEquals(expected, actual);
   }
 
