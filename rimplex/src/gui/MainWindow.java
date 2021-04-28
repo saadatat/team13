@@ -218,13 +218,13 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     // Instantiate the JButtons
     resetButton = new JButton("R");
     clearButton = new JButton("C");
-    imaginaryButton = new JButton("𝑖");
+    imaginaryButton = new JButton("\uD835\uDC56");
     addButton = new JButton("+");
     subtractButton = new JButton("-");
-    multiplyButton = new JButton("×");
-    divideButton = new JButton("÷");
+    multiplyButton = new JButton("\u00D7");
+    divideButton = new JButton("\u00F7");
     equalsButton = new JButton("=");
-    signButton = new JButton("±");
+    signButton = new JButton("\u00B1");
     resultButton = new JButton(">");
     hideResultButton = new JButton("<");
     zero = new JButton("0");
@@ -237,7 +237,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     seven = new JButton("7");
     eight = new JButton("8");
     nine = new JButton("9");
-    backspace = new JButton("←");
+    backspace = new JButton("\u2190");
     decimal = new JButton(".");
     fractionDisplayButton = new JButton("D");
     leftParenthesisButton = new JButton("(");
@@ -708,7 +708,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String inputField = inputTextField.getText().trim(); // String representation of what is input
     
     
-    if (inputTextField.getText().contains(")") || command.equals("×") || command.equals("÷")
+    if (inputTextField.getText().contains(")") || command.equals("\u00D7") || command.equals("\u00F7")
         || !inputTextField.getText().contains("("))
     {
       par = true;
@@ -718,8 +718,8 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
 
     WarningDialog warningDialog = WarningDialog.getInstance();
     inputField = inputField.trim();
-    inputField = inputField.replace("𝑖", "i");
-    String operators = "+-÷×";
+    inputField = inputField.replace("\uD835\uDC56", "i");
+    String operators = "+-\u00F7\u00D7";
     String result = calculator.getResult();
 
     // Display warning if an operator/equals is selected when no valid characters are being used.
@@ -735,7 +735,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     {
       if (par)
       {
-        if ((command.equals("×") || command.equals("÷"))
+        if ((command.equals("\u00D7") || command.equals("\u00F7"))
             && ((inputField.length() != 0) && (inputField.charAt(inputField.length() - 1) == '+'
                 || inputField.charAt(inputField.length() - 1) == '-')))
         {
@@ -772,7 +772,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     // Sign switch button
-    if (command.equals("±") && !inputField.equals(""))
+    if (command.equals("\u00B1") && !inputField.equals(""))
     {
       if (inputField.contains("("))
       {
@@ -936,7 +936,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     }
 
     // When the imaginary number button is pressed.
-    if (command.equals("𝑖"))
+    if (command.equals("\uD835\uDC56"))
     {
       if (inputField.length() != 0)
       {
@@ -947,7 +947,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
         else if (inputField.charAt(inputField.length() - 1) != '.' && !hasImaginary()
             && !inputField.contains("i"))
         {
-          inputTextField.setText(inputField += "𝑖");
+          inputTextField.setText(inputField += "\uD835\uDC56");
         }
         else
         {
@@ -956,7 +956,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
       else
       {
-        inputTextField.setText(inputField += "𝑖");
+        inputTextField.setText(inputField += "\uD835\uDC56");
       }
     }
 
@@ -1010,7 +1010,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
       }
     }
 
-    if (command.equals("←") && inputField.length() > 0)
+    if (command.equals("\u2190") && inputField.length() > 0)
     {
       inputTextField.setText(inputField.substring(0, inputField.length() - 1));
     }
@@ -1022,7 +1022,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
   public void equalsEvent()
   {
     String inputField = inputTextField.getText().trim();
-    inputField = inputField.replace("𝑖", "i");
+    inputField = inputField.replace("\uD835\uDC56", "i");
     inputField = inputField.replace("(", "");
     inputField = inputField.replace(")", "");
     WarningDialog warningDialog = WarningDialog.getInstance();
@@ -1076,7 +1076,7 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String inputField = inputTextField.getText().trim();
     inputField = inputField.replace(")", "");
     inputField = inputField.replace("(", "");
-    inputField = inputField.replace("𝑖", "i");
+    inputField = inputField.replace("\uD835\uDC56", "i");
     
     // Get string of result from calculator, used for running totals.
     String result = calculator.getResult();
@@ -1270,12 +1270,12 @@ public class MainWindow extends JFrame implements ActionListener, KeyListener, C
     String[] test = inputTextField.getText().split("\\+|-");
 
     if (test.length == 1
-        && (test[0].contains("𝑖") || test[0].contains("i") || test[0].contains("?")))
+        && (test[0].contains("\uD835\uDC56") || test[0].contains("i") || test[0].contains("?")))
     {
       return true;
     }
     else if (test.length == 2
-        && (test[1].contains("𝑖") || test[1].contains("i") || test[1].contains("?")))
+        && (test[1].contains("\uD835\uDC56") || test[1].contains("i") || test[1].contains("?")))
     {
       return true;
     }
