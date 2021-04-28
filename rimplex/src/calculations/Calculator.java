@@ -70,7 +70,7 @@ public class Calculator
       throw new IllegalArgumentException();
     }
     formattedString = stringToFormat;
-    formattedString = formattedString.replace("i", "𝑖");
+    formattedString = formattedString.replace("i", "\uD835\uDC56");
 
     return formattedString;
   }
