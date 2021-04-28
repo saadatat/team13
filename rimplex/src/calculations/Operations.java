@@ -312,8 +312,8 @@ public class Operations
     // decimal places there are. Then it can be converted into a fraction.
     long wholeNumber = (long) numberToConvert;
     double onlyDecimal = numberToConvert - wholeNumber;
-    long numerator = (long) (onlyDecimal * 1000);
-    long denominator = 1000;
+    long numerator = (long) (onlyDecimal * 10000);
+    long denominator = 10000;
     
     // Simplify the fraction part
     long gcd = Operations.getGCD(numerator, denominator);
