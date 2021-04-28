@@ -76,7 +76,7 @@ class CalculatorTest
     calculator.setFractionDisplay(true);
     calculator.setResultDoubles(2.2, 0);
     calculator.setResult("2.2+0i");
-    assertEquals( "2 1/5+0i", calculator.getResult());
+    assertEquals( "11/5+0i", calculator.getResult());
     
     
     calculator.clear();
