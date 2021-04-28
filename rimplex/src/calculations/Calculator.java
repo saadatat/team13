@@ -59,8 +59,8 @@ public class Calculator
   /**
    * Converts string i to italics.
    * 
-   * @param stringToFormat
-   * @return
+   * @param stringToFormat the String to italicize
+   * @return formattedString the formatted String
    */
   public static String formatItalic(String stringToFormat)
   {
@@ -283,6 +283,9 @@ public class Calculator
 
   /**
    * calls the appropriate calculation method.
+   * 
+   * @return true if it could operate correctly.
+   * @return false if it divides by 0
    */
   public boolean formResult()
   {
@@ -341,31 +344,61 @@ public class Calculator
     resultDoubles = null;
   }
   
+  /**
+   * To modify fraction boolean calibration
+   * @param incoming the state fractionDIsplay should be in
+   */
   public void setFractionDisplay(boolean incoming) {
     fractionDisplay = incoming;
   }
   
+  /**
+   * Gets the display value
+   * @return fractionDisplay the display value
+   */
   public boolean getFractionDisplay() {
     return fractionDisplay;
   }
   
 //**Methods to help increase coverage for testing**//
+  
+  /**
+   * Sets the division format result boolean
+   * @param incoming how divisionFormatResult should be
+   */
   public void setDivisionFormatResult(boolean incoming) {
     divisionFormatResult = incoming;
   }
   
+  /**
+   * returns String of the left operand
+   * @return leftOperand the left operand string
+   */
   public String getLeftOperandString() {
     return leftOperand;
   }
   
+  /**
+   * returns String of the right operand
+   * @return leftOperand the right operand string
+   */
   public String getRightOperandString() {
     return rightOperand;
   }
   
+  /**
+   * returns the resultDoubles array
+   * @return resultDoubles the result doubles.
+   */
   public double[] getDoubles() {
     return resultDoubles;
   }
   
+  /**
+   * sets the resultDouble array
+   * @param first the first value in the array
+   * @param second the second value in the array
+   */
   public void setResultDoubles(double first, double second) {
     resultDoubles[0] = first;
     resultDoubles[1] = second;

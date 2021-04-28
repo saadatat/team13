@@ -31,7 +31,8 @@ public class WarningDialog extends JOptionPane
   }
   
   /**
-   * Display custom message.
+   * displayDialog - displays the warning dialog into the option pane.
+   * @param message the warning message
    */
   public void displayDialog(String message)
   {
@@ -40,6 +41,8 @@ public class WarningDialog extends JOptionPane
   
   /**
    * Display custom message and title.
+   * @param message the custom message
+   * @param title the title
    */
   public void displayDialog(String message, String title)
   {
@@ -48,7 +51,7 @@ public class WarningDialog extends JOptionPane
   
   /**
    * Returns this singleton instance.
-   * @return
+   * @return intstance - the instance
    */
   public static WarningDialog getInstance()
   {

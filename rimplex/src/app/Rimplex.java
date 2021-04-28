@@ -21,8 +21,8 @@ public class Rimplex implements Runnable
    * 
    * @param args
    *          The command line arguments (which are ignored)
-   * @throws InterruptedException 
-   * @throws InvocationTargetException 
+   * @throws InterruptedException the Interrupted Exception
+   * @throws InvocationTargetException the Invocated Target Exception
    */
   public static void main(final String[] args) throws InvocationTargetException, InterruptedException
   {

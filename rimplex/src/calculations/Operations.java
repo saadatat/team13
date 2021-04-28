@@ -52,8 +52,8 @@ public class Operations
   }
 
   /**
-   * Accepts two Strings representing operands to multiply. Variables named after -> (a + bi) * (b +
-   * ci).
+   * Accepts two Strings representing operands to multiply. Variables named after: (a + bi) * 
+   * (b + ci).
    * 
    * @param operandOne
    *          - the first operand
@@ -80,7 +80,7 @@ public class Operations
   }
 
   /**
-   * Accepts two Strings representing operands to divide. Variables named after -> ( (ac + bd) + (bc
+   * Accepts two Strings representing operands to divide. Variables named after:( (ac + bd) + (bc
    * - ad)i ) / c^2 + d ^2.
    * 
    * @param operandOne
@@ -251,7 +251,11 @@ public class Operations
   }
   
   /**
-   * Overloaded function for formatResult
+   * Overloaded formatResult function for when given resultDoubles
+   * @param resultDoubles - the two doubles
+   * @param asFraction - boolean whether to turn into fraction 
+   * @return formatResult(resultDoubles[0], resultDoubles[1], asFraction)
+   *         the formatted result
    */
   public static String formatResult(double[] resultDoubles, boolean asFraction)
   {
@@ -263,8 +267,8 @@ public class Operations
    * 
    * @param real
    *          - the real number.
-   * @param operator
-   *          - the operator.
+   * @param asFraction
+   *          - whether or not to turn into a fraction.
    * @param imaginary
    *          - the imaginary.
    * @return String - the formatted result.
@@ -339,9 +343,9 @@ public class Operations
 
   /**
    * Allows the division result to be properly simplified for inputs such as "6/9". Do not delete if you don't have another solution yet... 
-   * @param operandOne
-   * @param operandTwo
-   * @return
+   * @param operandOne the first part of the expression
+   * @param operandTwo the second part of the expression
+   * @return the formatted fraction
    */
   public static String fractionFormat(String operandOne, String operandTwo) {
 
