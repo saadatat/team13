@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Calculator class, handles GUI interaction.
+ * @author Max Berger, Arman Saadat
+ *
+ */
 public class Calculator
 {
 
   private String leftOperand;
   private String rightOperand;
   private String result;
-  private double[] resultDoubles; // Double representation of answer with real first and imaginary second.
+  private double[] resultDoubles; 
+  // ^^Double representation of answer with real first and imaginary second.
   private String operator;
   private boolean fractionDisplay;
   private boolean divisionFormatResult;
@@ -41,7 +47,7 @@ public class Calculator
    *          - the incoming operand string to format.
    * @return String - the formatted operand string.
    */
-  public String formatDisplayOperand(String stringToFormat)
+  public String formatDisplayOperand(final String stringToFormat)
   {
     String formattedString = "";
 
@@ -62,7 +68,7 @@ public class Calculator
    * @param stringToFormat the String to italicize
    * @return formattedString the formatted String
    */
-  public static String formatItalic(String stringToFormat)
+  public static String formatItalic(final String stringToFormat)
   {
     String formattedString = "";
     if (stringToFormat == null || stringToFormat.trim().equals(""))
@@ -137,9 +143,11 @@ public class Calculator
   public String getResult()
   {
 
-    if (divisionFormatResult == false) {
+    if (!divisionFormatResult)
+    {
       
-      if (resultDoubles == null) {
+      if (resultDoubles == null)
+      {
         return "0+0i";
       }
       
@@ -148,14 +156,17 @@ public class Calculator
       result = Operations.formatResult(real, imag, false);
      
       
-      if (fractionDisplay) {
+      if (fractionDisplay)
+      {
         return Operations.formatResult(real, imag, true);
       }
-      }else {
-        divisionFormatResult = false;
-        return result;
-      }
+    }
+    else 
+    {
+      divisionFormatResult = false;
       return result;
+    }
+    return result;
   }
 
   /**
@@ -164,7 +175,7 @@ public class Calculator
    * @param incomingLeftOperand
    *          - the left operand.
    */
-  public void setLeftOperand(String incomingLeftOperand)
+  public void setLeftOperand(final String incomingLeftOperand)
   {
     if (incomingLeftOperand.contains("+i"))
     {
@@ -199,7 +210,7 @@ public class Calculator
    * @param incomingRightOperand
    *          - the right operand.
    */
-  public void setRightOperand(String incomingRightOperand)
+  public void setRightOperand(final String incomingRightOperand)
   {
 
     if (incomingRightOperand.contains("+i"))
@@ -223,7 +234,7 @@ public class Calculator
    * @param incomingResult
    *          - the result.
    */
-  public void setResult(String incomingResult)
+  public void setResult(final String incomingResult)
   {
   
     result = incomingResult;
@@ -261,12 +272,15 @@ public class Calculator
    */
   public void divide()
   {
-    if (fractionDisplay) {
+    if (fractionDisplay)
+    {
       result = Operations.fractionFormat(leftOperand, rightOperand);
       resultDoubles = Operations.divide(leftOperand, rightOperand);
       divisionFormatResult = true;
-    }else {
-    resultDoubles = Operations.divide(leftOperand, rightOperand);
+    }
+    else 
+    {
+      resultDoubles = Operations.divide(leftOperand, rightOperand);
     }
     resultResetHelper();
   }
@@ -344,61 +358,68 @@ public class Calculator
   }
   
   /**
-   * To modify fraction boolean calibration
+   * To modify fraction boolean calibration.
    * @param incoming the state fractionDIsplay should be in
    */
-  public void setFractionDisplay(boolean incoming) {
+  public void setFractionDisplay(final boolean incoming)
+  {
     fractionDisplay = incoming;
   }
   
   /**
-   * Gets the display value
+   * Gets the display value.
    * @return fractionDisplay the display value
    */
-  public boolean getFractionDisplay() {
+  public boolean getFractionDisplay()
+  {
     return fractionDisplay;
   }
   
 //**Methods to help increase coverage for testing**//
   
   /**
-   * Sets the division format result boolean
+   * Sets the division format result boolean.
    * @param incoming how divisionFormatResult should be
    */
-  public void setDivisionFormatResult(boolean incoming) {
+  public void setDivisionFormatResult(final boolean incoming)
+  {
     divisionFormatResult = incoming;
   }
   
   /**
-   * returns String of the left operand
+   * returns String of the left operand.
    * @return leftOperand the left operand string
    */
-  public String getLeftOperandString() {
+  public String getLeftOperandString()
+  {
     return leftOperand;
   }
   
   /**
-   * returns String of the right operand
+   * returns String of the right operand.
    * @return leftOperand the right operand string
    */
-  public String getRightOperandString() {
+  public String getRightOperandString()
+  {
     return rightOperand;
   }
   
   /**
-   * returns the resultDoubles array
+   * returns the resultDoubles array.
    * @return resultDoubles the result doubles.
    */
-  public double[] getDoubles() {
+  public double[] getDoubles()
+  {
     return resultDoubles;
   }
   
   /**
-   * sets the resultDouble array
+   * sets the resultDouble array.
    * @param first the first value in the array
    * @param second the second value in the array
    */
-  public void setResultDoubles(double first, double second) {
+  public void setResultDoubles(final double first, final double second)
+  {
     resultDoubles[0] = first;
     resultDoubles[1] = second;
   }
