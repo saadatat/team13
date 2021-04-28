@@ -4,6 +4,11 @@ import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Handles math operations and parsing.
+ * @author Max Berger, Arman Saadat, Kory Erdman
+ *
+ */
 public class Operations
 {
   /**
