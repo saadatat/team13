@@ -310,13 +310,13 @@ public class Operations
     
     // Rounds whole number, extracts decimal, and then multiplies decimal based on number of
     // decimal places there are. Then it can be converted into a fraction.
-    int wholeNumber = (int) numberToConvert;
+    long wholeNumber = (long) numberToConvert;
     double onlyDecimal = numberToConvert - wholeNumber;
-    int numerator = (int) (onlyDecimal * 1000);
-    int denominator = 1000;
+    long numerator = (long) (onlyDecimal * 1000);
+    long denominator = 1000;
     
     // Simplify the fraction part
-    int gcd = Operations.getGCD(numerator, denominator);
+    long gcd = Operations.getGCD(numerator, denominator);
     numerator /= gcd;
     denominator /= gcd; 
     
@@ -364,17 +364,17 @@ public class Operations
     double top1 = ac + bd;
     double top2 = bc - ad;
 
-    double cSquare = (double) Math.pow(opdoubles[1][0], 2);
-    double dSquare = (double) Math.pow(opdoubles[1][1], 2);
+    float cSquare = (float) Math.pow(opdoubles[1][0], 2);
+    float dSquare = (float) Math.pow(opdoubles[1][1], 2);
 
     double denominator = cSquare + dSquare;
 
     if (top1 == 0) {
       quotient1 = "0";
     }else {
-      int gcd1 = getGCD((int)top1, (int)denominator);
-      int returnTop = (int)top1/gcd1;
-      int returnDen = (int)denominator/gcd1;
+      long gcd1 = getGCD((int)top1, (int)denominator);
+      long returnTop = (long)top1/gcd1;
+      long returnDen = (long)denominator/gcd1;
       if (returnDen == 1) {
         quotient1 = returnTop + "";
       }else {
@@ -385,9 +385,9 @@ public class Operations
     if(top2 == 0) {
       quotient2 = "0";
     }else {
-      int gcd1 = getGCD((int)top2, (int)denominator);
-      int returnTop = (int)top2/gcd1;
-      int returnDen = (int)denominator/gcd1;
+      long gcd1 = getGCD((int)top2, (int)denominator);
+      long returnTop = (long)top2/gcd1;
+      long returnDen = (long)denominator/gcd1;
       if (returnDen == 1) {
         quotient2 = "" + returnTop;
       }else {
@@ -405,7 +405,7 @@ public class Operations
    * @param number2 Second number
    * @return The GCD.
    */
-  private static int getGCD(int number1, int number2) {
+  private static long getGCD(long number1, long number2) {
     if (number2 == 0) {
       return number1;
     }
